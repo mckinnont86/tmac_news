@@ -20,6 +20,7 @@
     --ot-accent: #4caf82;
     --fin-accent: #c9933a;
     --training-accent: #9b6fe0;
+    --cissp-accent: #e05555;
   }
 
   body {
@@ -103,6 +104,7 @@
   .tab-btn[data-tab="ot"]       { --tab-color: var(--ot-accent); }
   .tab-btn[data-tab="fin"]      { --tab-color: var(--fin-accent); }
   .tab-btn[data-tab="training"] { --tab-color: var(--training-accent); }
+  .tab-btn[data-tab="cissp"]    { --tab-color: var(--cissp-accent); }
 
   .main {
     padding: 28px 32px 60px;
@@ -495,6 +497,7 @@
   <button class="tab-btn" data-tab="ot">🏥 Hospital OT</button>
   <button class="tab-btn" data-tab="fin">💼 Finance &amp; Reg</button>
   <button class="tab-btn" data-tab="training">💪 Training</button>
+  <button class="tab-btn" data-tab="cissp">🎓 CISSP</button>
 </nav>
 
 <main class="main">
@@ -591,6 +594,154 @@
     <div id="pod-training"></div>
   </div>
 
+  <!-- ══ CISSP ══ -->
+  <div class="panel" id="panel-cissp">
+    <div class="panel-header">
+      <div>
+        <div class="panel-eyebrow" style="color:var(--cissp-accent)">Experienced Professional · 5–10 hrs/week · 10-month runway</div>
+        <div class="panel-title">CISSP Study Command Center</div>
+      </div>
+      <button class="fetch-btn" data-panel="cissp">
+        <div class="spinner"></div><span class="btn-label">Fetch Exam News</span>
+      </button>
+    </div>
+
+    <!-- MINDSET BANNER -->
+    <div style="background:#1a0a0a;color:#fff;border-radius:3px;padding:14px 20px;margin-bottom:24px;border-left:4px solid var(--cissp-accent);">
+      <div style="font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--cissp-accent);font-weight:700;margin-bottom:4px;">Critical Mindset Shift</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:1rem;margin-bottom:6px;">Think like a manager, not an engineer.</div>
+      <div style="font-size:0.8rem;color:rgba(255,255,255,0.75);line-height:1.5;">The CISSP rewards what a CISO would <em>decide</em>, not what an engineer would <em>implement</em>. Watch Kelly Handerhan's free "Why You Will Pass CISSP" video before opening any textbook — it's the most valuable 30 minutes in your prep.</div>
+    </div>
+
+    <!-- DOMAINS -->
+    <div class="section-label" style="color:var(--cissp-accent)">8 Domains — Exam Weight &amp; Study Priority</div>
+    <div class="cards-grid" style="margin-bottom:28px;">
+      <div class="news-card" style="--accent-color:var(--cissp-accent)">
+        <div class="card-tag">Domain 1 · 16% · ⚠️ Highest Priority</div>
+        <div class="card-headline">Security &amp; Risk Management</div>
+        <div class="card-summary">CIA triad, governance, compliance, legal/regulatory issues, risk management frameworks, business continuity. Underpins every other domain — spend the most time here. Most ops pros have gaps in the governance layer.</div>
+        <div class="card-meta"><div class="card-source">3–4 weeks</div><div class="card-date">16%</div></div>
+      </div>
+      <div class="news-card" style="--accent-color:var(--cissp-accent)">
+        <div class="card-tag">Domain 3 · 13% · ⚠️ High Priority</div>
+        <div class="card-headline">Security Architecture &amp; Engineering</div>
+        <div class="card-summary">Security models (Bell-LaPadula, Biba), cryptography, PKI, hardware security, cloud architecture. Practitioners with strong ops backgrounds often have cryptography gaps — go deep here.</div>
+        <div class="card-meta"><div class="card-source">2–3 weeks</div><div class="card-date">13%</div></div>
+      </div>
+      <div class="news-card" style="--accent-color:var(--cissp-accent)">
+        <div class="card-tag">Domain 4 · 13% · ⚠️ High Priority</div>
+        <div class="card-headline">Communication &amp; Network Security</div>
+        <div class="card-summary">OSI/TCP-IP model, protocols, VPNs, firewalls, wireless, secure network design, microsegmentation concepts. Your SE background gives you a head start — focus on CISSP's specific vocabulary and manager-level decisions.</div>
+        <div class="card-meta"><div class="card-source">2 weeks</div><div class="card-date">13%</div></div>
+      </div>
+      <div class="news-card" style="--accent-color:var(--cissp-accent)">
+        <div class="card-tag">Domain 7 · 13% · ⚠️ High Priority</div>
+        <div class="card-headline">Security Operations</div>
+        <div class="card-summary">Incident response, investigations, forensics, recovery, change management, patch management, physical security. High weight and your ops experience will help — but watch for CISSP's manager-first framing.</div>
+        <div class="card-meta"><div class="card-source">2 weeks</div><div class="card-date">13%</div></div>
+      </div>
+      <div class="news-card" style="--accent-color:#888">
+        <div class="card-tag">Domain 5 · 13%</div>
+        <div class="card-headline">Identity &amp; Access Management</div>
+        <div class="card-summary">Authentication, authorization, federation, SSO, access control models (DAC, MAC, RBAC), provisioning and deprovisioning. Relevant to your zero trust / microsegmentation work.</div>
+        <div class="card-meta"><div class="card-source">1–2 weeks</div><div class="card-date">13%</div></div>
+      </div>
+      <div class="news-card" style="--accent-color:#888">
+        <div class="card-tag">Domain 6 · 12%</div>
+        <div class="card-headline">Security Assessment &amp; Testing</div>
+        <div class="card-summary">Pen testing types, vulnerability assessments, audit logs, KPIs, third-party audits. Likely comfortable territory with your background — focus on CISSP's specific definitions and terminology.</div>
+        <div class="card-meta"><div class="card-source">1–2 weeks</div><div class="card-date">12%</div></div>
+      </div>
+      <div class="news-card" style="--accent-color:#888">
+        <div class="card-tag">Domain 8 · 10%</div>
+        <div class="card-headline">Software Development Security</div>
+        <div class="card-summary">SDLC, secure coding, OWASP Top 10, DevSecOps, code review, software acquisition security. Don't skip despite lower weight — non-developers often need extra time here.</div>
+        <div class="card-meta"><div class="card-source">2–3 weeks</div><div class="card-date">10%</div></div>
+      </div>
+      <div class="news-card" style="--accent-color:#888">
+        <div class="card-tag">Domain 2 · 10%</div>
+        <div class="card-headline">Asset Security</div>
+        <div class="card-summary">Data classification, ownership, privacy, retention, data destruction. Lighter domain — most experienced pros can handle in one focused week using end-of-chapter questions to identify gaps.</div>
+        <div class="card-meta"><div class="card-source">1 week</div><div class="card-date">10%</div></div>
+      </div>
+    </div>
+
+    <!-- STUDY PHASES -->
+    <div class="section-label" style="color:var(--cissp-accent)">📅 Study Phases — 10-Month Plan at 5–10 hrs/week</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:28px;">
+      <div style="background:#fff;border:1px solid var(--rule);border-radius:3px;padding:16px 18px;border-left:3px solid var(--cissp-accent);">
+        <div style="font-size:0.64rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--cissp-accent);margin-bottom:6px;">Phase 1 · Weeks 1–3</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:0.95rem;margin-bottom:6px;">Foundation &amp; Orientation</div>
+        <div style="font-size:0.79rem;color:#555;line-height:1.5;">Watch Kelly Handerhan. Read Chapple Chs 1–3. Take a 50Q baseline assessment to find weak domains before you commit to a reading order.</div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--rule);border-radius:3px;padding:16px 18px;border-left:3px solid var(--cissp-accent);">
+        <div style="font-size:0.64rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--cissp-accent);margin-bottom:6px;">Phase 2 · Weeks 4–28</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:0.95rem;margin-bottom:6px;">Core Domain Study</div>
+        <div style="font-size:0.79rem;color:#555;line-height:1.5;">One domain per 1–2 weeks in priority order. Read Chapple chapter → watch Destination Certification mind map video → do 50+ practice Qs. Use AIO for deep dives on weak spots.</div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--rule);border-radius:3px;padding:16px 18px;border-left:3px solid var(--cissp-accent);">
+        <div style="font-size:0.64rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--cissp-accent);margin-bottom:6px;">Phase 3 · Weeks 29–36</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:0.95rem;margin-bottom:6px;">Integration &amp; Weak Spots</div>
+        <div style="font-size:0.79rem;color:#555;line-height:1.5;">Full practice exams (Boson ExSim). Review every wrong answer by domain. Go back to the AIO for any domain below 70%. Start mixing cross-domain questions.</div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--rule);border-radius:3px;padding:16px 18px;border-left:3px solid var(--cissp-accent);">
+        <div style="font-size:0.64rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--cissp-accent);margin-bottom:6px;">Phase 4 · Weeks 37–40</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:0.95rem;margin-bottom:6px;">Final Sprint</div>
+        <div style="font-size:0.79rem;color:#555;line-height:1.5;">Open Eleventh Hour CISSP for rapid review only. No new material. Book your exam when consistently hitting 78%+ across three full 125Q simulations. Stop studying 48hrs before.</div>
+      </div>
+    </div>
+
+    <!-- BOOKS -->
+    <div class="section-label" style="color:var(--cissp-accent)">📚 Books</div>
+    <div class="podcast-grid" style="margin-bottom:28px;">
+      <div class="podcast-card" style="--accent-color:var(--cissp-accent)">
+        <div class="podcast-icon">📗</div>
+        <div class="podcast-body">
+          <div class="podcast-label">Primary — Start Here</div>
+          <div class="podcast-name">Official (ISC)² CISSP Study Guide</div>
+          <div class="podcast-desc">Chapple, Stewart &amp; Gibson. Most aligned to current exam objectives and CBK language. Use end-of-chapter Qs to decide if you need to read the full chapter.</div>
+        </div>
+      </div>
+      <div class="podcast-card" style="--accent-color:var(--cissp-accent)">
+        <div class="podcast-icon">📘</div>
+        <div class="podcast-body">
+          <div class="podcast-label">Deep Reference</div>
+          <div class="podcast-name">CISSP All-in-One Exam Guide</div>
+          <div class="podcast-desc">Shon Harris / Mike Chapple. Exhaustive — best as a deep-dive reference for weak domains, not a cover-to-cover read.</div>
+        </div>
+      </div>
+      <div class="podcast-card" style="--accent-color:var(--cissp-accent)">
+        <div class="podcast-icon">📕</div>
+        <div class="podcast-body">
+          <div class="podcast-label">Final 2 Weeks Only</div>
+          <div class="podcast-name">Eleventh Hour CISSP — Eric Conrad</div>
+          <div class="podcast-desc">Condensed rapid-review. Don't open it earlier — it's too thin for learning from scratch. Lifesaver for the final sprint.</div>
+        </div>
+      </div>
+      <div class="podcast-card" style="--accent-color:var(--cissp-accent)">
+        <div class="podcast-icon">📓</div>
+        <div class="podcast-body">
+          <div class="podcast-label">Practice</div>
+          <div class="podcast-name">Official (ISC)² CISSP Practice Tests</div>
+          <div class="podcast-desc">1,300+ questions aligned to the CBK. Use domain-by-domain to validate progress, not just as a final mock.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIVE FEED -->
+    <div class="section-label" style="color:var(--cissp-accent)">📡 Current Exam-Relevant News</div>
+    <div class="cards-container" id="cards-cissp">
+      <div class="state-box"><span class="state-icon">📡</span><p>Hit <strong>Fetch Exam News</strong> above to load current articles relevant to CISSP domains — risk management, cryptography, IAM, network security &amp; more.</p></div>
+    </div>
+
+    <!-- PODCASTS -->
+    <div class="pod-section-header" style="margin-top:28px;">
+      <div class="section-label" style="color:var(--cissp-accent)">🎙 CISSP Podcasts</div>
+      <button class="pod-load-btn" data-pod="cissp"><div class="spinner"></div>Load Latest Episodes</button>
+    </div>
+    <div id="pod-cissp"></div>
+  </div>
+
 </main>
 
 <script>
@@ -652,6 +803,16 @@ const PANELS = {
       { url: 'https://barbend.com/feed/',                            label: 'BarBend' },
       { url: 'https://www.t-nation.com/rss.xml',                     label: 'T-Nation' },
       { url: 'https://breakingmuscle.com/feed/',                     label: 'Breaking Muscle' },
+    ]
+  },
+  cissp: {
+    accent: '#e05555',
+    tag: 'CISSP',
+    feeds: [
+      { url: 'https://feeds.feedburner.com/TheHackersNews',          label: 'The Hacker News' },
+      { url: 'https://www.darkreading.com/rss/risk.xml',             label: 'Dark Reading Risk' },
+      { url: 'https://krebsonsecurity.com/feed/',                    label: 'Krebs on Security' },
+      { url: 'https://www.darkreading.com/rss.xml',                  label: 'Dark Reading' },
     ]
   }
 };
@@ -826,6 +987,48 @@ const PODCASTS = {
       rss: 'https://www.omnycontent.com/d/playlist/aaea4e69-af51-495e-afc9-a9760146922b/2a0a4a77-3a38-4e75-b938-aad000e03499/podcast.rss',
       label: 'Nutrition Science'
     },
+  ],
+  cissp: [
+    {
+      name: 'CISSP Cyber Training Podcast',
+      desc: 'Sean Gerber covers all 8 CISSP domains episode by episode. Layer it on your weekly domain reading during commutes.',
+      icon: '🎓',
+      url: 'https://cissp.cybertraining365.com/podcast/',
+      rss: 'https://feeds.buzzsprout.com/1615656.rss',
+      label: 'All Domains'
+    },
+    {
+      name: 'Destination Certification CISSP MindMap',
+      desc: 'Rob Witcher\'s YouTube/podcast series — one mind map per domain. Exceptional for visual learners and retention.',
+      icon: '🗺️',
+      url: 'https://www.youtube.com/@DestinationCertification',
+      rss: null,
+      label: 'Domain Deep Dives'
+    },
+    {
+      name: 'Security Now',
+      desc: 'Steve Gibson goes deep on cryptography, network security, and security architecture — maps directly to Domains 3 and 4.',
+      icon: '🛡️',
+      url: 'https://twit.tv/shows/security-now',
+      rss: 'https://feeds.twit.tv/sn.xml',
+      label: 'Domains 3 & 4'
+    },
+    {
+      name: 'Risky Business',
+      desc: 'Weekly news and interviews — helps connect exam concepts to real-world incidents. Great for Domain 7 (Security Operations).',
+      icon: '🔐',
+      url: 'https://risky.biz',
+      rss: 'https://risky.biz/feeds/risky-business/',
+      label: 'Domain 7'
+    },
+    {
+      name: 'CyberWire Daily',
+      desc: 'Daily 20-min briefing — keeps Domain 1 (Risk Management) and current threat landscape fresh with minimal time investment.',
+      icon: '📻',
+      url: 'https://thecyberwire.com/podcasts/daily-podcast',
+      rss: 'https://thecyberwire.com/feeds/daily-podcast.xml',
+      label: 'Domain 1'
+    },
   ]
 };
 
@@ -970,7 +1173,7 @@ async function fetchPodcastEpisodes(panelKey) {
 // On load: show static curated show cards
 // On "Load Latest Episodes": replace with live feed episode cards
 function initPodcasts() {
-  ['cyber','ot','fin','training'].forEach(key => {
+  ['cyber','ot','fin','training','cissp'].forEach(key => {
     const container = document.getElementById('pod-' + key);
     if (container) container.innerHTML = renderStaticPodcasts(key);
   });
