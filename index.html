@@ -23,6 +23,7 @@
   .tab-btn.active{color:var(--ink)}
   .tab-btn.active::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:3px;background:var(--tc,var(--ink))}
   .tab-btn[data-tab=cyber]{--tc:var(--ca)}
+  .tab-btn[data-tab=home]{--tc:var(--ink)}
   .tab-btn[data-tab=it]{--tc:var(--ca)}
   .tab-btn[data-tab=net]{--tc:var(--na)}
   .tab-btn[data-tab=sec]{--tc:var(--sea)}
@@ -90,6 +91,29 @@
   .phase-eye{font-size:.64rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--csa);margin-bottom:6px}
   .phase-h{font-family:'DM Serif Display',serif;font-size:.95rem;margin-bottom:6px}
   .phase-b{font-size:.79rem;color:#555;line-height:1.5}
+
+  /* HOME PAGE */
+  .home-quote{border-left:4px solid var(--ink);padding:18px 22px;margin-bottom:28px;background:var(--card-bg);border-radius:0 3px 3px 0}
+  .home-quote-text{font-family:'DM Serif Display',serif;font-size:1.3rem;line-height:1.4;margin-bottom:8px;color:var(--ink)}
+  .home-quote-attr{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .home-fact{background:var(--ink);color:var(--paper);border-radius:3px;padding:16px 22px;margin-bottom:28px;display:flex;gap:16px;align-items:flex-start}
+  .home-fact-icon{font-size:1.4rem;flex-shrink:0;margin-top:2px}
+  .home-fact-label{font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:4px}
+  .home-fact-text{font-size:.88rem;line-height:1.55;color:rgba(255,255,255,.9)}
+  .home-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-bottom:28px}
+  .home-card{background:var(--card-bg);border:1px solid var(--rule);border-radius:3px;padding:15px 18px 13px;display:flex;flex-direction:column;gap:6px;position:relative;text-decoration:none;color:inherit;transition:box-shadow .15s;cursor:pointer}
+  .home-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px;background:var(--hac,var(--rule))}
+  .home-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08)}
+  .home-card-tab{font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--hac,var(--muted))}
+  .home-card-hl{font-family:'DM Serif Display',serif;font-size:.95rem;line-height:1.3}
+  .home-card-src{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--muted);margin-top:2px}
+  .home-card-sk{height:110px}
+  .home-load-btn{display:flex;align-items:center;gap:8px;padding:10px 20px;border:1.5px solid var(--ink);background:var(--ink);color:var(--paper);font-family:'Inter',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.04em;cursor:pointer;border-radius:2px;transition:all .15s;margin:0 auto 28px}
+  .home-load-btn:hover{opacity:.8}
+  .home-load-btn:disabled{opacity:.4;cursor:not-allowed}
+  .home-load-btn .sp{width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none}
+  .home-load-btn.loading .sp{display:block}
+  .home-load-btn.loading .bl{opacity:.6}
   @media(max-width:640px){.masthead{padding:16px 16px 12px}.nav-strip{padding:0 16px}.main{padding:20px 16px 48px}.tab-btn{padding:10px 8px;font-size:.68rem}}
 </style>
 </head>
@@ -104,7 +128,8 @@
 </header>
 
 <nav class="nav-strip">
-  <button class="tab-btn active" data-tab="it">💻 IT</button>
+  <button class="tab-btn active" data-tab="home">🏠 Home</button>
+  <button class="tab-btn" data-tab="it">💻 IT</button>
   <button class="tab-btn" data-tab="net">🌐 Networking</button>
   <button class="tab-btn" data-tab="sec">🔐 Cybersecurity</button>
   <button class="tab-btn" data-tab="ot">🏭 Industrial OT</button>
@@ -116,8 +141,45 @@
 
 <main class="main">
 
+<!-- HOME -->
+<div class="panel active" id="panel-home">
+  <div style="margin-bottom:22px">
+    <div style="font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--muted);margin-bottom:4px">Good morning, Thomas</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:1.5rem;line-height:1.1" id="home-date-full"></div>
+  </div>
+
+  <!-- QUOTE -->
+  <div class="home-quote" id="home-quote">
+    <div class="home-quote-text" id="home-quote-text">Loading quote...</div>
+    <div class="home-quote-attr" id="home-quote-attr"></div>
+  </div>
+
+  <!-- FACT -->
+  <div class="home-fact" id="home-fact">
+    <div class="home-fact-icon">💡</div>
+    <div>
+      <div class="home-fact-label">Today's Fact</div>
+      <div class="home-fact-text" id="home-fact-text">Loading...</div>
+    </div>
+  </div>
+
+  <!-- TOP STORIES LABEL -->
+  <div style="font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;display:flex;align-items:center;gap:10px">
+    Top story from each category
+    <span style="flex:1;height:1px;background:var(--rule);display:block"></span>
+  </div>
+
+  <button class="home-load-btn" id="home-fetch-btn">
+    <div class="sp"></div><span class="bl">Load Today's Headlines</span>
+  </button>
+
+  <div class="home-grid" id="home-grid">
+    <!-- cards injected by JS -->
+  </div>
+</div>
+
 <!-- IT -->
-<div class="panel active" id="panel-it">
+<div class="panel" id="panel-it">
   <div class="ph">
     <div><div class="pe" style="color:var(--ca)">Cloud · AI · SaaS · DevOps · Infrastructure · Enterprise Tech</div><div class="pt">IT & technology</div></div>
     <button class="fetch-btn" data-panel="it"><div class="sp"></div><span class="bl">Fetch News</span></button>
@@ -472,6 +534,162 @@ async function fetchPodEpisodes(key){
         <div class="em">${e.date}</div>
       </a>`).join('')+`</div>`;
 }
+
+
+// ── HOME PAGE ──────────────────────────────────────────────────────────────
+const QUOTES = [
+  {text:"The best way to predict the future is to create it.",attr:"Peter Drucker"},
+  {text:"An investment in knowledge pays the best interest.",attr:"Benjamin Franklin"},
+  {text:"It does not matter how slowly you go as long as you do not stop.",attr:"Confucius"},
+  {text:"The secret of getting ahead is getting started.",attr:"Mark Twain"},
+  {text:"Success is not final, failure is not fatal: it is the courage to continue that counts.",attr:"Winston Churchill"},
+  {text:"Do something today that your future self will thank you for.",attr:"Sean Patrick Flanery"},
+  {text:"Discipline is the bridge between goals and accomplishment.",attr:"Jim Rohn"},
+  {text:"Champions aren't made in gyms. Champions are made from something they have deep inside them.",attr:"Muhammad Ali"},
+  {text:"Sweat is just fat crying.",attr:"Unknown"},
+  {text:"The more that you read, the more things you will know.",attr:"Dr. Seuss"},
+  {text:"Security is always excessive until it's not enough.",attr:"Robbie Sinclair"},
+  {text:"The price of anything is the amount of life you exchange for it.",attr:"Henry David Thoreau"},
+  {text:"Hard work beats talent when talent doesn't work hard.",attr:"Tim Notke"},
+  {text:"A ship in harbor is safe, but that is not what ships are for.",attr:"John A. Shedd"},
+  {text:"You don't have to be great to start, but you have to start to be great.",attr:"Zig Ziglar"},
+  {text:"The only way to do great work is to love what you do.",attr:"Steve Jobs"},
+  {text:"Fall seven times, stand up eight.",attr:"Japanese Proverb"},
+  {text:"Knowledge is power.",attr:"Francis Bacon"},
+  {text:"Either write something worth reading or do something worth writing.",attr:"Benjamin Franklin"},
+  {text:"Strength does not come from winning. Your struggles develop your strengths.",attr:"Arnold Schwarzenegger"},
+  {text:"The groundwork for all happiness is good health.",attr:"Leigh Hunt"},
+  {text:"In the middle of every difficulty lies opportunity.",attr:"Albert Einstein"},
+  {text:"Every expert was once a beginner.",attr:"Helen Hayes"},
+  {text:"The network perimeter is dead. Identity is the new perimeter.",attr:"Unknown"},
+  {text:"Amateurs practice until they get it right. Professionals practice until they can't get it wrong.",attr:"Unknown"},
+];
+
+const FACTS = [
+  "The average person makes about 35,000 decisions per day — most of them unconscious.",
+  "The human brain can store approximately 2.5 petabytes of information, equivalent to 3 million hours of TV.",
+  "Reading for just 6 minutes a day can reduce stress levels by up to 68%.",
+  "Wrestlers have one of the highest strength-to-weight ratios of any athlete.",
+  "Zero trust security was first coined by John Kindervag at Forrester Research in 2010.",
+  "The first computer virus, Creeper, was created in 1971 and displayed 'I'm the creeper, catch me if you can!'",
+  "Your heart beats about 100,000 times per day and over 2.5 billion times in a lifetime.",
+  "Creatine is one of the most studied supplements in sports science with over 500 peer-reviewed studies.",
+  "The CISSP exam has a minimum of 100 questions and a maximum of 150 with a time limit of 3 hours.",
+  "The global cybersecurity market is projected to exceed $500 billion by 2030.",
+  "Microsegmentation can reduce the blast radius of a breach by up to 90%.",
+  "The average data breach takes 207 days to identify and 73 days to contain.",
+  "Running for just 5–10 minutes per day at slow speeds reduces the risk of cardiovascular disease by 45%.",
+  "Sleep deprivation reduces athletic performance by up to 30% — recovery is training.",
+  "The first Olympic wrestling competition was held in 708 BC in ancient Greece.",
+  "BGP, the protocol that routes the entire internet, was designed on two cocktail napkins in 1989.",
+  "There are over 1,000 different CISSP practice questions variations per domain across major study platforms.",
+  "The average hospital has over 10 connected medical devices per patient bed.",
+  "High-intensity interval training (HIIT) can burn more calories in 15 minutes than jogging for an hour.",
+  "Protein synthesis after resistance training peaks within 24–48 hours — rest days are growth days.",
+  "The NIST Cybersecurity Framework is used by over 30% of US organizations.",
+  "SD-WAN adoption grew over 40% in 2023 as enterprises shifted from MPLS to cloud-first networking.",
+  "A 1% improvement every day compounds to a 37x improvement over a year.",
+  "The human body has over 600 muscles — wrestlers use nearly all of them in a single match.",
+  "Phishing attacks account for over 90% of data breaches worldwide.",
+];
+
+function pickDaily(arr) {
+  const day = Math.floor(Date.now() / 86400000);
+  return arr[day % arr.length];
+}
+
+function initHome() {
+  // Date
+  const now = new Date();
+  document.getElementById('home-date-full').textContent =
+    now.toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric', year:'numeric'});
+
+  // Quote
+  const q = pickDaily(QUOTES);
+  document.getElementById('home-quote-text').textContent = '"' + q.text + '"';
+  document.getElementById('home-quote-attr').textContent = '— ' + q.attr;
+
+  // Fact
+  const f = pickDaily(FACTS.slice().reverse()); // offset from quote
+  document.getElementById('home-fact-text').textContent = f;
+}
+
+// HOME TABS CONFIG for pulling top story
+const HOME_TABS = [
+  {key:'it',  label:'💻 IT',           accent:'var(--ca)',  tab:'it'},
+  {key:'net', label:'🌐 Networking',   accent:'var(--na)',  tab:'net'},
+  {key:'sec', label:'🔐 Cybersecurity',accent:'var(--sea)', tab:'sec'},
+  {key:'ot',  label:'🏭 Industrial OT',accent:'var(--oa)',  tab:'ot'},
+  {key:'hc',  label:'🏥 Healthcare',   accent:'var(--hca)', tab:'hc'},
+  {key:'fin', label:'💼 Finance & Reg',accent:'var(--fa)',  tab:'fin'},
+  {key:'training',label:'💪 Training', accent:'var(--ta)',  tab:'training'},
+  {key:'cissp',label:'🎓 CISSP',       accent:'var(--csa)', tab:'cissp'},
+];
+
+async function loadHomeHeadlines() {
+  const btn = document.getElementById('home-fetch-btn');
+  btn.classList.add('loading'); btn.disabled = true;
+
+  // Show skeletons
+  document.getElementById('home-grid').innerHTML = HOME_TABS.map(t => `
+    <div class="home-card home-card-sk" style="--hac:${t.accent}">
+      <div class="sk-line s" style="margin-bottom:8px"></div>
+      <div class="sk-line"></div>
+      <div class="sk-line m"></div>
+    </div>`).join('');
+
+  // Fetch top story from each tab's first feed
+  const results = await Promise.all(HOME_TABS.map(async t => {
+    const feeds = NEWS_FEEDS[t.key];
+    if (!feeds || !feeds.length) return {tab: t, item: null};
+    // Try feeds in order until we get a result
+    for (const feed of feeds) {
+      try {
+        const r = await fetch(`${API}${encodeURIComponent(feed.url)}`);
+        const d = await r.json();
+        if (d.status === 'ok' && d.items && d.items.length) {
+          // For tabs with keywords, find first matching item
+          const kws = KEYWORDS[t.key];
+          let item = d.items[0];
+          if (kws) {
+            const match = d.items.find(i => {
+              const txt = (i.title + ' ' + stripHtml(i.description||'')).toLowerCase();
+              return kws.some(k => txt.includes(k));
+            });
+            if (match) item = match;
+          }
+          return {tab: t, item: {
+            headline: item.title || 'Untitled',
+            link: item.link || '#',
+            source: feed.label,
+            date: fmtDate(item.pubDate)
+          }};
+        }
+      } catch {}
+    }
+    return {tab: t, item: null};
+  }));
+
+  document.getElementById('home-grid').innerHTML = results.map(({tab: t, item}) => {
+    if (!item) return `
+      <div class="home-card" style="--hac:${t.accent}">
+        <div class="home-card-tab">${t.label}</div>
+        <div class="home-card-hl" style="color:var(--muted);font-family:'Inter',sans-serif;font-size:.82rem">No story loaded</div>
+      </div>`;
+    return `
+      <a class="home-card" href="${item.link}" target="_blank" rel="noopener" style="--hac:${t.accent}">
+        <div class="home-card-tab">${t.label}</div>
+        <div class="home-card-hl">${item.headline}</div>
+        <div class="home-card-src">${item.source} · ${item.date}</div>
+      </a>`;
+  }).join('');
+
+  btn.classList.remove('loading'); btn.disabled = false;
+  btn.querySelector('.bl').textContent = 'Refresh Headlines';
+}
+
+document.getElementById('home-fetch-btn').addEventListener('click', loadHomeHeadlines);
+initHome();
 
 // ── INIT ──────────────────────────────────────────────────────────────────
 ['it','net','sec','ot','hc','fin','training','cissp'].forEach(key=>{
