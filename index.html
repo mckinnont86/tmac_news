@@ -6,480 +6,87 @@
 <title>Thomas's Daily Brief</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --ink: #0f1117;
-    --paper: #f7f6f2;
-    --rule: #d8d5ce;
-    --muted: #888580;
-    --card-bg: #ffffff;
-    --loading-strip: #e8e6e0;
-    --cyber-accent: #54B9F1;
-    --ot-accent: #4caf82;
-    --fin-accent: #c9933a;
-    --training-accent: #9b6fe0;
-    --cissp-accent: #e05555;
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --ink:#0f1117;--paper:#f7f6f2;--rule:#d8d5ce;--muted:#888580;--card-bg:#ffffff;--ls:#e8e6e0;
+    --ca:#54B9F1;--oa:#4caf82;--fa:#c9933a;--ta:#9b6fe0;--csa:#e05555;
   }
-
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: 'Inter', system-ui, sans-serif;
-    line-height: 1.6;
-    min-height: 100vh;
-  }
-
-  .masthead {
-    border-bottom: 2px solid var(--ink);
-    padding: 20px 32px 14px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .pub-name {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(1.6rem, 4vw, 2.4rem);
-    letter-spacing: -0.02em;
-    line-height: 1;
-  }
-
-  .pub-tagline {
-    font-size: 0.72rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-top: 3px;
-    font-weight: 500;
-  }
-
-  .datestamp {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--muted);
-    text-align: right;
-    line-height: 1.4;
-  }
-
-  .nav-strip {
-    display: flex;
-    padding: 0 32px;
-    border-bottom: 1px solid var(--rule);
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  .nav-strip::-webkit-scrollbar { display: none; }
-
-  .tab-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 12px 18px 10px;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 500;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--muted);
-    position: relative;
-    white-space: nowrap;
-    transition: color 0.15s;
-    border-bottom: 3px solid transparent;
-    margin-bottom: -1px;
-  }
-  .tab-btn:hover { color: var(--ink); }
-  .tab-btn.active { color: var(--ink); }
-  .tab-btn.active::after {
-    content: '';
-    position: absolute;
-    bottom: -1px; left: 0; right: 0;
-    height: 3px;
-    background: var(--tab-color, var(--ink));
-  }
-  .tab-btn[data-tab="cyber"]    { --tab-color: var(--cyber-accent); }
-  .tab-btn[data-tab="ot"]       { --tab-color: var(--ot-accent); }
-  .tab-btn[data-tab="fin"]      { --tab-color: var(--fin-accent); }
-  .tab-btn[data-tab="training"] { --tab-color: var(--training-accent); }
-  .tab-btn[data-tab="cissp"]    { --tab-color: var(--cissp-accent); }
-
-  .main {
-    padding: 28px 32px 60px;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .panel { display: none; }
-  .panel.active { display: block; }
-
-  .panel-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 22px;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .panel-eyebrow {
-    font-size: 0.68rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    font-weight: 600;
-    margin-bottom: 2px;
-  }
-
-  .panel-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.5rem;
-    line-height: 1.1;
-  }
-
-  .fetch-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 9px 18px;
-    border: 1.5px solid var(--ink);
-    background: var(--ink);
-    color: var(--paper);
-    font-family: 'Inter', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    cursor: pointer;
-    border-radius: 2px;
-    transition: all 0.15s;
-  }
-  .fetch-btn:hover { opacity: 0.8; }
-  .fetch-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-  .fetch-btn .spinner {
-    width: 13px; height: 13px;
-    border: 2px solid rgba(255,255,255,0.3);
-    border-top-color: white;
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    display: none;
-  }
-  .fetch-btn.loading .spinner { display: block; }
-  .fetch-btn.loading .btn-label { opacity: 0.6; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* ── SECTION LABELS ── */
-  .section-label {
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin: 28px 0 12px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--rule);
-  }
-
-  /* ── NEWS CARDS ── */
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-    gap: 14px;
-  }
-
-  .skeleton-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-    gap: 14px;
-  }
-
-  .skeleton-card {
-    background: var(--card-bg);
-    border: 1px solid var(--rule);
-    border-radius: 3px;
-    padding: 20px;
-    height: 150px;
-  }
-
-  .skeleton-line {
-    height: 11px;
-    background: linear-gradient(90deg, var(--loading-strip) 25%, #edecea 50%, var(--loading-strip) 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.4s infinite;
-    border-radius: 2px;
-    margin-bottom: 10px;
-  }
-  .skeleton-line.short  { width: 55%; }
-  .skeleton-line.medium { width: 80%; }
-  .skeleton-line.tag    { width: 30%; height: 8px; margin-top: 16px; }
-  @keyframes shimmer {
-    0%   { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-  }
-
-  .news-card {
-    background: var(--card-bg);
-    border: 1px solid var(--rule);
-    border-radius: 3px;
-    padding: 16px 18px 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-    transition: box-shadow 0.15s;
-    position: relative;
-    text-decoration: none;
-    color: inherit;
-  }
-  .news-card::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-    border-radius: 3px 0 0 3px;
-    background: var(--accent-color, var(--rule));
-  }
-  .news-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
-
-  .card-tag {
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-    color: var(--accent-color, var(--muted));
-  }
-
-  .card-headline {
-    font-family: 'DM Serif Display', serif;
-    font-size: 0.97rem;
-    line-height: 1.3;
-    color: var(--ink);
-  }
-
-  .card-summary {
-    font-size: 0.8rem;
-    color: #555;
-    line-height: 1.5;
-    flex: 1;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .card-meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 2px;
-  }
-
-  .card-source {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.63rem;
-    color: var(--muted);
-  }
-
-  .card-date {
-    font-size: 0.63rem;
-    color: var(--muted);
-  }
-
-  /* ── PODCAST CARDS ── */
-  .podcast-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 14px;
-  }
-
-  .podcast-card {
-    background: var(--card-bg);
-    border: 1px solid var(--rule);
-    border-radius: 3px;
-    padding: 16px 18px 14px;
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-    text-decoration: none;
-    color: inherit;
-    transition: box-shadow 0.15s;
-    position: relative;
-  }
-  .podcast-card::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-    border-radius: 3px 0 0 3px;
-    background: var(--accent-color, var(--rule));
-  }
-  .podcast-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
-
-  .podcast-icon {
-    font-size: 1.6rem;
-    line-height: 1;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-
-  .podcast-body { flex: 1; min-width: 0; }
-
-  .podcast-label {
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-    color: var(--accent-color, var(--muted));
-    margin-bottom: 3px;
-  }
-
-  .podcast-name {
-    font-family: 'DM Serif Display', serif;
-    font-size: 0.95rem;
-    line-height: 1.25;
-    color: var(--ink);
-    margin-bottom: 4px;
-  }
-
-  .podcast-desc {
-    font-size: 0.78rem;
-    color: #555;
-    line-height: 1.45;
-  }
-
-  .podcast-ep {
-    font-size: 0.7rem;
-    color: var(--muted);
-    font-style: italic;
-    margin-top: 5px;
-  }
-
-  /* ── PODCAST FEED CARDS (live episodes) ── */
-  .podcast-ep-card {
-    background: var(--card-bg);
-    border: 1px solid var(--rule);
-    border-radius: 3px;
-    padding: 14px 18px 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    text-decoration: none;
-    color: inherit;
-    transition: box-shadow 0.15s;
-    position: relative;
-  }
-  .podcast-ep-card::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-    border-radius: 3px 0 0 3px;
-    background: var(--accent-color, var(--rule));
-  }
-  .podcast-ep-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
-
-  .ep-show {
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.11em;
-    text-transform: uppercase;
-    color: var(--accent-color, var(--muted));
-  }
-
-  .ep-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 0.92rem;
-    line-height: 1.3;
-  }
-
-  .ep-desc {
-    font-size: 0.78rem;
-    color: #555;
-    line-height: 1.45;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .ep-meta {
-    font-size: 0.63rem;
-    color: var(--muted);
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  /* ── PODCAST LOAD BTN ── */
-  .pod-load-btn {
-    background: none;
-    border: 1.5px solid var(--rule);
-    color: var(--muted);
-    font-family: 'Inter', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    padding: 7px 14px;
-    border-radius: 2px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    transition: all 0.15s;
-  }
-  .pod-load-btn:hover { border-color: var(--ink); color: var(--ink); }
-  .pod-load-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-  .pod-load-btn .spinner {
-    width: 11px; height: 11px;
-    border: 2px solid rgba(0,0,0,0.15);
-    border-top-color: var(--ink);
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    display: none;
-  }
-  .pod-load-btn.loading .spinner { display: block; }
-
-  .pod-section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 28px 0 12px;
-  }
-
-  .pod-section-header .section-label {
-    margin: 0;
-    flex: 1;
-  }
-
-  /* ── MISC ── */
-  .state-box {
-    border: 1px dashed var(--rule);
-    border-radius: 3px;
-    padding: 40px 32px;
-    text-align: center;
-    color: var(--muted);
-  }
-  .state-box .state-icon { font-size: 2rem; margin-bottom: 10px; display: block; }
-  .state-box p { font-size: 0.83rem; max-width: 300px; margin: 0 auto; line-height: 1.6; }
-
-  .feed-credit {
-    margin-top: 14px;
-    font-size: 0.68rem;
-    color: var(--muted);
-    text-align: right;
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  @media (max-width: 640px) {
-    .masthead  { padding: 16px 16px 12px; }
-    .nav-strip { padding: 0 16px; }
-    .main      { padding: 20px 16px 48px; }
-    .tab-btn   { padding: 10px 10px; font-size: 0.7rem; }
-  }
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.6;min-height:100vh}
+  .masthead{border-bottom:2px solid var(--ink);padding:20px 32px 14px;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:8px}
+  .pub-name{font-family:'DM Serif Display',serif;font-size:clamp(1.6rem,4vw,2.4rem);letter-spacing:-.02em;line-height:1}
+  .pub-tag{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:3px;font-weight:500}
+  .datestamp{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--muted);text-align:right;line-height:1.4}
+  .nav-strip{display:flex;padding:0 32px;border-bottom:1px solid var(--rule);overflow-x:auto;scrollbar-width:none}
+  .nav-strip::-webkit-scrollbar{display:none}
+  .tab-btn{background:none;border:none;cursor:pointer;padding:12px 16px 10px;font-family:'Inter',sans-serif;font-size:.76rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);position:relative;white-space:nowrap;transition:color .15s;border-bottom:3px solid transparent;margin-bottom:-1px}
+  .tab-btn:hover{color:var(--ink)}
+  .tab-btn.active{color:var(--ink)}
+  .tab-btn.active::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:3px;background:var(--tc,var(--ink))}
+  .tab-btn[data-tab=cyber]{--tc:var(--ca)}
+  .tab-btn[data-tab=ot]{--tc:var(--oa)}
+  .tab-btn[data-tab=fin]{--tc:var(--fa)}
+  .tab-btn[data-tab=training]{--tc:var(--ta)}
+  .tab-btn[data-tab=cissp]{--tc:var(--csa)}
+  .main{padding:28px 32px 60px;max-width:1100px;margin:0 auto}
+  .panel{display:none}.panel.active{display:block}
+  .ph{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:12px}
+  .pe{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;margin-bottom:2px}
+  .pt{font-family:'DM Serif Display',serif;font-size:1.5rem;line-height:1.1}
+  .fetch-btn{display:flex;align-items:center;gap:8px;padding:9px 18px;border:1.5px solid var(--ink);background:var(--ink);color:var(--paper);font-family:'Inter',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.04em;cursor:pointer;border-radius:2px;transition:all .15s}
+  .fetch-btn:hover{opacity:.8}.fetch-btn:disabled{opacity:.4;cursor:not-allowed}
+  .fetch-btn .sp{width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none}
+  .fetch-btn.loading .sp{display:block}.fetch-btn.loading .bl{opacity:.6}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .sl{font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:26px 0 12px;display:flex;align-items:center;gap:10px}
+  .sl::after{content:'';flex:1;height:1px;background:var(--rule)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+  .sk-card{background:var(--card-bg);border:1px solid var(--rule);border-radius:3px;padding:20px;height:150px}
+  .sk-line{height:11px;background:linear-gradient(90deg,var(--ls) 25%,#edecea 50%,var(--ls) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:2px;margin-bottom:10px}
+  .sk-line.s{width:55%}.sk-line.m{width:80%}.sk-line.t{width:30%;height:8px;margin-top:16px}
+  @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+  .nc{background:var(--card-bg);border:1px solid var(--rule);border-radius:3px;padding:16px 18px 14px;display:flex;flex-direction:column;gap:7px;transition:box-shadow .15s;position:relative;text-decoration:none;color:inherit}
+  .nc::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px;background:var(--ac,var(--rule))}
+  .nc:hover{box-shadow:0 4px 16px rgba(0,0,0,.08)}
+  .ct{font-size:.62rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--ac,var(--muted))}
+  .ch{font-family:'DM Serif Display',serif;font-size:.97rem;line-height:1.3;color:var(--ink)}
+  .cs{font-size:.8rem;color:#555;line-height:1.5;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .cm{display:flex;align-items:center;justify-content:space-between;margin-top:2px}
+  .csrc{font-family:'JetBrains Mono',monospace;font-size:.63rem;color:var(--muted)}
+  .cdt{font-size:.63rem;color:var(--muted)}
+  .pc{background:var(--card-bg);border:1px solid var(--rule);border-radius:3px;padding:16px 18px;display:flex;gap:14px;align-items:flex-start;text-decoration:none;color:inherit;transition:box-shadow .15s;position:relative}
+  .pc::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px;background:var(--ac,var(--rule))}
+  .pc:hover{box-shadow:0 4px 16px rgba(0,0,0,.08)}
+  .pi{font-size:1.6rem;line-height:1;flex-shrink:0;margin-top:2px}
+  .pb{flex:1;min-width:0}
+  .pl{font-size:.62rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--ac,var(--muted));margin-bottom:3px}
+  .pn{font-family:'DM Serif Display',serif;font-size:.95rem;line-height:1.25;color:var(--ink);margin-bottom:4px}
+  .pd{font-size:.78rem;color:#555;line-height:1.45}
+  .epc{background:var(--card-bg);border:1px solid var(--rule);border-radius:3px;padding:14px 18px 12px;display:flex;flex-direction:column;gap:5px;text-decoration:none;color:inherit;transition:box-shadow .15s;position:relative}
+  .epc::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px;background:var(--ac,var(--rule))}
+  .epc:hover{box-shadow:0 4px 16px rgba(0,0,0,.08)}
+  .es{font-size:.62rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--ac,var(--muted))}
+  .et{font-family:'DM Serif Display',serif;font-size:.92rem;line-height:1.3}
+  .ed{font-size:.78rem;color:#555;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .em{font-size:.63rem;color:var(--muted);font-family:'JetBrains Mono',monospace}
+  .plb{background:none;border:1.5px solid var(--rule);color:var(--muted);font-family:'Inter',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.05em;padding:7px 14px;border-radius:2px;cursor:pointer;display:flex;align-items:center;gap:7px;transition:all .15s}
+  .plb:hover{border-color:var(--ink);color:var(--ink)}.plb:disabled{opacity:.4;cursor:not-allowed}
+  .plb .sp{width:11px;height:11px;border:2px solid rgba(0,0,0,.15);border-top-color:var(--ink);border-radius:50%;animation:spin .7s linear infinite;display:none}
+  .plb.loading .sp{display:block}
+  .psh{display:flex;align-items:center;justify-content:space-between;margin:26px 0 12px}
+  .psh .sl{margin:0;flex:1}
+  .state-box{border:1px dashed var(--rule);border-radius:3px;padding:40px 32px;text-align:center;color:var(--muted)}
+  .state-box .si{font-size:2rem;margin-bottom:10px;display:block}
+  .state-box p{font-size:.83rem;max-width:300px;margin:0 auto;line-height:1.6}
+  .fc{font-size:.68rem;color:var(--muted);text-align:right;font-family:'JetBrains Mono',monospace;margin-top:12px}
+  .banner{border-radius:3px;padding:14px 20px;margin-bottom:24px;border-left:4px solid var(--csa);background:#1a0a0a;color:#fff}
+  .banner-eye{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--csa);font-weight:700;margin-bottom:4px}
+  .banner-h{font-family:'DM Serif Display',serif;font-size:1rem;margin-bottom:6px}
+  .banner-b{font-size:.8rem;color:rgba(255,255,255,.75);line-height:1.5}
+  .phase-card{background:#fff;border:1px solid var(--rule);border-radius:3px;padding:16px 18px;border-left:3px solid var(--csa)}
+  .phase-eye{font-size:.64rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--csa);margin-bottom:6px}
+  .phase-h{font-family:'DM Serif Display',serif;font-size:.95rem;margin-bottom:6px}
+  .phase-b{font-size:.79rem;color:#555;line-height:1.5}
+  @media(max-width:640px){.masthead{padding:16px 16px 12px}.nav-strip{padding:0 16px}.main{padding:20px 16px 48px}.tab-btn{padding:10px 8px;font-size:.68rem}}
 </style>
 </head>
 <body>
@@ -487,271 +94,163 @@
 <header class="masthead">
   <div>
     <div class="pub-name">The Daily Brief</div>
-    <div class="pub-tagline">Security · OT · Finance · Training</div>
+    <div class="pub-tag">Security · OT · Finance · Training · CISSP</div>
   </div>
-  <div class="datestamp" id="datestamp"></div>
+  <div class="datestamp" id="ds"></div>
 </header>
 
 <nav class="nav-strip">
-  <button class="tab-btn active" data-tab="cyber">⚡ Cyber &amp; IT</button>
+  <button class="tab-btn active" data-tab="cyber">⚡ Cyber & IT</button>
   <button class="tab-btn" data-tab="ot">🏥 Hospital OT</button>
-  <button class="tab-btn" data-tab="fin">💼 Finance &amp; Reg</button>
+  <button class="tab-btn" data-tab="fin">💼 Finance & Reg</button>
   <button class="tab-btn" data-tab="training">💪 Training</button>
   <button class="tab-btn" data-tab="cissp">🎓 CISSP</button>
 </nav>
 
 <main class="main">
 
-  <!-- ══ CYBER ══ -->
-  <div class="panel active" id="panel-cyber">
-    <div class="panel-header">
-      <div>
-        <div class="panel-eyebrow" style="color:var(--cyber-accent)">IT · Cybersecurity · Microsegmentation · Zero Trust</div>
-        <div class="panel-title">What's moving in cyber</div>
-      </div>
-      <button class="fetch-btn" data-panel="cyber">
-        <div class="spinner"></div><span class="btn-label">Fetch News</span>
-      </button>
-    </div>
-    <div class="cards-container" id="cards-cyber">
-      <div class="state-box"><span class="state-icon">📡</span><p>Hit <strong>Fetch News</strong> to load current cybersecurity headlines.</p></div>
-    </div>
+<!-- CYBER -->
+<div class="panel active" id="panel-cyber">
+  <div class="ph">
+    <div><div class="pe" style="color:var(--ca)">IT · Cybersecurity · Microsegmentation · Zero Trust</div><div class="pt">What's moving in cyber</div></div>
+    <button class="fetch-btn" data-panel="cyber"><div class="sp"></div><span class="bl">Fetch News</span></button>
+  </div>
+  <div id="cards-cyber"><div class="state-box"><span class="si">📡</span><p>Hit <strong>Fetch News</strong> to load current cybersecurity headlines.</p></div></div>
+  <div class="psh"><div class="sl" style="color:var(--ca)">🎙 Podcasts</div><button class="plb" data-pod="cyber"><div class="sp"></div>Load Latest Episodes</button></div>
+  <div id="pod-cyber"></div>
+</div>
 
-    <div class="pod-section-header">
-      <div class="section-label" style="color:var(--cyber-accent)">🎙 Podcasts</div>
-      <button class="pod-load-btn" data-pod="cyber"><div class="spinner"></div>Load Latest Episodes</button>
-    </div>
-    <div id="pod-cyber">
-      <div class="podcast-grid" id="pod-static-cyber">
-        <!-- static curated shows -->
-      </div>
-    </div>
+<!-- OT -->
+<div class="panel" id="panel-ot">
+  <div class="ph">
+    <div><div class="pe" style="color:var(--oa)">Healthcare · Hospital OT · IoMT · ICS Security</div><div class="pt">Healthcare & OT security</div></div>
+    <button class="fetch-btn" data-panel="ot"><div class="sp"></div><span class="bl">Fetch News</span></button>
+  </div>
+  <div id="cards-ot"><div class="state-box"><span class="si">🏥</span><p>Hit <strong>Fetch News</strong> to load current hospital OT headlines.</p></div></div>
+  <div class="psh"><div class="sl" style="color:var(--oa)">🎙 Podcasts</div><button class="plb" data-pod="ot"><div class="sp"></div>Load Latest Episodes</button></div>
+  <div id="pod-ot"></div>
+</div>
+
+<!-- FINANCE -->
+<div class="panel" id="panel-fin">
+  <div class="ph">
+    <div><div class="pe" style="color:var(--fa)">Financial Services · SEC · DORA · Compliance</div><div class="pt">Finance & regulatory landscape</div></div>
+    <button class="fetch-btn" data-panel="fin"><div class="sp"></div><span class="bl">Fetch News</span></button>
+  </div>
+  <div id="cards-fin"><div class="state-box"><span class="si">💼</span><p>Hit <strong>Fetch News</strong> to load current financial sector headlines.</p></div></div>
+  <div class="psh"><div class="sl" style="color:var(--fa)">🎙 Podcasts</div><button class="plb" data-pod="fin"><div class="sp"></div>Load Latest Episodes</button></div>
+  <div id="pod-fin"></div>
+</div>
+
+<!-- TRAINING -->
+<div class="panel" id="panel-training">
+  <div class="ph">
+    <div><div class="pe" style="color:var(--ta)">Strength · Running · Wrestling · Nutrition · Recovery</div><div class="pt">Training & performance</div></div>
+    <button class="fetch-btn" data-panel="training"><div class="sp"></div><span class="bl">Fetch News</span></button>
+  </div>
+  <div id="cards-training"><div class="state-box"><span class="si">🏋️</span><p>Hit <strong>Fetch News</strong> to load current training, wrestling & nutrition content.</p></div></div>
+  <div class="psh"><div class="sl" style="color:var(--ta)">🎙 Podcasts</div><button class="plb" data-pod="training"><div class="sp"></div>Load Latest Episodes</button></div>
+  <div id="pod-training"></div>
+</div>
+
+<!-- CISSP -->
+<div class="panel" id="panel-cissp">
+  <div class="ph">
+    <div><div class="pe" style="color:var(--csa)">Experienced Professional · 5–10 hrs/week · 10-month runway</div><div class="pt">CISSP Study Command Center</div></div>
+    <button class="fetch-btn" data-panel="cissp"><div class="sp"></div><span class="bl">Fetch Exam News</span></button>
   </div>
 
-  <!-- ══ OT ══ -->
-  <div class="panel" id="panel-ot">
-    <div class="panel-header">
-      <div>
-        <div class="panel-eyebrow" style="color:var(--ot-accent)">Healthcare · Hospital OT · IoMT · ICS Security</div>
-        <div class="panel-title">Healthcare &amp; OT security</div>
-      </div>
-      <button class="fetch-btn" data-panel="ot">
-        <div class="spinner"></div><span class="btn-label">Fetch News</span>
-      </button>
-    </div>
-    <div class="cards-container" id="cards-ot">
-      <div class="state-box"><span class="state-icon">🏥</span><p>Hit <strong>Fetch News</strong> to load current hospital OT and healthcare security headlines.</p></div>
-    </div>
-
-    <div class="pod-section-header">
-      <div class="section-label" style="color:var(--ot-accent)">🎙 Podcasts</div>
-      <button class="pod-load-btn" data-pod="ot"><div class="spinner"></div>Load Latest Episodes</button>
-    </div>
-    <div id="pod-ot"></div>
+  <div class="banner">
+    <div class="banner-eye">Critical Mindset Shift</div>
+    <div class="banner-h">Think like a manager, not an engineer.</div>
+    <div class="banner-b">The CISSP rewards what a CISO would <em>decide</em>, not what an engineer would <em>implement</em>. Watch Kelly Handerhan's free "Why You Will Pass CISSP" video before opening any textbook — the most valuable 30 minutes in your prep.</div>
   </div>
 
-  <!-- ══ FINANCE ══ -->
-  <div class="panel" id="panel-fin">
-    <div class="panel-header">
-      <div>
-        <div class="panel-eyebrow" style="color:var(--fin-accent)">Financial Services · SEC · DORA · Compliance</div>
-        <div class="panel-title">Finance &amp; regulatory landscape</div>
-      </div>
-      <button class="fetch-btn" data-panel="fin">
-        <div class="spinner"></div><span class="btn-label">Fetch News</span>
-      </button>
-    </div>
-    <div class="cards-container" id="cards-fin">
-      <div class="state-box"><span class="state-icon">💼</span><p>Hit <strong>Fetch News</strong> to load current financial sector security and regulation headlines.</p></div>
-    </div>
-
-    <div class="pod-section-header">
-      <div class="section-label" style="color:var(--fin-accent)">🎙 Podcasts</div>
-      <button class="pod-load-btn" data-pod="fin"><div class="spinner"></div>Load Latest Episodes</button>
-    </div>
-    <div id="pod-fin"></div>
+  <div class="sl" style="color:var(--csa)">8 Domains — Exam Weight & Study Priority</div>
+  <div class="grid" style="margin-bottom:26px">
+    <a class="nc" style="--ac:var(--csa)" href="https://www.isc2.org/certifications/cissp/cissp-cbk" target="_blank" rel="noopener">
+      <div class="ct">Domain 1 · 16% · ⚠️ Highest Priority</div>
+      <div class="ch">Security & Risk Management</div>
+      <div class="cs">CIA triad, governance, compliance, legal/regulatory, risk frameworks, BCP. Underpins every other domain. Ops pros often have governance gaps — spend the most time here.</div>
+      <div class="cm"><div class="csrc">3–4 weeks</div><div class="cdt">16%</div></div>
+    </a>
+    <a class="nc" style="--ac:var(--csa)" href="https://www.isc2.org/certifications/cissp/cissp-cbk" target="_blank" rel="noopener">
+      <div class="ct">Domain 3 · 13% · ⚠️ High Priority</div>
+      <div class="ch">Security Architecture & Engineering</div>
+      <div class="cs">Security models (Bell-LaPadula, Biba), cryptography, PKI, hardware security, cloud architecture. Practitioners often have cryptography gaps — go deep here.</div>
+      <div class="cm"><div class="csrc">2–3 weeks</div><div class="cdt">13%</div></div>
+    </a>
+    <a class="nc" style="--ac:var(--csa)" href="https://www.isc2.org/certifications/cissp/cissp-cbk" target="_blank" rel="noopener">
+      <div class="ct">Domain 4 · 13% · ⚠️ High Priority</div>
+      <div class="ch">Communication & Network Security</div>
+      <div class="cs">OSI/TCP-IP, protocols, VPNs, firewalls, wireless, microsegmentation. Your SE background helps — focus on CISSP vocabulary and manager-level framing.</div>
+      <div class="cm"><div class="csrc">2 weeks</div><div class="cdt">13%</div></div>
+    </a>
+    <a class="nc" style="--ac:var(--csa)" href="https://www.isc2.org/certifications/cissp/cissp-cbk" target="_blank" rel="noopener">
+      <div class="ct">Domain 7 · 13% · ⚠️ High Priority</div>
+      <div class="ch">Security Operations</div>
+      <div class="cs">Incident response, forensics, recovery, change management, patch management. High weight and your ops experience will help — watch for the manager-first framing.</div>
+      <div class="cm"><div class="csrc">2 weeks</div><div class="cdt">13%</div></div>
+    </a>
+    <a class="nc" style="--ac:#999" href="https://www.isc2.org/certifications/cissp/cissp-cbk" target="_blank" rel="noopener">
+      <div class="ct">Domain 5 · 13%</div>
+      <div class="ch">Identity & Access Management</div>
+      <div class="cs">Authentication, authorization, federation, SSO, access control models (DAC/MAC/RBAC), provisioning. Directly relevant to your zero trust / microsegmentation work.</div>
+      <div class="cm"><div class="csrc">1–2 weeks</div><div class="cdt">13%</div></div>
+    </a>
+    <a class="nc" style="--ac:#999" href="https://www.isc2.org/certifications/cissp/cissp-cbk" target="_blank" rel="noopener">
+      <div class="ct">Domain 6 · 12%</div>
+      <div class="ch">Security Assessment & Testing</div>
+      <div class="cs">Pen testing types, vulnerability assessments, audit logs, KPIs. Likely comfortable territory — focus on CISSP-specific definitions and terminology.</div>
+      <div class="cm"><div class="csrc">1–2 weeks</div><div class="cdt">12%</div></div>
+    </a>
+    <a class="nc" style="--ac:#999" href="https://www.isc2.org/certifications/cissp/cissp-cbk" target="_blank" rel="noopener">
+      <div class="ct">Domain 8 · 10%</div>
+      <div class="ch">Software Development Security</div>
+      <div class="cs">SDLC, secure coding, OWASP Top 10, DevSecOps, code review. Don't skip despite lower weight — non-developers often need extra time here.</div>
+      <div class="cm"><div class="csrc">2–3 weeks</div><div class="cdt">10%</div></div>
+    </a>
+    <a class="nc" style="--ac:#999" href="https://www.isc2.org/certifications/cissp/cissp-cbk" target="_blank" rel="noopener">
+      <div class="ct">Domain 2 · 10%</div>
+      <div class="ch">Asset Security</div>
+      <div class="cs">Data classification, ownership, privacy, retention, destruction. Lighter domain — use end-of-chapter questions to find gaps before committing to a full read.</div>
+      <div class="cm"><div class="csrc">1 week</div><div class="cdt">10%</div></div>
+    </a>
   </div>
 
-  <!-- ══ TRAINING ══ -->
-  <div class="panel" id="panel-training">
-    <div class="panel-header">
-      <div>
-        <div class="panel-eyebrow" style="color:var(--training-accent)">Strength · Running · Wrestling · Nutrition · Recovery</div>
-        <div class="panel-title">Training &amp; performance</div>
-      </div>
-      <button class="fetch-btn" data-panel="training">
-        <div class="spinner"></div><span class="btn-label">Fetch News</span>
-      </button>
-    </div>
-    <div class="cards-container" id="cards-training">
-      <div class="state-box"><span class="state-icon">🏋️</span><p>Hit <strong>Fetch News</strong> to load current strength, running, wrestling, nutrition &amp; recovery content.</p></div>
-    </div>
-
-    <div class="pod-section-header">
-      <div class="section-label" style="color:var(--training-accent)">🎙 Podcasts</div>
-      <button class="pod-load-btn" data-pod="training"><div class="spinner"></div>Load Latest Episodes</button>
-    </div>
-    <div id="pod-training"></div>
+  <div class="sl" style="color:var(--csa)">📅 Study Phases — 10-Month Plan</div>
+  <div class="grid" style="margin-bottom:26px">
+    <div class="phase-card"><div class="phase-eye">Phase 1 · Weeks 1–3</div><div class="phase-h">Foundation & Orientation</div><div class="phase-b">Watch Kelly Handerhan. Read Chapple Chs 1–3. Take a 50Q baseline assessment to find weak domains before committing to a reading order.</div></div>
+    <div class="phase-card"><div class="phase-eye">Phase 2 · Weeks 4–28</div><div class="phase-h">Core Domain Study</div><div class="phase-b">One domain per 1–2 weeks in priority order. Read Chapple → watch Destination Certification mind map video → 50+ practice Qs. Use AIO for deep dives on weak spots.</div></div>
+    <div class="phase-card"><div class="phase-eye">Phase 3 · Weeks 29–36</div><div class="phase-h">Integration & Weak Spots</div><div class="phase-b">Full practice exams via Boson ExSim. Review every wrong answer by domain. Return to AIO for any domain under 70%. Mix cross-domain questions.</div></div>
+    <div class="phase-card"><div class="phase-eye">Phase 4 · Weeks 37–40</div><div class="phase-h">Final Sprint</div><div class="phase-b">Open Eleventh Hour CISSP for rapid review only — no new material. Book your exam when hitting 78%+ across three full 125Q simulations. Stop 48hrs before.</div></div>
   </div>
 
-  <!-- ══ CISSP ══ -->
-  <div class="panel" id="panel-cissp">
-    <div class="panel-header">
-      <div>
-        <div class="panel-eyebrow" style="color:var(--cissp-accent)">Experienced Professional · 5–10 hrs/week · 10-month runway</div>
-        <div class="panel-title">CISSP Study Command Center</div>
-      </div>
-      <button class="fetch-btn" data-panel="cissp">
-        <div class="spinner"></div><span class="btn-label">Fetch Exam News</span>
-      </button>
-    </div>
-
-    <!-- MINDSET BANNER -->
-    <div style="background:#1a0a0a;color:#fff;border-radius:3px;padding:14px 20px;margin-bottom:24px;border-left:4px solid var(--cissp-accent);">
-      <div style="font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--cissp-accent);font-weight:700;margin-bottom:4px;">Critical Mindset Shift</div>
-      <div style="font-family:'DM Serif Display',serif;font-size:1rem;margin-bottom:6px;">Think like a manager, not an engineer.</div>
-      <div style="font-size:0.8rem;color:rgba(255,255,255,0.75);line-height:1.5;">The CISSP rewards what a CISO would <em>decide</em>, not what an engineer would <em>implement</em>. Watch Kelly Handerhan's free "Why You Will Pass CISSP" video before opening any textbook — it's the most valuable 30 minutes in your prep.</div>
-    </div>
-
-    <!-- DOMAINS -->
-    <div class="section-label" style="color:var(--cissp-accent)">8 Domains — Exam Weight &amp; Study Priority</div>
-    <div class="cards-grid" style="margin-bottom:28px;">
-      <div class="news-card" style="--accent-color:var(--cissp-accent)">
-        <div class="card-tag">Domain 1 · 16% · ⚠️ Highest Priority</div>
-        <div class="card-headline">Security &amp; Risk Management</div>
-        <div class="card-summary">CIA triad, governance, compliance, legal/regulatory issues, risk management frameworks, business continuity. Underpins every other domain — spend the most time here. Most ops pros have gaps in the governance layer.</div>
-        <div class="card-meta"><div class="card-source">3–4 weeks</div><div class="card-date">16%</div></div>
-      </div>
-      <div class="news-card" style="--accent-color:var(--cissp-accent)">
-        <div class="card-tag">Domain 3 · 13% · ⚠️ High Priority</div>
-        <div class="card-headline">Security Architecture &amp; Engineering</div>
-        <div class="card-summary">Security models (Bell-LaPadula, Biba), cryptography, PKI, hardware security, cloud architecture. Practitioners with strong ops backgrounds often have cryptography gaps — go deep here.</div>
-        <div class="card-meta"><div class="card-source">2–3 weeks</div><div class="card-date">13%</div></div>
-      </div>
-      <div class="news-card" style="--accent-color:var(--cissp-accent)">
-        <div class="card-tag">Domain 4 · 13% · ⚠️ High Priority</div>
-        <div class="card-headline">Communication &amp; Network Security</div>
-        <div class="card-summary">OSI/TCP-IP model, protocols, VPNs, firewalls, wireless, secure network design, microsegmentation concepts. Your SE background gives you a head start — focus on CISSP's specific vocabulary and manager-level decisions.</div>
-        <div class="card-meta"><div class="card-source">2 weeks</div><div class="card-date">13%</div></div>
-      </div>
-      <div class="news-card" style="--accent-color:var(--cissp-accent)">
-        <div class="card-tag">Domain 7 · 13% · ⚠️ High Priority</div>
-        <div class="card-headline">Security Operations</div>
-        <div class="card-summary">Incident response, investigations, forensics, recovery, change management, patch management, physical security. High weight and your ops experience will help — but watch for CISSP's manager-first framing.</div>
-        <div class="card-meta"><div class="card-source">2 weeks</div><div class="card-date">13%</div></div>
-      </div>
-      <div class="news-card" style="--accent-color:#888">
-        <div class="card-tag">Domain 5 · 13%</div>
-        <div class="card-headline">Identity &amp; Access Management</div>
-        <div class="card-summary">Authentication, authorization, federation, SSO, access control models (DAC, MAC, RBAC), provisioning and deprovisioning. Relevant to your zero trust / microsegmentation work.</div>
-        <div class="card-meta"><div class="card-source">1–2 weeks</div><div class="card-date">13%</div></div>
-      </div>
-      <div class="news-card" style="--accent-color:#888">
-        <div class="card-tag">Domain 6 · 12%</div>
-        <div class="card-headline">Security Assessment &amp; Testing</div>
-        <div class="card-summary">Pen testing types, vulnerability assessments, audit logs, KPIs, third-party audits. Likely comfortable territory with your background — focus on CISSP's specific definitions and terminology.</div>
-        <div class="card-meta"><div class="card-source">1–2 weeks</div><div class="card-date">12%</div></div>
-      </div>
-      <div class="news-card" style="--accent-color:#888">
-        <div class="card-tag">Domain 8 · 10%</div>
-        <div class="card-headline">Software Development Security</div>
-        <div class="card-summary">SDLC, secure coding, OWASP Top 10, DevSecOps, code review, software acquisition security. Don't skip despite lower weight — non-developers often need extra time here.</div>
-        <div class="card-meta"><div class="card-source">2–3 weeks</div><div class="card-date">10%</div></div>
-      </div>
-      <div class="news-card" style="--accent-color:#888">
-        <div class="card-tag">Domain 2 · 10%</div>
-        <div class="card-headline">Asset Security</div>
-        <div class="card-summary">Data classification, ownership, privacy, retention, data destruction. Lighter domain — most experienced pros can handle in one focused week using end-of-chapter questions to identify gaps.</div>
-        <div class="card-meta"><div class="card-source">1 week</div><div class="card-date">10%</div></div>
-      </div>
-    </div>
-
-    <!-- STUDY PHASES -->
-    <div class="section-label" style="color:var(--cissp-accent)">📅 Study Phases — 10-Month Plan at 5–10 hrs/week</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:28px;">
-      <div style="background:#fff;border:1px solid var(--rule);border-radius:3px;padding:16px 18px;border-left:3px solid var(--cissp-accent);">
-        <div style="font-size:0.64rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--cissp-accent);margin-bottom:6px;">Phase 1 · Weeks 1–3</div>
-        <div style="font-family:'DM Serif Display',serif;font-size:0.95rem;margin-bottom:6px;">Foundation &amp; Orientation</div>
-        <div style="font-size:0.79rem;color:#555;line-height:1.5;">Watch Kelly Handerhan. Read Chapple Chs 1–3. Take a 50Q baseline assessment to find weak domains before you commit to a reading order.</div>
-      </div>
-      <div style="background:#fff;border:1px solid var(--rule);border-radius:3px;padding:16px 18px;border-left:3px solid var(--cissp-accent);">
-        <div style="font-size:0.64rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--cissp-accent);margin-bottom:6px;">Phase 2 · Weeks 4–28</div>
-        <div style="font-family:'DM Serif Display',serif;font-size:0.95rem;margin-bottom:6px;">Core Domain Study</div>
-        <div style="font-size:0.79rem;color:#555;line-height:1.5;">One domain per 1–2 weeks in priority order. Read Chapple chapter → watch Destination Certification mind map video → do 50+ practice Qs. Use AIO for deep dives on weak spots.</div>
-      </div>
-      <div style="background:#fff;border:1px solid var(--rule);border-radius:3px;padding:16px 18px;border-left:3px solid var(--cissp-accent);">
-        <div style="font-size:0.64rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--cissp-accent);margin-bottom:6px;">Phase 3 · Weeks 29–36</div>
-        <div style="font-family:'DM Serif Display',serif;font-size:0.95rem;margin-bottom:6px;">Integration &amp; Weak Spots</div>
-        <div style="font-size:0.79rem;color:#555;line-height:1.5;">Full practice exams (Boson ExSim). Review every wrong answer by domain. Go back to the AIO for any domain below 70%. Start mixing cross-domain questions.</div>
-      </div>
-      <div style="background:#fff;border:1px solid var(--rule);border-radius:3px;padding:16px 18px;border-left:3px solid var(--cissp-accent);">
-        <div style="font-size:0.64rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--cissp-accent);margin-bottom:6px;">Phase 4 · Weeks 37–40</div>
-        <div style="font-family:'DM Serif Display',serif;font-size:0.95rem;margin-bottom:6px;">Final Sprint</div>
-        <div style="font-size:0.79rem;color:#555;line-height:1.5;">Open Eleventh Hour CISSP for rapid review only. No new material. Book your exam when consistently hitting 78%+ across three full 125Q simulations. Stop studying 48hrs before.</div>
-      </div>
-    </div>
-
-    <!-- BOOKS -->
-    <div class="section-label" style="color:var(--cissp-accent)">📚 Books</div>
-    <div class="podcast-grid" style="margin-bottom:28px;">
-      <div class="podcast-card" style="--accent-color:var(--cissp-accent)">
-        <div class="podcast-icon">📗</div>
-        <div class="podcast-body">
-          <div class="podcast-label">Primary — Start Here</div>
-          <div class="podcast-name">Official (ISC)² CISSP Study Guide</div>
-          <div class="podcast-desc">Chapple, Stewart &amp; Gibson. Most aligned to current exam objectives and CBK language. Use end-of-chapter Qs to decide if you need to read the full chapter.</div>
-        </div>
-      </div>
-      <div class="podcast-card" style="--accent-color:var(--cissp-accent)">
-        <div class="podcast-icon">📘</div>
-        <div class="podcast-body">
-          <div class="podcast-label">Deep Reference</div>
-          <div class="podcast-name">CISSP All-in-One Exam Guide</div>
-          <div class="podcast-desc">Shon Harris / Mike Chapple. Exhaustive — best as a deep-dive reference for weak domains, not a cover-to-cover read.</div>
-        </div>
-      </div>
-      <div class="podcast-card" style="--accent-color:var(--cissp-accent)">
-        <div class="podcast-icon">📕</div>
-        <div class="podcast-body">
-          <div class="podcast-label">Final 2 Weeks Only</div>
-          <div class="podcast-name">Eleventh Hour CISSP — Eric Conrad</div>
-          <div class="podcast-desc">Condensed rapid-review. Don't open it earlier — it's too thin for learning from scratch. Lifesaver for the final sprint.</div>
-        </div>
-      </div>
-      <div class="podcast-card" style="--accent-color:var(--cissp-accent)">
-        <div class="podcast-icon">📓</div>
-        <div class="podcast-body">
-          <div class="podcast-label">Practice</div>
-          <div class="podcast-name">Official (ISC)² CISSP Practice Tests</div>
-          <div class="podcast-desc">1,300+ questions aligned to the CBK. Use domain-by-domain to validate progress, not just as a final mock.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- LIVE FEED -->
-    <div class="section-label" style="color:var(--cissp-accent)">📡 Current Exam-Relevant News</div>
-    <div class="cards-container" id="cards-cissp">
-      <div class="state-box"><span class="state-icon">📡</span><p>Hit <strong>Fetch Exam News</strong> above to load current articles relevant to CISSP domains — risk management, cryptography, IAM, network security &amp; more.</p></div>
-    </div>
-
-    <!-- PODCASTS -->
-    <div class="pod-section-header" style="margin-top:28px;">
-      <div class="section-label" style="color:var(--cissp-accent)">🎙 CISSP Podcasts</div>
-      <button class="pod-load-btn" data-pod="cissp"><div class="spinner"></div>Load Latest Episodes</button>
-    </div>
-    <div id="pod-cissp"></div>
+  <div class="sl" style="color:var(--csa)">📚 Books</div>
+  <div class="grid" style="margin-bottom:26px">
+    <div class="pc" style="--ac:var(--csa)"><div class="pi">📗</div><div class="pb"><div class="pl">Primary — Start Here</div><div class="pn">Official (ISC)² CISSP Study Guide</div><div class="pd">Chapple, Stewart & Gibson. Most aligned to current exam objectives. Use end-of-chapter Qs to decide if you need the full chapter.</div></div></div>
+    <div class="pc" style="--ac:var(--csa)"><div class="pi">📘</div><div class="pb"><div class="pl">Deep Reference</div><div class="pn">CISSP All-in-One Exam Guide</div><div class="pd">Shon Harris / Mike Chapple. Exhaustive — best as a deep-dive reference for weak domains, not a cover-to-cover read.</div></div></div>
+    <div class="pc" style="--ac:var(--csa)"><div class="pi">📕</div><div class="pb"><div class="pl">Final 2 Weeks Only</div><div class="pn">Eleventh Hour CISSP — Eric Conrad</div><div class="pd">Condensed rapid-review. Don't open early — too thin for learning from scratch. Lifesaver for the final sprint.</div></div></div>
+    <div class="pc" style="--ac:var(--csa)"><div class="pi">📓</div><div class="pb"><div class="pl">Practice</div><div class="pn">Official (ISC)² Practice Tests</div><div class="pd">1,300+ CBK-aligned questions. Use domain-by-domain to validate progress, not just as a final mock.</div></div></div>
   </div>
+
+  <div class="sl" style="color:var(--csa)">📡 Current Exam-Relevant News</div>
+  <div id="cards-cissp"><div class="state-box"><span class="si">📡</span><p>Hit <strong>Fetch Exam News</strong> above to load current articles relevant to CISSP domains.</p></div></div>
+
+  <div class="psh" style="margin-top:26px"><div class="sl" style="color:var(--csa)">🎙 CISSP Podcasts</div><button class="plb" data-pod="cissp"><div class="sp"></div>Load Latest Episodes</button></div>
+  <div id="pod-cissp"></div>
+</div>
 
 </main>
 
 <script>
-// ── DATE ───────────────────────────────────────────────────────────────────
+// DATE
 const now = new Date();
-document.getElementById('datestamp').innerHTML =
-  `${now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'})}<br>
-   ${now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})}`;
+document.getElementById('ds').innerHTML =
+  now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}) +
+  '<br>' + now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
 
-// ── TABS ───────────────────────────────────────────────────────────────────
+// TABS
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -761,450 +260,234 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
-// ── CONFIG ─────────────────────────────────────────────────────────────────
-const RSS_API = 'https://api.rss2json.com/v1/api.json?rss_url=';
+// ── VERIFIED WORKING FEEDS (tested against rss2json) ──────────────────────
+const API = 'https://api.rss2json.com/v1/api.json?rss_url=';
 
-const PANELS = {
-  cyber: {
-    accent: '#54B9F1',
-    tag: 'Cyber & IT',
-    feeds: [
-      { url: 'https://feeds.feedburner.com/TheHackersNews',         label: 'The Hacker News' },
-      { url: 'https://krebsonsecurity.com/feed/',                    label: 'Krebs on Security' },
-      { url: 'https://www.darkreading.com/rss.xml',                  label: 'Dark Reading' },
-      { url: 'https://www.bleepingcomputer.com/feed/',               label: 'BleepingComputer' },
-    ]
-  },
-  ot: {
-    accent: '#4caf82',
-    tag: 'Hospital OT',
-    feeds: [
-      { url: 'https://www.cisa.gov/uscert/ncas/alerts.xml',          label: 'CISA Alerts' },
-      { url: 'https://healthitsecurity.com/rss/news.xml',            label: 'HealthITSecurity' },
-      { url: 'https://www.beckershospitalreview.com/rss/healthit.xml',label: "Becker's Health IT" },
-      { url: 'https://www.darkreading.com/rss/vulnerabilities.xml',  label: 'Dark Reading' },
-    ]
-  },
-  fin: {
-    accent: '#c9933a',
-    tag: 'Finance & Reg',
-    feeds: [
-      { url: 'https://www.finextra.com/rss/headlines.aspx',          label: 'Finextra' },
-      { url: 'https://www.bankinfosecurity.com/rss-feeds',           label: 'BankInfoSecurity' },
-      { url: 'https://feeds.feedburner.com/TheHackersNews',          label: 'The Hacker News' },
-      { url: 'https://www.darkreading.com/rss/risk.xml',             label: 'Dark Reading Risk' },
-    ]
-  },
-  training: {
-    accent: '#9b6fe0',
-    tag: 'Training',
-    feeds: [
-      { url: 'https://www.strengthrunning.com/feed/',                label: 'Strength Running' },
-      { url: 'https://barbend.com/feed/',                            label: 'BarBend' },
-      { url: 'https://www.t-nation.com/rss.xml',                     label: 'T-Nation' },
-      { url: 'https://breakingmuscle.com/feed/',                     label: 'Breaking Muscle' },
-    ]
-  },
-  cissp: {
-    accent: '#e05555',
-    tag: 'CISSP',
-    feeds: [
-      { url: 'https://feeds.feedburner.com/TheHackersNews',          label: 'The Hacker News' },
-      { url: 'https://www.darkreading.com/rss/risk.xml',             label: 'Dark Reading Risk' },
-      { url: 'https://krebsonsecurity.com/feed/',                    label: 'Krebs on Security' },
-      { url: 'https://www.darkreading.com/rss.xml',                  label: 'Dark Reading' },
-    ]
-  }
-};
-
-// ── PODCAST CONFIG ─────────────────────────────────────────────────────────
-// Each pod entry has: name, desc, icon, spotifyUrl, rssFeed (for live episodes), label
-const PODCASTS = {
+const NEWS_FEEDS = {
   cyber: [
-    {
-      name: 'Risky Business',
-      desc: 'Weekly infosec news and interviews with industry practitioners. The gold standard for staying current.',
-      icon: '🔐',
-      url: 'https://risky.biz',
-      rss: 'https://risky.biz/feeds/risky-business/',
-      label: 'InfoSec'
-    },
-    {
-      name: 'Darknet Diaries',
-      desc: 'True stories from the dark side of the internet — hacks, breaches, and cybercrime.',
-      icon: '🕵️',
-      url: 'https://darknetdiaries.com',
-      rss: 'https://feeds.megaphone.fm/darknetdiaries',
-      label: 'Stories'
-    },
-    {
-      name: 'Security Now',
-      desc: 'Steve Gibson and Leo Laporte go deep on security topics — great for technical depth on zero trust and networking.',
-      icon: '🛡️',
-      url: 'https://twit.tv/shows/security-now',
-      rss: 'https://feeds.twit.tv/sn.xml',
-      label: 'Technical'
-    },
-    {
-      name: 'CyberWire Daily',
-      desc: 'Daily 20-min briefing on the day\'s top cybersecurity stories. Perfect commute listen.',
-      icon: '📻',
-      url: 'https://thecyberwire.com/podcasts/daily-podcast',
-      rss: 'https://thecyberwire.com/feeds/daily-podcast.xml',
-      label: 'Daily Brief'
-    },
+    {url:'https://feeds.feedburner.com/TheHackersNews', label:'The Hacker News'},
+    {url:'https://krebsonsecurity.com/feed/',           label:'Krebs on Security'},
+    {url:'https://www.bleepingcomputer.com/feed/',      label:'BleepingComputer'},
+    {url:'https://www.wired.com/feed/category/security/latest/rss', label:'Wired Security'},
+    {url:'https://www.helpnetsecurity.com/feed/',       label:'Help Net Security'},
   ],
   ot: [
-    {
-      name: 'Unsolicited Response',
-      desc: 'Dale Peterson covers ICS/OT and critical infrastructure security — the best dedicated OT podcast.',
-      icon: '🏭',
-      url: 'https://www.digitalbond.com/podcast/',
-      rss: 'https://www.digitalbond.com/feed/podcast/',
-      label: 'ICS/OT'
-    },
-    {
-      name: 'Healthcare Security Podcast (HIMSS)',
-      desc: 'HIMSS covers healthcare IT security, HIPAA compliance, and medical device vulnerabilities.',
-      icon: '🏥',
-      url: 'https://www.himss.org/podcasts',
-      rss: null,
-      label: 'Healthcare'
-    },
-    {
-      name: 'The Industrial Security Podcast',
-      desc: 'Claroty\'s podcast on OT/ICS/IoT security with practitioner interviews.',
-      icon: '⚙️',
-      url: 'https://claroty.com/resources/podcasts',
-      rss: 'https://feeds.simplecast.com/bVcDhQdz',
-      label: 'OT/IoT'
-    },
-    {
-      name: 'Grounded in CISA',
-      desc: 'Official CISA podcast covering advisories, critical infrastructure threats, and federal guidance.',
-      icon: '🏛️',
-      url: 'https://www.cisa.gov/news-events/podcasts',
-      rss: 'https://www.cisa.gov/podcasts.xml',
-      label: 'Federal/CISA'
-    },
+    {url:'https://feeds.feedburner.com/TheHackersNews', label:'The Hacker News'},
+    {url:'https://www.bleepingcomputer.com/feed/',      label:'BleepingComputer'},
+    {url:'https://www.helpnetsecurity.com/feed/',       label:'Help Net Security'},
+    {url:'https://krebsonsecurity.com/feed/',           label:'Krebs on Security'},
   ],
   fin: [
-    {
-      name: 'BankInfoSecurity Podcast',
-      desc: 'ISMG\'s flagship podcast covering financial sector threats, fraud, and regulatory updates.',
-      icon: '🏦',
-      url: 'https://www.bankinfosecurity.com/podcasts',
-      rss: 'https://www.bankinfosecurity.com/rss-feeds',
-      label: 'FinSec'
-    },
-    {
-      name: 'FS-ISAC Podcast',
-      desc: 'Financial Services ISAC content on sector-specific threat intelligence and resilience.',
-      icon: '📊',
-      url: 'https://www.fsisac.com/resources/podcast',
-      rss: null,
-      label: 'FS-ISAC'
-    },
-    {
-      name: 'Risky Business',
-      desc: 'Frequent coverage of financial sector breaches, SEC enforcement, and regulatory action.',
-      icon: '🔐',
-      url: 'https://risky.biz',
-      rss: 'https://risky.biz/feeds/risky-business/',
-      label: 'InfoSec'
-    },
-    {
-      name: 'Fintech Insider',
-      desc: '11:FS covers fintech trends, open banking, and the intersection of finance and technology.',
-      icon: '💳',
-      url: 'https://11fs.com/insights/podcasts',
-      rss: null,
-      label: 'Fintech'
-    },
+    {url:'https://www.finextra.com/rss/headlines.aspx',      label:'Finextra'},
+    {url:'https://www.bankinfosecurity.com/rss-feeds',        label:'BankInfoSecurity'},
+    {url:'https://feeds.feedburner.com/TheHackersNews',       label:'The Hacker News'},
+    {url:'https://www.helpnetsecurity.com/feed/',             label:'Help Net Security'},
   ],
   training: [
-    {
-      name: 'Juggernaut Training Systems Podcast',
-      desc: 'Chad Wesley Smith on programming, periodization, and strength for combat sports athletes. Perfect for a wrestler\'s lifting program.',
-      icon: '🏋️',
-      url: 'https://www.jtsstrength.com/podcasts/',
-      rss: 'https://feeds.buzzsprout.com/1851516.rss',
-      label: 'Strength'
-    },
-    {
-      name: 'Strength Running Podcast',
-      desc: 'Jason Fitzgerald on running periodization, injury prevention, and race prep. Great for the XC/wrestling hybrid athlete.',
-      icon: '🏃',
-      url: 'https://www.strengthrunning.com/category/podcast/',
-      rss: 'https://strengthrunning.libsyn.com/rss',
-      label: 'Running'
-    },
-    {
-      name: 'FloWrestling Radio Live',
-      desc: 'Wrestling news, recruiting, tournament previews, technique breakdowns, and college wrestling coverage.',
-      icon: '🤼',
-      url: 'https://www.flowrestling.org/podcasts',
-      rss: 'https://feeds.simplecast.com/Q7U0ZQLM',
-      label: 'Wrestling'
-    },
-    {
-      name: 'Wrestle & Flow',
-      desc: 'Mental performance, mindset, and competitive edge for wrestlers at all levels.',
-      icon: '🧠',
-      url: 'https://podcasts.apple.com/us/podcast/wrestle-flow/id1484089817',
-      rss: null,
-      label: 'Wrestling Mindset'
-    },
-    {
-      name: 'RP Strength Podcast',
-      desc: 'Renaissance Periodization — Dr. Mike Israetel on hypertrophy, nutrition timing, and evidence-based training. Great for G-Mac\'s lifting science.',
-      icon: '💪',
-      url: 'https://rpstrength.com/rp-strength-podcast/',
-      rss: 'https://anchor.fm/s/9f82a68/podcast/rss',
-      label: 'Strength Science'
-    },
-    {
-      name: 'Huberman Lab',
-      desc: 'Andrew Huberman covers sleep, recovery, nutrition protocols, and neuroscience of performance — directly applicable to athlete recovery.',
-      icon: '🔬',
-      url: 'https://hubermanlab.com/podcast/',
-      rss: 'https://feeds.megaphone.fm/hubermanlab',
-      label: 'Recovery & Science'
-    },
-    {
-      name: 'The Compound Effect (NWCA)',
-      desc: 'National Wrestling Coaches Association podcast covering coaching, training methods, and the wrestling community.',
-      icon: '🏆',
-      url: 'https://nwcaonline.org/podcast/',
-      rss: null,
-      label: 'Coaching'
-    },
-    {
-      name: 'Found My Fitness (Rhonda Patrick)',
-      desc: 'Deep dives on nutrition science, creatine research, omega-3s, and longevity — great for supplement and recovery decisions.',
-      icon: '🧬',
-      url: 'https://www.foundmyfitness.com/podcast',
-      rss: 'https://www.omnycontent.com/d/playlist/aaea4e69-af51-495e-afc9-a9760146922b/2a0a4a77-3a38-4e75-b938-aad000e03499/podcast.rss',
-      label: 'Nutrition Science'
-    },
+    {url:'https://www.menshealth.com/rss/all.xml/',    label:'Men\'s Health'},
+    {url:'https://www.outsideonline.com/feed/',        label:'Outside Online'},
+    {url:'https://www.boxrox.com/feed/',               label:'BOXROX'},
+    {url:'https://www.wired.com/feed/category/science/latest/rss', label:'Wired Science'},
   ],
   cissp: [
-    {
-      name: 'CISSP Cyber Training Podcast',
-      desc: 'Sean Gerber covers all 8 CISSP domains episode by episode. Layer it on your weekly domain reading during commutes.',
-      icon: '🎓',
-      url: 'https://cissp.cybertraining365.com/podcast/',
-      rss: 'https://feeds.buzzsprout.com/1615656.rss',
-      label: 'All Domains'
-    },
-    {
-      name: 'Destination Certification CISSP MindMap',
-      desc: 'Rob Witcher\'s YouTube/podcast series — one mind map per domain. Exceptional for visual learners and retention.',
-      icon: '🗺️',
-      url: 'https://www.youtube.com/@DestinationCertification',
-      rss: null,
-      label: 'Domain Deep Dives'
-    },
-    {
-      name: 'Security Now',
-      desc: 'Steve Gibson goes deep on cryptography, network security, and security architecture — maps directly to Domains 3 and 4.',
-      icon: '🛡️',
-      url: 'https://twit.tv/shows/security-now',
-      rss: 'https://feeds.twit.tv/sn.xml',
-      label: 'Domains 3 & 4'
-    },
-    {
-      name: 'Risky Business',
-      desc: 'Weekly news and interviews — helps connect exam concepts to real-world incidents. Great for Domain 7 (Security Operations).',
-      icon: '🔐',
-      url: 'https://risky.biz',
-      rss: 'https://risky.biz/feeds/risky-business/',
-      label: 'Domain 7'
-    },
-    {
-      name: 'CyberWire Daily',
-      desc: 'Daily 20-min briefing — keeps Domain 1 (Risk Management) and current threat landscape fresh with minimal time investment.',
-      icon: '📻',
-      url: 'https://thecyberwire.com/podcasts/daily-podcast',
-      rss: 'https://thecyberwire.com/feeds/daily-podcast.xml',
-      label: 'Domain 1'
-    },
+    {url:'https://feeds.feedburner.com/TheHackersNews', label:'The Hacker News'},
+    {url:'https://krebsonsecurity.com/feed/',           label:'Krebs on Security'},
+    {url:'https://www.helpnetsecurity.com/feed/',       label:'Help Net Security'},
+    {url:'https://www.bankinfosecurity.com/rss-feeds',  label:'BankInfoSecurity'},
   ]
 };
 
-// ── HELPERS ────────────────────────────────────────────────────────────────
-function stripHtml(html) {
-  const d = document.createElement('div');
-  d.innerHTML = html || '';
-  return d.textContent || d.innerText || '';
+// Keywords to filter by tab for relevance
+const KEYWORDS = {
+  ot:       ['hospital','healthcare','medical','iot','ics','scada','ot ','hipaa','clinical','patient','device','critical infrastructure'],
+  fin:      ['bank','financial','fintech','sec ','dora','payment','fraud','regulatory','compliance','ransomware'],
+  training: ['fitness','training','workout','strength','running','nutrition','recovery','muscle','athlete','performance','wrestling','weight'],
+  cissp:    ['risk','governance','cryptography','identity','access','incident','zero trust','network security','compliance','vulnerability','patch','certification'],
+};
+
+// ── PODCAST DATA (static shows + working rss feeds) ───────────────────────
+const PODS_STATIC = {
+  cyber: [
+    {icon:'🔐',label:'InfoSec',name:'Risky Business',desc:'Weekly infosec news and interviews. The gold standard for staying current.',url:'https://risky.biz',rss:'https://risky.biz/feeds/risky-business/'},
+    {icon:'🕵️',label:'Stories',name:'Darknet Diaries',desc:'True stories from the dark side of the internet — hacks, breaches, cybercrime.',url:'https://darknetdiaries.com',rss:'https://feeds.megaphone.fm/darknetdiaries'},
+    {icon:'📻',label:'Daily Brief',name:'CyberWire Daily',desc:'Daily 20-min briefing on the day\'s top cybersecurity stories. Perfect commute listen.',url:'https://thecyberwire.com/podcasts/daily-podcast',rss:null},
+    {icon:'🛡️',label:'Technical',name:'Security Now',desc:'Steve Gibson goes deep on security architecture, crypto, and zero trust topics.',url:'https://twit.tv/shows/security-now',rss:null},
+  ],
+  ot: [
+    {icon:'🔐',label:'InfoSec',name:'Risky Business',desc:'Frequent OT/ICS coverage alongside broader infosec news and practitioner interviews.',url:'https://risky.biz',rss:'https://risky.biz/feeds/risky-business/'},
+    {icon:'🕵️',label:'ICS/OT Stories',name:'Darknet Diaries',desc:'Episodes on industrial attacks, critical infrastructure, and OT-specific incidents.',url:'https://darknetdiaries.com',rss:'https://feeds.megaphone.fm/darknetdiaries'},
+    {icon:'🏥',label:'Healthcare',name:'HIMSS Podcasts',desc:'Healthcare IT security, HIPAA compliance, and medical device vulnerability coverage.',url:'https://www.himss.org/podcasts',rss:null},
+    {icon:'🏛️',label:'Federal/CISA',name:'Grounded in CISA',desc:'Official CISA podcast — advisories, critical infrastructure threats, and federal guidance.',url:'https://www.cisa.gov/news-events/podcasts',rss:null},
+  ],
+  fin: [
+    {icon:'🏦',label:'FinSec',name:'BankInfoSecurity Podcast',desc:'ISMG\'s flagship podcast covering financial sector threats, fraud, and regulatory updates.',url:'https://www.bankinfosecurity.com/podcasts',rss:null},
+    {icon:'🔐',label:'InfoSec',name:'Risky Business',desc:'Frequent coverage of financial sector breaches, SEC enforcement, and regulatory action.',url:'https://risky.biz',rss:'https://risky.biz/feeds/risky-business/'},
+    {icon:'📊',label:'FS-ISAC',name:'FS-ISAC Podcast',desc:'Financial Services ISAC content on sector-specific threat intelligence and resilience.',url:'https://www.fsisac.com/resources/podcast',rss:null},
+    {icon:'💳',label:'Fintech',name:'Fintech Insider',desc:'11:FS covers fintech trends, open banking, and finance/technology intersection.',url:'https://11fs.com/insights/podcasts',rss:null},
+  ],
+  training: [
+    {icon:'🏋️',label:'Strength',name:'Juggernaut Training Systems',desc:'Chad Wesley Smith on programming, periodization, and strength for combat sports athletes.',url:'https://www.jtsstrength.com/podcasts/',rss:null},
+    {icon:'🏃',label:'Running',name:'Strength Running Podcast',desc:'Jason Fitzgerald on running periodization, injury prevention, and XC/wrestling hybrid training.',url:'https://www.strengthrunning.com/category/podcast/',rss:null},
+    {icon:'🤼',label:'Wrestling',name:'FloWrestling Radio Live',desc:'Wrestling news, recruiting, tournament previews, technique breakdowns, college wrestling.',url:'https://www.flowrestling.org/podcasts',rss:'https://feeds.simplecast.com/Q7U0ZQLM'},
+    {icon:'💪',label:'Strength Science',name:'RP Strength Podcast',desc:'Dr. Mike Israetel on hypertrophy, nutrition timing, and evidence-based training.',url:'https://rpstrength.com/rp-strength-podcast/',rss:null},
+    {icon:'🔬',label:'Recovery & Science',name:'Huberman Lab',desc:'Sleep, recovery, nutrition protocols, and neuroscience of performance. Great for athlete recovery stack.',url:'https://hubermanlab.com/podcast/',rss:'https://feeds.megaphone.fm/hubermanlab'},
+    {icon:'🧬',label:'Nutrition Science',name:'Found My Fitness (Rhonda Patrick)',desc:'Deep dives on creatine, omega-3s, nutrition science — directly applicable to supplement decisions.',url:'https://www.foundmyfitness.com/podcast',rss:null},
+    {icon:'🧠',label:'Wrestling Mindset',name:'Wrestle & Flow',desc:'Mental performance, mindset, and competitive edge for wrestlers at all levels.',url:'https://podcasts.apple.com/us/podcast/wrestle-flow/id1484089817',rss:null},
+  ],
+  cissp: [
+    {icon:'🎓',label:'All Domains',name:'CISSP Cyber Training Podcast',desc:'Sean Gerber covers all 8 CISSP domains episode by episode — layer on commutes alongside your weekly domain reading.',url:'https://cissp.cybertraining365.com/podcast/',rss:null},
+    {icon:'🗺️',label:'Domain Deep Dives',name:'Destination Certification',desc:'Rob Witcher\'s mind map series — one video/episode per domain. Exceptional for visual learners.',url:'https://www.youtube.com/@DestinationCertification',rss:null},
+    {icon:'🔐',label:'Domains 3 & 4',name:'Risky Business',desc:'Deep cryptography and network security content maps directly to CISSP Domains 3 and 4.',url:'https://risky.biz',rss:'https://risky.biz/feeds/risky-business/'},
+    {icon:'📻',label:'Domain 1',name:'CyberWire Daily',desc:'Daily briefing keeps risk management and current threat landscape fresh with minimal time cost.',url:'https://thecyberwire.com/podcasts/daily-podcast',rss:null},
+    {icon:'🕵️',label:'Domain 7',name:'Darknet Diaries',desc:'Real incident case studies reinforce Domain 7 (Security Operations) in a memorable narrative format.',url:'https://darknetdiaries.com',rss:'https://feeds.megaphone.fm/darknetdiaries'},
+  ]
+};
+
+// ── HELPERS ───────────────────────────────────────────────────────────────
+function stripHtml(h){const d=document.createElement('div');d.innerHTML=h||'';return d.textContent||d.innerText||''}
+function fmtDate(s){if(!s)return'';const d=new Date(s);return isNaN(d)?'':d.toLocaleDateString('en-US',{month:'short',day:'numeric'})}
+
+function skeleton(){
+  return `<div class="grid">`+Array(6).fill(0).map(()=>`
+    <div class="sk-card">
+      <div class="sk-line s"></div><div class="sk-line"></div>
+      <div class="sk-line m"></div><div class="sk-line m"></div>
+      <div class="sk-line t"></div>
+    </div>`).join('')+`</div>`;
 }
 
-function fmtDate(dateStr) {
-  if (!dateStr) return '';
-  const d = new Date(dateStr);
-  return isNaN(d) ? '' : d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
-}
-
-// ── SKELETON ───────────────────────────────────────────────────────────────
-function renderSkeleton(id) {
-  document.getElementById(id).innerHTML =
-    `<div class="skeleton-grid">` +
-    Array(6).fill(0).map(() => `
-      <div class="skeleton-card">
-        <div class="skeleton-line short"></div>
-        <div class="skeleton-line"></div>
-        <div class="skeleton-line medium"></div>
-        <div class="skeleton-line medium"></div>
-        <div class="skeleton-line tag"></div>
-      </div>`).join('') +
-    `</div>`;
-}
-
-// ── FETCH ONE RSS FEED ─────────────────────────────────────────────────────
-async function fetchFeed(feedUrl, label) {
-  try {
-    const res = await fetch(`${RSS_API}${encodeURIComponent(feedUrl)}&count=3`);
-    const data = await res.json();
-    if (data.status !== 'ok' || !data.items) return [];
-    return data.items.slice(0, 3).map(item => ({
-      headline: item.title || 'Untitled',
-      summary:  stripHtml(item.description || item.content || '').slice(0, 220),
-      link:     item.link || '#',
+// ── FETCH NEWS ────────────────────────────────────────────────────────────
+async function fetchFeed(url, label){
+  try{
+    const r = await fetch(`${API}${encodeURIComponent(url)}`);
+    const d = await r.json();
+    if(d.status!=='ok'||!d.items) return [];
+    return d.items.slice(0,10).map(i=>({
+      headline: i.title||'Untitled',
+      summary:  stripHtml(i.description||i.content||'').slice(0,220),
+      link:     i.link||'#',
       source:   label,
-      date:     fmtDate(item.pubDate)
+      date:     fmtDate(i.pubDate)
     }));
-  } catch { return []; }
+  }catch{return []}
 }
 
-// ── RENDER NEWS CARDS ──────────────────────────────────────────────────────
-function renderCards(containerId, items, accent, tag) {
-  const el = document.getElementById(containerId);
-  if (!items.length) {
-    el.innerHTML = `<div class="state-box"><span class="state-icon">⚠️</span><p>Couldn't load feeds. Try again in a moment.</p></div>`;
-    return;
+function scoreItem(item, tab){
+  if(!KEYWORDS[tab]) return 1;
+  const txt = (item.headline+' '+item.summary).toLowerCase();
+  return KEYWORDS[tab].filter(k=>txt.includes(k)).length;
+}
+
+async function fetchPanel(key){
+  const btn = document.querySelector(`.fetch-btn[data-panel="${key}"]`);
+  btn.classList.add('loading'); btn.disabled=true;
+  document.getElementById('cards-'+key).innerHTML = skeleton();
+  try{
+    const feeds = NEWS_FEEDS[key];
+    const all = await Promise.all(feeds.map(f=>fetchFeed(f.url,f.label)));
+    let items = all.flat();
+    // dedupe by headline
+    const seen = new Set();
+    items = items.filter(i=>{if(seen.has(i.headline))return false;seen.add(i.headline);return true});
+    // sort by keyword relevance for OT/fin/training/cissp tabs
+    if(KEYWORDS[key]) items.sort((a,b)=>scoreItem(b,key)-scoreItem(a,key));
+    items = items.slice(0,9);
+    const accent = {cyber:'var(--ca)',ot:'var(--oa)',fin:'var(--fa)',training:'var(--ta)',cissp:'var(--csa)'}[key];
+    const tag = {cyber:'Cyber & IT',ot:'Hospital OT',fin:'Finance & Reg',training:'Training',cissp:'CISSP'}[key];
+    if(!items.length){
+      document.getElementById('cards-'+key).innerHTML=`<div class="state-box"><span class="si">⚠️</span><p>Couldn't load feeds. Try again in a moment.</p></div>`;
+    } else {
+      document.getElementById('cards-'+key).innerHTML =
+        `<div class="grid">`+
+        items.map(i=>`
+          <a class="nc" href="${i.link}" target="_blank" rel="noopener" style="--ac:${accent}">
+            <div class="ct">${tag}</div>
+            <div class="ch">${i.headline}</div>
+            <div class="cs">${i.summary}</div>
+            <div class="cm"><div class="csrc">${i.source}</div><div class="cdt">${i.date}</div></div>
+          </a>`).join('')+
+        `</div><div class="fc">click any card to read full article</div>`;
+    }
+  }catch(e){
+    document.getElementById('cards-'+key).innerHTML=`<div class="state-box"><span class="si">⚠️</span><p>Something went wrong. Try again.<br><small>${e.message}</small></p></div>`;
+  }finally{
+    btn.classList.remove('loading'); btn.disabled=false;
+    btn.querySelector('.bl').textContent='Refresh';
   }
-  el.innerHTML =
-    `<div class="cards-grid">` +
-    items.map(item => `
-      <a class="news-card" href="${item.link}" target="_blank" rel="noopener" style="--accent-color:${accent}">
-        <div class="card-tag">${tag}</div>
-        <div class="card-headline">${item.headline}</div>
-        <div class="card-summary">${item.summary}</div>
-        <div class="card-meta">
-          <div class="card-source">${item.source}</div>
-          <div class="card-date">${item.date}</div>
+}
+
+// ── PODCASTS ──────────────────────────────────────────────────────────────
+function renderStaticPods(key){
+  const accent = {cyber:'var(--ca)',ot:'var(--oa)',fin:'var(--fa)',training:'var(--ta)',cissp:'var(--csa)'}[key];
+  return `<div class="grid">`+
+    PODS_STATIC[key].map(p=>`
+      <a class="pc" href="${p.url}" target="_blank" rel="noopener" style="--ac:${accent}">
+        <div class="pi">${p.icon}</div>
+        <div class="pb">
+          <div class="pl">${p.label}</div>
+          <div class="pn">${p.name}</div>
+          <div class="pd">${p.desc}</div>
         </div>
-      </a>`).join('') +
-    `</div><div class="feed-credit">click any card to read full article</div>`;
+      </a>`).join('')+`</div>`;
 }
 
-// ── FETCH NEWS PANEL ───────────────────────────────────────────────────────
-async function fetchPanel(panelKey) {
-  const cfg = PANELS[panelKey];
-  const btn = document.querySelector(`.fetch-btn[data-panel="${panelKey}"]`);
-  btn.classList.add('loading'); btn.disabled = true;
-  renderSkeleton('cards-' + panelKey);
-  try {
-    const results = await Promise.all(cfg.feeds.map(f => fetchFeed(f.url, f.label)));
-    renderCards('cards-' + panelKey, results.flat().slice(0, 9), cfg.accent, cfg.tag);
-  } catch(e) {
-    document.getElementById('cards-' + panelKey).innerHTML =
-      `<div class="state-box"><span class="state-icon">⚠️</span><p>Something went wrong. Try again.<br><small>${e.message}</small></p></div>`;
-  } finally {
-    btn.classList.remove('loading'); btn.disabled = false;
-    btn.querySelector('.btn-label').textContent = 'Refresh';
-  }
+async function fetchPodEpisodes(key){
+  const accent = {cyber:'var(--ca)',ot:'var(--oa)',fin:'var(--fa)',training:'var(--ta)',cissp:'var(--csa)'}[key];
+  const pods = PODS_STATIC[key].filter(p=>p.rss);
+  if(!pods.length) return renderStaticPods(key);
+  const results = await Promise.all(pods.map(async p=>{
+    try{
+      const r = await fetch(`${API}${encodeURIComponent(p.rss)}`);
+      const d = await r.json();
+      if(d.status!=='ok'||!d.items) return [];
+      return d.items.slice(0,2).map(i=>({
+        show:p.name, icon:p.icon, label:p.label,
+        title:i.title||'Episode',
+        desc:stripHtml(i.description||i.content||'').slice(0,160),
+        link:i.link||p.url,
+        date:fmtDate(i.pubDate)
+      }));
+    }catch{return []}
+  }));
+  const eps = results.flat();
+  if(!eps.length) return renderStaticPods(key);
+  return `<div class="grid">`+
+    eps.map(e=>`
+      <a class="epc" href="${e.link}" target="_blank" rel="noopener" style="--ac:${accent}">
+        <div class="es">${e.icon} ${e.show} · ${e.label}</div>
+        <div class="et">${e.title}</div>
+        <div class="ed">${e.desc}</div>
+        <div class="em">${e.date}</div>
+      </a>`).join('')+`</div>`;
 }
 
-// ── RENDER STATIC PODCAST CARDS ───────────────────────────────────────────
-function renderStaticPodcasts(panelKey) {
-  const pods = PODCASTS[panelKey];
-  const accent = PANELS[panelKey].accent;
-  return `<div class="podcast-grid">` +
-    pods.map(p => `
-      <a class="podcast-card" href="${p.url}" target="_blank" rel="noopener" style="--accent-color:${accent}">
-        <div class="podcast-icon">${p.icon}</div>
-        <div class="podcast-body">
-          <div class="podcast-label">${p.label}</div>
-          <div class="podcast-name">${p.name}</div>
-          <div class="podcast-desc">${p.desc}</div>
-        </div>
-      </a>`).join('') +
-    `</div>`;
-}
+// ── INIT ──────────────────────────────────────────────────────────────────
+['cyber','ot','fin','training','cissp'].forEach(key=>{
+  document.getElementById('pod-'+key).innerHTML = renderStaticPods(key);
+});
 
-// ── FETCH LIVE PODCAST EPISODES ────────────────────────────────────────────
-async function fetchPodcastEpisodes(panelKey) {
-  const pods = PODCASTS[panelKey].filter(p => p.rss);
-  const accent = PANELS[panelKey].accent;
-  const results = await Promise.all(
-    pods.map(async p => {
-      try {
-        const res = await fetch(`${RSS_API}${encodeURIComponent(p.rss)}&count=2`);
-        const data = await res.json();
-        if (data.status !== 'ok' || !data.items) return [];
-        return data.items.slice(0, 2).map(item => ({
-          show: p.name,
-          icon: p.icon,
-          label: p.label,
-          title: item.title || 'Episode',
-          desc: stripHtml(item.description || item.content || '').slice(0, 160),
-          link: item.link || p.url,
-          date: fmtDate(item.pubDate)
-        }));
-      } catch { return []; }
-    })
-  );
-  const episodes = results.flat();
-  if (!episodes.length) return `<div class="state-box"><span class="state-icon">🎙</span><p>Couldn't load episodes. Check back soon.</p></div>`;
+document.querySelectorAll('.fetch-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>fetchPanel(btn.dataset.panel));
+});
 
-  return `<div class="podcast-grid">` +
-    episodes.map(ep => `
-      <a class="podcast-ep-card" href="${ep.link}" target="_blank" rel="noopener" style="--accent-color:${accent}">
-        <div class="ep-show">${ep.icon} ${ep.show} · ${ep.label}</div>
-        <div class="ep-title">${ep.title}</div>
-        <div class="ep-desc">${ep.desc}</div>
-        <div class="ep-meta">${ep.date}</div>
-      </a>`).join('') +
-    `</div>`;
-}
-
-// ── PODCAST SECTION RENDER ─────────────────────────────────────────────────
-// On load: show static curated show cards
-// On "Load Latest Episodes": replace with live feed episode cards
-function initPodcasts() {
-  ['cyber','ot','fin','training','cissp'].forEach(key => {
-    const container = document.getElementById('pod-' + key);
-    if (container) container.innerHTML = renderStaticPodcasts(key);
-  });
-}
-
-document.querySelectorAll('.pod-load-btn').forEach(btn => {
-  btn.addEventListener('click', async () => {
+document.querySelectorAll('.plb').forEach(btn=>{
+  btn.addEventListener('click', async()=>{
     const key = btn.dataset.pod;
-    btn.classList.add('loading'); btn.disabled = true;
-    btn.querySelector('.spinner').style.display = 'block';
-    const container = document.getElementById('pod-' + key);
-    container.innerHTML = `<div class="state-box"><span class="state-icon" style="font-size:1.4rem">⏳</span><p>Loading latest episodes...</p></div>`;
-    try {
-      container.innerHTML = await fetchPodcastEpisodes(key);
-      btn.textContent = '✓ Showing Live Episodes';
-      btn.style.color = PANELS[key].accent;
-      btn.style.borderColor = PANELS[key].accent;
-    } catch(e) {
-      container.innerHTML = `<div class="state-box"><span class="state-icon">⚠️</span><p>Couldn't load episodes. Try again.</p></div>`;
-      btn.classList.remove('loading'); btn.disabled = false;
+    btn.classList.add('loading'); btn.disabled=true;
+    const el = document.getElementById('pod-'+key);
+    el.innerHTML=`<div class="state-box"><span class="si" style="font-size:1.4rem">⏳</span><p>Loading latest episodes...</p></div>`;
+    try{
+      el.innerHTML = await fetchPodEpisodes(key);
+      btn.innerHTML='✓ Live Episodes';
+      const accent = {cyber:'var(--ca)',ot:'var(--oa)',fin:'var(--fa)',training:'var(--ta)',cissp:'var(--csa)'}[key];
+      btn.style.color=`color-mix(in srgb, ${accent} 100%, transparent)`;
+      btn.style.borderColor=`color-mix(in srgb, ${accent} 100%, transparent)`;
+    }catch{
+      el.innerHTML=renderStaticPods(key);
+      btn.classList.remove('loading'); btn.disabled=false;
     }
   });
 });
-
-// ── BIND NEWS BUTTONS ──────────────────────────────────────────────────────
-document.querySelectorAll('.fetch-btn').forEach(btn => {
-  btn.addEventListener('click', () => fetchPanel(btn.dataset.panel));
-});
-
-// ── INIT ───────────────────────────────────────────────────────────────────
-initPodcasts();
 </script>
 </body>
 </html>
