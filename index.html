@@ -361,15 +361,18 @@ const NEWS_FEEDS = {
 
 // Keywords to filter by tab for relevance
 const KEYWORDS = {
-  it:       ['cloud','ai ','artificial intelligence','saas','devops','infrastructure','kubernetes','docker','aws','azure','gcp','software','api','enterprise','digital transformation','data center'],
-  net:      ['network','microsegmentation','zero trust','sdn','firewall','vlan','routing','switching','bgp','ospf','wan','sd-wan','vpn','packet','overlay','segment','vxlan'],
-  sec:      ['ransomware','malware','breach','exploit','vulnerability','cve','patch','threat','attack','phishing','apt','zero-day','incident','ioc','siem','edr','xdr'],
-  ot:       ['ics','scada','industrial','plc','operational technology','ot security','critical infrastructure','modbus','dnp3','purdue','factory','manufacturing','energy grid','pipeline','water treatment'],
-  hc:       ['hospital','healthcare','medical','iomt','hipaa','clinical','patient','device','health system','emr','ehr','pharmacy','radiology','nurse','physician','health-isac','hc3'],
-  fin:      ['bank','financial','fintech','sec ','dora','payment','fraud','regulatory','compliance','ransomware'],
-  training: ['fitness','training','workout','strength','running','nutrition','recovery','muscle','athlete','performance','wrestling','weight'],
-  cissp:    ['risk','governance','cryptography','identity','access','incident','zero trust','network security','compliance','vulnerability','patch','certification'],
+  it:       ['cloud computing','artificial intelligence','machine learning','saas','devops','kubernetes','docker','aws','azure','google cloud','software development','digital transformation','data center','enterprise software','open source','platform engineering','generative ai','llm','chatgpt','copilot','automation','it operations','apple','microsoft','google','meta','nvidia','chip','semiconductor'],
+  net:      ['microsegmentation','zero trust network','software-defined','sd-wan','sdn','network segmentation','vlan','bgp','ospf','mpls','packet','bandwidth','latency','overlay network','vxlan','network fabric','switching','routing protocol','netops','network architecture','wifi 6','5g network','network monitoring','ddos','dns poisoning','arp'],
+  sec:      ['ransomware','malware','data breach','exploit','vulnerability','cve-','zero-day','phishing','nation-state','threat actor','apt ','cyberattack','hacker','trojan','spyware','botnet','credential stuffing','brute force','social engineering','cyber incident','dark web','stolen data','threat intelligence','siem','edr','xdr','ioc','threat hunt','penetration test','red team','bug bounty'],
+  ot:       ['ics','scada','industrial control','plc','operational technology','purdue model','modbus','dnp3','profinet','opc-ua','factory automation','manufacturing security','energy sector','power grid','pipeline security','water utility','critical infrastructure attack','dragos','claroty ot','nozomi','ot network'],
+  hc:       ['hospital','healthcare','health system','medical device','iomt','hipaa','patient data','clinical','emr','ehr','electronic health','radiology','pharmacy','telehealth','health-isac','hc3 advisory','ransomware hospital','nursing','physician','fda medical','medtech','patient safety','medical record'],
+  fin:      ['bank','financial institution','fintech','sec rule','dora regulation','payment system','fraud','money laundering','swift','financial regulator','fdic','occ ','financial crime','crypto exchange','defi','trading platform','market manipulation','financial data breach','pci dss','card skimming','atm fraud','wire transfer','financial compliance'],
+  training: ['strength training','weight lifting','powerlifting','wrestling','cross country','running performance','marathon','periodization','progressive overload','creatine','protein intake','sports nutrition','athlete recovery','sleep recovery','foam rolling','mobility','injury prevention','vo2 max','lactate threshold','wrestling technique','wrestling camp','wrestling tournament','ncaa wrestling','high school wrestling','combat sport','grappling'],
+  cissp:    ['cissp','isc2','cbk','security domain','risk management framework','cryptography','pki','access control','identity management','incident response plan','security architecture','asset classification','security assessment','software security','security governance','nist framework','iso 27001','sox compliance','gdpr','security certification','security audit'],
 };
+
+// Tabs that REQUIRE at least 1 keyword match to show an article (strict mode)
+const STRICT_TABS = new Set(['ot','hc','fin','training','cissp','net']);
 
 // ── PODCAST DATA (static shows + working rss feeds) ───────────────────────
 const PODS_STATIC = {
@@ -473,7 +476,11 @@ async function fetchPanel(key){
     // dedupe by headline
     const seen = new Set();
     items = items.filter(i=>{if(seen.has(i.headline))return false;seen.add(i.headline);return true});
-    // sort by keyword relevance for OT/fin/training/cissp tabs
+    // strict tabs: REQUIRE at least 1 keyword match — no bleed-through from other categories
+    if(STRICT_TABS.has(key) && KEYWORDS[key]) {
+      items = items.filter(i => scoreItem(i, key) > 0);
+    }
+    // sort by keyword relevance score (highest first)
     if(KEYWORDS[key]) items.sort((a,b)=>scoreItem(b,key)-scoreItem(a,key));
     items = items.slice(0,9);
     const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',cissp:'var(--csa)'}[key];
