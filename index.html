@@ -26,7 +26,6 @@
     background: var(--paper);
     color: var(--ink);
     font-family: 'Inter', system-ui, sans-serif;
-    font-weight: 400;
     line-height: 1.6;
     min-height: 100vh;
   }
@@ -91,7 +90,6 @@
     border-bottom: 3px solid transparent;
     margin-bottom: -1px;
   }
-
   .tab-btn:hover { color: var(--ink); }
   .tab-btn.active { color: var(--ink); }
   .tab-btn.active::after {
@@ -101,10 +99,9 @@
     height: 3px;
     background: var(--tab-color, var(--ink));
   }
-
-  .tab-btn[data-tab="cyber"] { --tab-color: var(--cyber-accent); }
-  .tab-btn[data-tab="ot"]    { --tab-color: var(--ot-accent); }
-  .tab-btn[data-tab="fin"]   { --tab-color: var(--fin-accent); }
+  .tab-btn[data-tab="cyber"]    { --tab-color: var(--cyber-accent); }
+  .tab-btn[data-tab="ot"]       { --tab-color: var(--ot-accent); }
+  .tab-btn[data-tab="fin"]      { --tab-color: var(--fin-accent); }
   .tab-btn[data-tab="training"] { --tab-color: var(--training-accent); }
 
   .main {
@@ -157,7 +154,6 @@
   }
   .fetch-btn:hover { opacity: 0.8; }
   .fetch-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
   .fetch-btn .spinner {
     width: 13px; height: 13px;
     border: 2px solid rgba(255,255,255,0.3);
@@ -168,19 +164,38 @@
   }
   .fetch-btn.loading .spinner { display: block; }
   .fetch-btn.loading .btn-label { opacity: 0.6; }
-
   @keyframes spin { to { transform: rotate(360deg); } }
 
+  /* ── SECTION LABELS ── */
+  .section-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 28px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* ── NEWS CARDS ── */
   .cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 14px;
   }
 
   .skeleton-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 14px;
   }
 
   .skeleton-card {
@@ -188,21 +203,20 @@
     border: 1px solid var(--rule);
     border-radius: 3px;
     padding: 20px;
-    height: 160px;
+    height: 150px;
   }
 
   .skeleton-line {
-    height: 12px;
+    height: 11px;
     background: linear-gradient(90deg, var(--loading-strip) 25%, #edecea 50%, var(--loading-strip) 75%);
     background-size: 200% 100%;
     animation: shimmer 1.4s infinite;
     border-radius: 2px;
     margin-bottom: 10px;
   }
-  .skeleton-line.short  { width: 60%; }
-  .skeleton-line.medium { width: 85%; }
-  .skeleton-line.tag    { width: 35%; height: 8px; margin-top: 18px; }
-
+  .skeleton-line.short  { width: 55%; }
+  .skeleton-line.medium { width: 80%; }
+  .skeleton-line.tag    { width: 30%; height: 8px; margin-top: 16px; }
   @keyframes shimmer {
     0%   { background-position: 200% 0; }
     100% { background-position: -200% 0; }
@@ -212,10 +226,10 @@
     background: var(--card-bg);
     border: 1px solid var(--rule);
     border-radius: 3px;
-    padding: 18px 20px 16px;
+    padding: 16px 18px 14px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 7px;
     transition: box-shadow 0.15s;
     position: relative;
     text-decoration: none;
@@ -232,8 +246,8 @@
   .news-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
 
   .card-tag {
-    font-size: 0.64rem;
-    font-weight: 600;
+    font-size: 0.62rem;
+    font-weight: 700;
     letter-spacing: 0.13em;
     text-transform: uppercase;
     color: var(--accent-color, var(--muted));
@@ -241,15 +255,15 @@
 
   .card-headline {
     font-family: 'DM Serif Display', serif;
-    font-size: 1rem;
+    font-size: 0.97rem;
     line-height: 1.3;
     color: var(--ink);
   }
 
   .card-summary {
-    font-size: 0.82rem;
-    color: #444;
-    line-height: 1.55;
+    font-size: 0.8rem;
+    color: #555;
+    line-height: 1.5;
     flex: 1;
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -261,33 +275,198 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 4px;
+    margin-top: 2px;
   }
 
   .card-source {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.66rem;
+    font-size: 0.63rem;
     color: var(--muted);
   }
 
   .card-date {
-    font-size: 0.66rem;
+    font-size: 0.63rem;
     color: var(--muted);
   }
 
+  /* ── PODCAST CARDS ── */
+  .podcast-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+  }
+
+  .podcast-card {
+    background: var(--card-bg);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 16px 18px 14px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.15s;
+    position: relative;
+  }
+  .podcast-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    border-radius: 3px 0 0 3px;
+    background: var(--accent-color, var(--rule));
+  }
+  .podcast-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+
+  .podcast-icon {
+    font-size: 1.6rem;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .podcast-body { flex: 1; min-width: 0; }
+
+  .podcast-label {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--accent-color, var(--muted));
+    margin-bottom: 3px;
+  }
+
+  .podcast-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 0.95rem;
+    line-height: 1.25;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .podcast-desc {
+    font-size: 0.78rem;
+    color: #555;
+    line-height: 1.45;
+  }
+
+  .podcast-ep {
+    font-size: 0.7rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 5px;
+  }
+
+  /* ── PODCAST FEED CARDS (live episodes) ── */
+  .podcast-ep-card {
+    background: var(--card-bg);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 14px 18px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.15s;
+    position: relative;
+  }
+  .podcast-ep-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    border-radius: 3px 0 0 3px;
+    background: var(--accent-color, var(--rule));
+  }
+  .podcast-ep-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+
+  .ep-show {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--accent-color, var(--muted));
+  }
+
+  .ep-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 0.92rem;
+    line-height: 1.3;
+  }
+
+  .ep-desc {
+    font-size: 0.78rem;
+    color: #555;
+    line-height: 1.45;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .ep-meta {
+    font-size: 0.63rem;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ── PODCAST LOAD BTN ── */
+  .pod-load-btn {
+    background: none;
+    border: 1.5px solid var(--rule);
+    color: var(--muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 7px 14px;
+    border-radius: 2px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    transition: all 0.15s;
+  }
+  .pod-load-btn:hover { border-color: var(--ink); color: var(--ink); }
+  .pod-load-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .pod-load-btn .spinner {
+    width: 11px; height: 11px;
+    border: 2px solid rgba(0,0,0,0.15);
+    border-top-color: var(--ink);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: none;
+  }
+  .pod-load-btn.loading .spinner { display: block; }
+
+  .pod-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 28px 0 12px;
+  }
+
+  .pod-section-header .section-label {
+    margin: 0;
+    flex: 1;
+  }
+
+  /* ── MISC ── */
   .state-box {
     border: 1px dashed var(--rule);
     border-radius: 3px;
-    padding: 48px 32px;
+    padding: 40px 32px;
     text-align: center;
     color: var(--muted);
   }
-  .state-box .state-icon { font-size: 2rem; margin-bottom: 12px; display: block; }
-  .state-box p { font-size: 0.85rem; max-width: 300px; margin: 0 auto; line-height: 1.6; }
+  .state-box .state-icon { font-size: 2rem; margin-bottom: 10px; display: block; }
+  .state-box p { font-size: 0.83rem; max-width: 300px; margin: 0 auto; line-height: 1.6; }
 
   .feed-credit {
-    margin-top: 18px;
-    font-size: 0.7rem;
+    margin-top: 14px;
+    font-size: 0.68rem;
     color: var(--muted);
     text-align: right;
     font-family: 'JetBrains Mono', monospace;
@@ -297,7 +476,7 @@
     .masthead  { padding: 16px 16px 12px; }
     .nav-strip { padding: 0 16px; }
     .main      { padding: 20px 16px 48px; }
-    .tab-btn   { padding: 10px 12px; font-size: 0.72rem; }
+    .tab-btn   { padding: 10px 10px; font-size: 0.7rem; }
   }
 </style>
 </head>
@@ -320,6 +499,7 @@
 
 <main class="main">
 
+  <!-- ══ CYBER ══ -->
   <div class="panel active" id="panel-cyber">
     <div class="panel-header">
       <div>
@@ -327,14 +507,25 @@
         <div class="panel-title">What's moving in cyber</div>
       </div>
       <button class="fetch-btn" data-panel="cyber">
-        <div class="spinner"></div><span class="btn-label">Fetch Latest</span>
+        <div class="spinner"></div><span class="btn-label">Fetch News</span>
       </button>
     </div>
     <div class="cards-container" id="cards-cyber">
-      <div class="state-box"><span class="state-icon">📡</span><p>Hit <strong>Fetch Latest</strong> to load current cybersecurity headlines.</p></div>
+      <div class="state-box"><span class="state-icon">📡</span><p>Hit <strong>Fetch News</strong> to load current cybersecurity headlines.</p></div>
+    </div>
+
+    <div class="pod-section-header">
+      <div class="section-label" style="color:var(--cyber-accent)">🎙 Podcasts</div>
+      <button class="pod-load-btn" data-pod="cyber"><div class="spinner"></div>Load Latest Episodes</button>
+    </div>
+    <div id="pod-cyber">
+      <div class="podcast-grid" id="pod-static-cyber">
+        <!-- static curated shows -->
+      </div>
     </div>
   </div>
 
+  <!-- ══ OT ══ -->
   <div class="panel" id="panel-ot">
     <div class="panel-header">
       <div>
@@ -342,14 +533,21 @@
         <div class="panel-title">Healthcare &amp; OT security</div>
       </div>
       <button class="fetch-btn" data-panel="ot">
-        <div class="spinner"></div><span class="btn-label">Fetch Latest</span>
+        <div class="spinner"></div><span class="btn-label">Fetch News</span>
       </button>
     </div>
     <div class="cards-container" id="cards-ot">
-      <div class="state-box"><span class="state-icon">🏥</span><p>Hit <strong>Fetch Latest</strong> to load current hospital OT and healthcare security headlines.</p></div>
+      <div class="state-box"><span class="state-icon">🏥</span><p>Hit <strong>Fetch News</strong> to load current hospital OT and healthcare security headlines.</p></div>
     </div>
+
+    <div class="pod-section-header">
+      <div class="section-label" style="color:var(--ot-accent)">🎙 Podcasts</div>
+      <button class="pod-load-btn" data-pod="ot"><div class="spinner"></div>Load Latest Episodes</button>
+    </div>
+    <div id="pod-ot"></div>
   </div>
 
+  <!-- ══ FINANCE ══ -->
   <div class="panel" id="panel-fin">
     <div class="panel-header">
       <div>
@@ -357,27 +555,40 @@
         <div class="panel-title">Finance &amp; regulatory landscape</div>
       </div>
       <button class="fetch-btn" data-panel="fin">
-        <div class="spinner"></div><span class="btn-label">Fetch Latest</span>
+        <div class="spinner"></div><span class="btn-label">Fetch News</span>
       </button>
     </div>
     <div class="cards-container" id="cards-fin">
-      <div class="state-box"><span class="state-icon">💼</span><p>Hit <strong>Fetch Latest</strong> to load current financial sector security and regulation headlines.</p></div>
+      <div class="state-box"><span class="state-icon">💼</span><p>Hit <strong>Fetch News</strong> to load current financial sector security and regulation headlines.</p></div>
     </div>
+
+    <div class="pod-section-header">
+      <div class="section-label" style="color:var(--fin-accent)">🎙 Podcasts</div>
+      <button class="pod-load-btn" data-pod="fin"><div class="spinner"></div>Load Latest Episodes</button>
+    </div>
+    <div id="pod-fin"></div>
   </div>
 
+  <!-- ══ TRAINING ══ -->
   <div class="panel" id="panel-training">
     <div class="panel-header">
       <div>
-        <div class="panel-eyebrow" style="color:var(--training-accent)">Strength · Running · Wrestling · Periodization</div>
+        <div class="panel-eyebrow" style="color:var(--training-accent)">Strength · Running · Wrestling · Nutrition · Recovery</div>
         <div class="panel-title">Training &amp; performance</div>
       </div>
       <button class="fetch-btn" data-panel="training">
-        <div class="spinner"></div><span class="btn-label">Fetch Latest</span>
+        <div class="spinner"></div><span class="btn-label">Fetch News</span>
       </button>
     </div>
     <div class="cards-container" id="cards-training">
-      <div class="state-box"><span class="state-icon">🏋️</span><p>Hit <strong>Fetch Latest</strong> to load current strength, running, and wrestling training content.</p></div>
+      <div class="state-box"><span class="state-icon">🏋️</span><p>Hit <strong>Fetch News</strong> to load current strength, running, wrestling, nutrition &amp; recovery content.</p></div>
     </div>
+
+    <div class="pod-section-header">
+      <div class="section-label" style="color:var(--training-accent)">🎙 Podcasts</div>
+      <button class="pod-load-btn" data-pod="training"><div class="spinner"></div>Load Latest Episodes</button>
+    </div>
+    <div id="pod-training"></div>
   </div>
 
 </main>
@@ -399,52 +610,237 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
-// ── FEEDS CONFIG ────────────────────────────────────────────────────────────
-// rss2json free API — no key needed, 1000 req/day per IP
-const API = 'https://api.rss2json.com/v1/api.json?rss_url=';
+// ── CONFIG ─────────────────────────────────────────────────────────────────
+const RSS_API = 'https://api.rss2json.com/v1/api.json?rss_url=';
 
 const PANELS = {
   cyber: {
     accent: '#54B9F1',
     tag: 'Cyber & IT',
     feeds: [
-      { url: 'https://feeds.feedburner.com/TheHackersNews',        label: 'The Hacker News' },
-      { url: 'https://krebsonsecurity.com/feed/',                   label: 'Krebs on Security' },
-      { url: 'https://www.darkreading.com/rss.xml',                 label: 'Dark Reading' },
-      { url: 'https://www.bleepingcomputer.com/feed/',              label: 'BleepingComputer' },
+      { url: 'https://feeds.feedburner.com/TheHackersNews',         label: 'The Hacker News' },
+      { url: 'https://krebsonsecurity.com/feed/',                    label: 'Krebs on Security' },
+      { url: 'https://www.darkreading.com/rss.xml',                  label: 'Dark Reading' },
+      { url: 'https://www.bleepingcomputer.com/feed/',               label: 'BleepingComputer' },
     ]
   },
   ot: {
     accent: '#4caf82',
     tag: 'Hospital OT',
     feeds: [
-      { url: 'https://www.cisa.gov/uscert/ncas/alerts.xml',         label: 'CISA Alerts' },
-      { url: 'https://healthitsecurity.com/rss/news.xml',           label: 'HealthITSecurity' },
-      { url: 'https://www.beckershospitalreview.com/rss/healthit.xml', label: "Becker's Health IT" },
-      { url: 'https://www.darkreading.com/rss/vulnerabilities.xml', label: 'Dark Reading Vulns' },
+      { url: 'https://www.cisa.gov/uscert/ncas/alerts.xml',          label: 'CISA Alerts' },
+      { url: 'https://healthitsecurity.com/rss/news.xml',            label: 'HealthITSecurity' },
+      { url: 'https://www.beckershospitalreview.com/rss/healthit.xml',label: "Becker's Health IT" },
+      { url: 'https://www.darkreading.com/rss/vulnerabilities.xml',  label: 'Dark Reading' },
     ]
   },
   fin: {
     accent: '#c9933a',
     tag: 'Finance & Reg',
     feeds: [
-      { url: 'https://www.finextra.com/rss/headlines.aspx',         label: 'Finextra' },
-      { url: 'https://www.bankinfosecurity.com/rss-feeds',          label: 'BankInfoSecurity' },
-      { url: 'https://feeds.feedburner.com/TheHackersNews',         label: 'The Hacker News' },
-      { url: 'https://www.darkreading.com/rss/risk.xml',            label: 'Dark Reading Risk' },
+      { url: 'https://www.finextra.com/rss/headlines.aspx',          label: 'Finextra' },
+      { url: 'https://www.bankinfosecurity.com/rss-feeds',           label: 'BankInfoSecurity' },
+      { url: 'https://feeds.feedburner.com/TheHackersNews',          label: 'The Hacker News' },
+      { url: 'https://www.darkreading.com/rss/risk.xml',             label: 'Dark Reading Risk' },
     ]
   },
   training: {
     accent: '#9b6fe0',
     tag: 'Training',
     feeds: [
-      { url: 'https://www.strengthrunning.com/feed/',               label: 'Strength Running' },
-      { url: 'https://www.t-nation.com/rss.xml',                    label: 'T-Nation' },
-      { url: 'https://barbend.com/feed/',                           label: 'BarBend' },
-      { url: 'https://breakingmuscle.com/feed/',                    label: 'Breaking Muscle' },
+      { url: 'https://www.strengthrunning.com/feed/',                label: 'Strength Running' },
+      { url: 'https://barbend.com/feed/',                            label: 'BarBend' },
+      { url: 'https://www.t-nation.com/rss.xml',                     label: 'T-Nation' },
+      { url: 'https://breakingmuscle.com/feed/',                     label: 'Breaking Muscle' },
     ]
   }
 };
+
+// ── PODCAST CONFIG ─────────────────────────────────────────────────────────
+// Each pod entry has: name, desc, icon, spotifyUrl, rssFeed (for live episodes), label
+const PODCASTS = {
+  cyber: [
+    {
+      name: 'Risky Business',
+      desc: 'Weekly infosec news and interviews with industry practitioners. The gold standard for staying current.',
+      icon: '🔐',
+      url: 'https://risky.biz',
+      rss: 'https://risky.biz/feeds/risky-business/',
+      label: 'InfoSec'
+    },
+    {
+      name: 'Darknet Diaries',
+      desc: 'True stories from the dark side of the internet — hacks, breaches, and cybercrime.',
+      icon: '🕵️',
+      url: 'https://darknetdiaries.com',
+      rss: 'https://feeds.megaphone.fm/darknetdiaries',
+      label: 'Stories'
+    },
+    {
+      name: 'Security Now',
+      desc: 'Steve Gibson and Leo Laporte go deep on security topics — great for technical depth on zero trust and networking.',
+      icon: '🛡️',
+      url: 'https://twit.tv/shows/security-now',
+      rss: 'https://feeds.twit.tv/sn.xml',
+      label: 'Technical'
+    },
+    {
+      name: 'CyberWire Daily',
+      desc: 'Daily 20-min briefing on the day\'s top cybersecurity stories. Perfect commute listen.',
+      icon: '📻',
+      url: 'https://thecyberwire.com/podcasts/daily-podcast',
+      rss: 'https://thecyberwire.com/feeds/daily-podcast.xml',
+      label: 'Daily Brief'
+    },
+  ],
+  ot: [
+    {
+      name: 'Unsolicited Response',
+      desc: 'Dale Peterson covers ICS/OT and critical infrastructure security — the best dedicated OT podcast.',
+      icon: '🏭',
+      url: 'https://www.digitalbond.com/podcast/',
+      rss: 'https://www.digitalbond.com/feed/podcast/',
+      label: 'ICS/OT'
+    },
+    {
+      name: 'Healthcare Security Podcast (HIMSS)',
+      desc: 'HIMSS covers healthcare IT security, HIPAA compliance, and medical device vulnerabilities.',
+      icon: '🏥',
+      url: 'https://www.himss.org/podcasts',
+      rss: null,
+      label: 'Healthcare'
+    },
+    {
+      name: 'The Industrial Security Podcast',
+      desc: 'Claroty\'s podcast on OT/ICS/IoT security with practitioner interviews.',
+      icon: '⚙️',
+      url: 'https://claroty.com/resources/podcasts',
+      rss: 'https://feeds.simplecast.com/bVcDhQdz',
+      label: 'OT/IoT'
+    },
+    {
+      name: 'Grounded in CISA',
+      desc: 'Official CISA podcast covering advisories, critical infrastructure threats, and federal guidance.',
+      icon: '🏛️',
+      url: 'https://www.cisa.gov/news-events/podcasts',
+      rss: 'https://www.cisa.gov/podcasts.xml',
+      label: 'Federal/CISA'
+    },
+  ],
+  fin: [
+    {
+      name: 'BankInfoSecurity Podcast',
+      desc: 'ISMG\'s flagship podcast covering financial sector threats, fraud, and regulatory updates.',
+      icon: '🏦',
+      url: 'https://www.bankinfosecurity.com/podcasts',
+      rss: 'https://www.bankinfosecurity.com/rss-feeds',
+      label: 'FinSec'
+    },
+    {
+      name: 'FS-ISAC Podcast',
+      desc: 'Financial Services ISAC content on sector-specific threat intelligence and resilience.',
+      icon: '📊',
+      url: 'https://www.fsisac.com/resources/podcast',
+      rss: null,
+      label: 'FS-ISAC'
+    },
+    {
+      name: 'Risky Business',
+      desc: 'Frequent coverage of financial sector breaches, SEC enforcement, and regulatory action.',
+      icon: '🔐',
+      url: 'https://risky.biz',
+      rss: 'https://risky.biz/feeds/risky-business/',
+      label: 'InfoSec'
+    },
+    {
+      name: 'Fintech Insider',
+      desc: '11:FS covers fintech trends, open banking, and the intersection of finance and technology.',
+      icon: '💳',
+      url: 'https://11fs.com/insights/podcasts',
+      rss: null,
+      label: 'Fintech'
+    },
+  ],
+  training: [
+    {
+      name: 'Juggernaut Training Systems Podcast',
+      desc: 'Chad Wesley Smith on programming, periodization, and strength for combat sports athletes. Perfect for a wrestler\'s lifting program.',
+      icon: '🏋️',
+      url: 'https://www.jtsstrength.com/podcasts/',
+      rss: 'https://feeds.buzzsprout.com/1851516.rss',
+      label: 'Strength'
+    },
+    {
+      name: 'Strength Running Podcast',
+      desc: 'Jason Fitzgerald on running periodization, injury prevention, and race prep. Great for the XC/wrestling hybrid athlete.',
+      icon: '🏃',
+      url: 'https://www.strengthrunning.com/category/podcast/',
+      rss: 'https://strengthrunning.libsyn.com/rss',
+      label: 'Running'
+    },
+    {
+      name: 'FloWrestling Radio Live',
+      desc: 'Wrestling news, recruiting, tournament previews, technique breakdowns, and college wrestling coverage.',
+      icon: '🤼',
+      url: 'https://www.flowrestling.org/podcasts',
+      rss: 'https://feeds.simplecast.com/Q7U0ZQLM',
+      label: 'Wrestling'
+    },
+    {
+      name: 'Wrestle & Flow',
+      desc: 'Mental performance, mindset, and competitive edge for wrestlers at all levels.',
+      icon: '🧠',
+      url: 'https://podcasts.apple.com/us/podcast/wrestle-flow/id1484089817',
+      rss: null,
+      label: 'Wrestling Mindset'
+    },
+    {
+      name: 'RP Strength Podcast',
+      desc: 'Renaissance Periodization — Dr. Mike Israetel on hypertrophy, nutrition timing, and evidence-based training. Great for G-Mac\'s lifting science.',
+      icon: '💪',
+      url: 'https://rpstrength.com/rp-strength-podcast/',
+      rss: 'https://anchor.fm/s/9f82a68/podcast/rss',
+      label: 'Strength Science'
+    },
+    {
+      name: 'Huberman Lab',
+      desc: 'Andrew Huberman covers sleep, recovery, nutrition protocols, and neuroscience of performance — directly applicable to athlete recovery.',
+      icon: '🔬',
+      url: 'https://hubermanlab.com/podcast/',
+      rss: 'https://feeds.megaphone.fm/hubermanlab',
+      label: 'Recovery & Science'
+    },
+    {
+      name: 'The Compound Effect (NWCA)',
+      desc: 'National Wrestling Coaches Association podcast covering coaching, training methods, and the wrestling community.',
+      icon: '🏆',
+      url: 'https://nwcaonline.org/podcast/',
+      rss: null,
+      label: 'Coaching'
+    },
+    {
+      name: 'Found My Fitness (Rhonda Patrick)',
+      desc: 'Deep dives on nutrition science, creatine research, omega-3s, and longevity — great for supplement and recovery decisions.',
+      icon: '🧬',
+      url: 'https://www.foundmyfitness.com/podcast',
+      rss: 'https://www.omnycontent.com/d/playlist/aaea4e69-af51-495e-afc9-a9760146922b/2a0a4a77-3a38-4e75-b938-aad000e03499/podcast.rss',
+      label: 'Nutrition Science'
+    },
+  ]
+};
+
+// ── HELPERS ────────────────────────────────────────────────────────────────
+function stripHtml(html) {
+  const d = document.createElement('div');
+  d.innerHTML = html || '';
+  return d.textContent || d.innerText || '';
+}
+
+function fmtDate(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  return isNaN(d) ? '' : d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+}
 
 // ── SKELETON ───────────────────────────────────────────────────────────────
 function renderSkeleton(id) {
@@ -461,42 +857,27 @@ function renderSkeleton(id) {
     `</div>`;
 }
 
-// ── STRIP HTML ─────────────────────────────────────────────────────────────
-function stripHtml(html) {
-  const d = document.createElement('div');
-  d.innerHTML = html || '';
-  return d.textContent || d.innerText || '';
-}
-
-function fmtDate(dateStr) {
-  if (!dateStr) return '';
-  const d = new Date(dateStr);
-  return isNaN(d) ? '' : d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
-}
-
-// ── FETCH ONE FEED ─────────────────────────────────────────────────────────
+// ── FETCH ONE RSS FEED ─────────────────────────────────────────────────────
 async function fetchFeed(feedUrl, label) {
   try {
-    const res = await fetch(`${API}${encodeURIComponent(feedUrl)}&count=3`);
+    const res = await fetch(`${RSS_API}${encodeURIComponent(feedUrl)}&count=3`);
     const data = await res.json();
     if (data.status !== 'ok' || !data.items) return [];
     return data.items.slice(0, 3).map(item => ({
       headline: item.title || 'Untitled',
-      summary:  stripHtml(item.description || item.content || '').slice(0, 200),
+      summary:  stripHtml(item.description || item.content || '').slice(0, 220),
       link:     item.link || '#',
       source:   label,
       date:     fmtDate(item.pubDate)
     }));
-  } catch(e) {
-    return [];
-  }
+  } catch { return []; }
 }
 
-// ── RENDER CARDS ────────────────────────────────────────────────────────────
+// ── RENDER NEWS CARDS ──────────────────────────────────────────────────────
 function renderCards(containerId, items, accent, tag) {
   const el = document.getElementById(containerId);
   if (!items.length) {
-    el.innerHTML = `<div class="state-box"><span class="state-icon">⚠️</span><p>Couldn't load feeds right now. Try again in a moment.</p></div>`;
+    el.innerHTML = `<div class="state-box"><span class="state-icon">⚠️</span><p>Couldn't load feeds. Try again in a moment.</p></div>`;
     return;
   }
   el.innerHTML =
@@ -511,37 +892,116 @@ function renderCards(containerId, items, accent, tag) {
           <div class="card-date">${item.date}</div>
         </div>
       </a>`).join('') +
-    `</div>
-     <div class="feed-credit">via rss2json · click any card to read full article</div>`;
+    `</div><div class="feed-credit">click any card to read full article</div>`;
 }
 
-// ── FETCH PANEL ─────────────────────────────────────────────────────────────
+// ── FETCH NEWS PANEL ───────────────────────────────────────────────────────
 async function fetchPanel(panelKey) {
   const cfg = PANELS[panelKey];
   const btn = document.querySelector(`.fetch-btn[data-panel="${panelKey}"]`);
-
-  btn.classList.add('loading');
-  btn.disabled = true;
+  btn.classList.add('loading'); btn.disabled = true;
   renderSkeleton('cards-' + panelKey);
-
   try {
     const results = await Promise.all(cfg.feeds.map(f => fetchFeed(f.url, f.label)));
-    const items = results.flat().slice(0, 9); // up to 9 cards
-    renderCards('cards-' + panelKey, items, cfg.accent, cfg.tag);
+    renderCards('cards-' + panelKey, results.flat().slice(0, 9), cfg.accent, cfg.tag);
   } catch(e) {
     document.getElementById('cards-' + panelKey).innerHTML =
       `<div class="state-box"><span class="state-icon">⚠️</span><p>Something went wrong. Try again.<br><small>${e.message}</small></p></div>`;
   } finally {
-    btn.classList.remove('loading');
-    btn.disabled = false;
+    btn.classList.remove('loading'); btn.disabled = false;
     btn.querySelector('.btn-label').textContent = 'Refresh';
   }
 }
 
-// ── BIND BUTTONS ───────────────────────────────────────────────────────────
+// ── RENDER STATIC PODCAST CARDS ───────────────────────────────────────────
+function renderStaticPodcasts(panelKey) {
+  const pods = PODCASTS[panelKey];
+  const accent = PANELS[panelKey].accent;
+  return `<div class="podcast-grid">` +
+    pods.map(p => `
+      <a class="podcast-card" href="${p.url}" target="_blank" rel="noopener" style="--accent-color:${accent}">
+        <div class="podcast-icon">${p.icon}</div>
+        <div class="podcast-body">
+          <div class="podcast-label">${p.label}</div>
+          <div class="podcast-name">${p.name}</div>
+          <div class="podcast-desc">${p.desc}</div>
+        </div>
+      </a>`).join('') +
+    `</div>`;
+}
+
+// ── FETCH LIVE PODCAST EPISODES ────────────────────────────────────────────
+async function fetchPodcastEpisodes(panelKey) {
+  const pods = PODCASTS[panelKey].filter(p => p.rss);
+  const accent = PANELS[panelKey].accent;
+  const results = await Promise.all(
+    pods.map(async p => {
+      try {
+        const res = await fetch(`${RSS_API}${encodeURIComponent(p.rss)}&count=2`);
+        const data = await res.json();
+        if (data.status !== 'ok' || !data.items) return [];
+        return data.items.slice(0, 2).map(item => ({
+          show: p.name,
+          icon: p.icon,
+          label: p.label,
+          title: item.title || 'Episode',
+          desc: stripHtml(item.description || item.content || '').slice(0, 160),
+          link: item.link || p.url,
+          date: fmtDate(item.pubDate)
+        }));
+      } catch { return []; }
+    })
+  );
+  const episodes = results.flat();
+  if (!episodes.length) return `<div class="state-box"><span class="state-icon">🎙</span><p>Couldn't load episodes. Check back soon.</p></div>`;
+
+  return `<div class="podcast-grid">` +
+    episodes.map(ep => `
+      <a class="podcast-ep-card" href="${ep.link}" target="_blank" rel="noopener" style="--accent-color:${accent}">
+        <div class="ep-show">${ep.icon} ${ep.show} · ${ep.label}</div>
+        <div class="ep-title">${ep.title}</div>
+        <div class="ep-desc">${ep.desc}</div>
+        <div class="ep-meta">${ep.date}</div>
+      </a>`).join('') +
+    `</div>`;
+}
+
+// ── PODCAST SECTION RENDER ─────────────────────────────────────────────────
+// On load: show static curated show cards
+// On "Load Latest Episodes": replace with live feed episode cards
+function initPodcasts() {
+  ['cyber','ot','fin','training'].forEach(key => {
+    const container = document.getElementById('pod-' + key);
+    if (container) container.innerHTML = renderStaticPodcasts(key);
+  });
+}
+
+document.querySelectorAll('.pod-load-btn').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const key = btn.dataset.pod;
+    btn.classList.add('loading'); btn.disabled = true;
+    btn.querySelector('.spinner').style.display = 'block';
+    const container = document.getElementById('pod-' + key);
+    container.innerHTML = `<div class="state-box"><span class="state-icon" style="font-size:1.4rem">⏳</span><p>Loading latest episodes...</p></div>`;
+    try {
+      container.innerHTML = await fetchPodcastEpisodes(key);
+      btn.textContent = '✓ Showing Live Episodes';
+      btn.style.color = PANELS[key].accent;
+      btn.style.borderColor = PANELS[key].accent;
+    } catch(e) {
+      container.innerHTML = `<div class="state-box"><span class="state-icon">⚠️</span><p>Couldn't load episodes. Try again.</p></div>`;
+      btn.classList.remove('loading'); btn.disabled = false;
+    }
+  });
+});
+
+// ── BIND NEWS BUTTONS ──────────────────────────────────────────────────────
 document.querySelectorAll('.fetch-btn').forEach(btn => {
   btn.addEventListener('click', () => fetchPanel(btn.dataset.panel));
 });
+
+// ── INIT ───────────────────────────────────────────────────────────────────
+initPodcasts();
 </script>
 </body>
 </html>
