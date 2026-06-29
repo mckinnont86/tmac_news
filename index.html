@@ -9,7 +9,7 @@
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   :root{
     --ink:#0f1117;--paper:#f7f6f2;--rule:#d8d5ce;--muted:#888580;--card-bg:#ffffff;--ls:#e8e6e0;
-    --ca:#54B9F1;--oa:#4caf82;--hca:#2a9d8f;--fa:#c9933a;--ta:#9b6fe0;--csa:#e05555;
+    --ca:#54B9F1;--na:#3a86e8;--sea:#e05555;--oa:#4caf82;--hca:#2a9d8f;--fa:#c9933a;--ta:#9b6fe0;--csa:#c084fc;
   }
   body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.6;min-height:100vh}
   .masthead{border-bottom:2px solid var(--ink);padding:20px 32px 14px;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:8px}
@@ -23,6 +23,9 @@
   .tab-btn.active{color:var(--ink)}
   .tab-btn.active::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:3px;background:var(--tc,var(--ink))}
   .tab-btn[data-tab=cyber]{--tc:var(--ca)}
+  .tab-btn[data-tab=it]{--tc:var(--ca)}
+  .tab-btn[data-tab=net]{--tc:var(--na)}
+  .tab-btn[data-tab=sec]{--tc:var(--sea)}
   .tab-btn[data-tab=ot]{--tc:var(--oa)}
   .tab-btn[data-tab=hc]{--tc:var(--hca)}
   .tab-btn[data-tab=fin]{--tc:var(--fa)}
@@ -95,13 +98,15 @@
 <header class="masthead">
   <div>
     <div class="pub-name">The Daily Brief</div>
-    <div class="pub-tag">Security · OT · Healthcare · Finance · Training · CISSP</div>
+    <div class="pub-tag">IT · Networking · Security · OT · Healthcare · Finance · Training · CISSP</div>
   </div>
   <div class="datestamp" id="ds"></div>
 </header>
 
 <nav class="nav-strip">
-  <button class="tab-btn active" data-tab="cyber">⚡ Cyber & IT</button>
+  <button class="tab-btn active" data-tab="it">💻 IT</button>
+  <button class="tab-btn" data-tab="net">🌐 Networking</button>
+  <button class="tab-btn" data-tab="sec">🔐 Cybersecurity</button>
   <button class="tab-btn" data-tab="ot">🏭 Industrial OT</button>
   <button class="tab-btn" data-tab="hc">🏥 Healthcare</button>
   <button class="tab-btn" data-tab="fin">💼 Finance & Reg</button>
@@ -111,15 +116,37 @@
 
 <main class="main">
 
-<!-- CYBER -->
-<div class="panel active" id="panel-cyber">
+<!-- IT -->
+<div class="panel active" id="panel-it">
   <div class="ph">
-    <div><div class="pe" style="color:var(--ca)">IT · Cybersecurity · Microsegmentation · Zero Trust</div><div class="pt">What's moving in cyber</div></div>
-    <button class="fetch-btn" data-panel="cyber"><div class="sp"></div><span class="bl">Fetch News</span></button>
+    <div><div class="pe" style="color:var(--ca)">Cloud · AI · SaaS · DevOps · Infrastructure · Enterprise Tech</div><div class="pt">IT & technology</div></div>
+    <button class="fetch-btn" data-panel="it"><div class="sp"></div><span class="bl">Fetch News</span></button>
   </div>
-  <div id="cards-cyber"><div class="state-box"><span class="si">📡</span><p>Hit <strong>Fetch News</strong> to load current cybersecurity headlines.</p></div></div>
-  <div class="psh"><div class="sl" style="color:var(--ca)">🎙 Podcasts</div><button class="plb" data-pod="cyber"><div class="sp"></div>Load Latest Episodes</button></div>
-  <div id="pod-cyber"></div>
+  <div id="cards-it"><div class="state-box"><span class="si">💻</span><p>Hit <strong>Fetch News</strong> to load current IT and technology headlines.</p></div></div>
+  <div class="psh"><div class="sl" style="color:var(--ca)">🎙 Podcasts</div><button class="plb" data-pod="it"><div class="sp"></div>Load Latest Episodes</button></div>
+  <div id="pod-it"></div>
+</div>
+
+<!-- NETWORKING -->
+<div class="panel" id="panel-net">
+  <div class="ph">
+    <div><div class="pe" style="color:var(--na)">SDN · Zero Trust · Microsegmentation · SD-WAN · Network Architecture</div><div class="pt">Networking</div></div>
+    <button class="fetch-btn" data-panel="net"><div class="sp"></div><span class="bl">Fetch News</span></button>
+  </div>
+  <div id="cards-net"><div class="state-box"><span class="si">🌐</span><p>Hit <strong>Fetch News</strong> to load current networking headlines.</p></div></div>
+  <div class="psh"><div class="sl" style="color:var(--na)">🎙 Podcasts</div><button class="plb" data-pod="net"><div class="sp"></div>Load Latest Episodes</button></div>
+  <div id="pod-net"></div>
+</div>
+
+<!-- CYBERSECURITY -->
+<div class="panel" id="panel-sec">
+  <div class="ph">
+    <div><div class="pe" style="color:var(--sea)">Threat Intel · Incidents · Vulnerabilities · Malware · Ransomware</div><div class="pt">Cybersecurity</div></div>
+    <button class="fetch-btn" data-panel="sec"><div class="sp"></div><span class="bl">Fetch News</span></button>
+  </div>
+  <div id="cards-sec"><div class="state-box"><span class="si">🔐</span><p>Hit <strong>Fetch News</strong> to load current cybersecurity threat and incident headlines.</p></div></div>
+  <div class="psh"><div class="sl" style="color:var(--sea)">🎙 Podcasts</div><button class="plb" data-pod="sec"><div class="sp"></div>Load Latest Episodes</button></div>
+  <div id="pod-sec"></div>
 </div>
 
 <!-- OT -->
@@ -210,11 +237,22 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 const API = 'https://api.rss2json.com/v1/api.json?rss_url=';
 
 const NEWS_FEEDS = {
-  cyber: [
+  it: [
+    {url:'https://www.wired.com/feed/category/business/latest/rss', label:'Wired Business'},
+    {url:'https://www.wired.com/feed/category/science/latest/rss',  label:'Wired Science'},
     {url:'https://feeds.feedburner.com/TheHackersNews', label:'The Hacker News'},
+    {url:'https://www.helpnetsecurity.com/feed/',       label:'Help Net Security'},
+  ],
+  net: [
+    {url:'https://feeds.feedburner.com/TheHackersNews', label:'The Hacker News'},
+    {url:'https://www.helpnetsecurity.com/feed/',       label:'Help Net Security'},
+    {url:'https://www.bleepingcomputer.com/feed/',      label:'BleepingComputer'},
+    {url:'https://krebsonsecurity.com/feed/',           label:'Krebs on Security'},
+  ],
+  sec: [
     {url:'https://krebsonsecurity.com/feed/',           label:'Krebs on Security'},
     {url:'https://www.bleepingcomputer.com/feed/',      label:'BleepingComputer'},
-    {url:'https://www.wired.com/feed/category/security/latest/rss', label:'Wired Security'},
+    {url:'https://feeds.feedburner.com/TheHackersNews', label:'The Hacker News'},
     {url:'https://www.helpnetsecurity.com/feed/',       label:'Help Net Security'},
   ],
   ot: [
@@ -251,6 +289,9 @@ const NEWS_FEEDS = {
 
 // Keywords to filter by tab for relevance
 const KEYWORDS = {
+  it:       ['cloud','ai ','artificial intelligence','saas','devops','infrastructure','kubernetes','docker','aws','azure','gcp','software','api','enterprise','digital transformation','data center'],
+  net:      ['network','microsegmentation','zero trust','sdn','firewall','vlan','routing','switching','bgp','ospf','wan','sd-wan','vpn','packet','overlay','segment','vxlan'],
+  sec:      ['ransomware','malware','breach','exploit','vulnerability','cve','patch','threat','attack','phishing','apt','zero-day','incident','ioc','siem','edr','xdr'],
   ot:       ['ics','scada','industrial','plc','operational technology','ot security','critical infrastructure','modbus','dnp3','purdue','factory','manufacturing','energy grid','pipeline','water treatment'],
   hc:       ['hospital','healthcare','medical','iomt','hipaa','clinical','patient','device','health system','emr','ehr','pharmacy','radiology','nurse','physician','health-isac','hc3'],
   fin:      ['bank','financial','fintech','sec ','dora','payment','fraud','regulatory','compliance','ransomware'],
@@ -260,11 +301,23 @@ const KEYWORDS = {
 
 // ── PODCAST DATA (static shows + working rss feeds) ───────────────────────
 const PODS_STATIC = {
-  cyber: [
-    {icon:'🔐',label:'InfoSec',name:'Risky Business',desc:'Weekly infosec news and interviews. The gold standard for staying current.',url:'https://risky.biz',rss:'https://risky.biz/feeds/risky-business/'},
-    {icon:'🕵️',label:'Stories',name:'Darknet Diaries',desc:'True stories from the dark side of the internet — hacks, breaches, cybercrime.',url:'https://darknetdiaries.com',rss:'https://feeds.megaphone.fm/darknetdiaries'},
-    {icon:'📻',label:'Daily Brief',name:'CyberWire Daily',desc:'Daily 20-min briefing on the day\'s top cybersecurity stories. Perfect commute listen.',url:'https://thecyberwire.com/podcasts/daily-podcast',rss:null},
-    {icon:'🛡️',label:'Technical',name:'Security Now',desc:'Steve Gibson goes deep on security architecture, crypto, and zero trust topics.',url:'https://twit.tv/shows/security-now',rss:null},
+  it: [
+    {icon:'🎙',label:'Tech News',name:'Wired Podcast',desc:'Wired editors break down the biggest technology stories — AI, cloud, enterprise tech, policy.',url:'https://www.wired.com/podcasts/',rss:null},
+    {icon:'🤖',label:'AI & Cloud',name:'Lex Fridman Podcast',desc:'Long-form interviews with leading AI researchers, engineers, and technology executives.',url:'https://lexfridman.com/podcast/',rss:null},
+    {icon:'☁️',label:'Cloud Security',name:'Google Cloud Security Podcast',desc:'Cloud security architecture, IAM, DevSecOps, and enterprise cloud practices.',url:'https://cloud.withgoogle.com/cloudsecurity/podcast/',rss:null},
+    {icon:'🚀',label:'DevOps',name:'Ship It! (Changelog)',desc:'DevOps, infrastructure, Kubernetes, and platform engineering conversations.',url:'https://changelog.com/shipit',rss:null},
+  ],
+  net: [
+    {icon:'🌐',label:'Networking Deep Dive',name:'Packet Pushers Heavy Networking',desc:'BGP, SDN, SD-WAN, microsegmentation — technical networking from practitioners. Perfect for SE work.',url:'https://packetpushers.net/podcast/heavy-networking/',rss:'https://packetpushers.net/feed/podcast/'},
+    {icon:'🔒',label:'Zero Trust',name:'Zero Trust Security Podcast',desc:'Zero trust architecture, microsegmentation, and identity-first network design.',url:'https://www.illumio.com/resource-center/podcasts',rss:null},
+    {icon:'🛡️',label:'Network Security',name:'Security Now',desc:'Steve Gibson on TLS, encryption, network protocols and architecture — great depth on network security.',url:'https://twit.tv/shows/security-now',rss:null},
+    {icon:'📡',label:'Network Engineering',name:'Network Collective',desc:'Routing, switching, architecture, and the future of enterprise networking from working engineers.',url:'https://networkcollective.com/podcast/',rss:null},
+  ],
+  sec: [
+    {icon:'🔐',label:'InfoSec',name:'Risky Business',desc:'Weekly infosec news and practitioner interviews. The gold standard for staying current on threats.',url:'https://risky.biz',rss:'https://risky.biz/feeds/risky-business/'},
+    {icon:'🕵️',label:'True Crime Cyber',name:'Darknet Diaries',desc:'True stories from the dark side — hacks, breaches, nation-state attacks, and cybercrime.',url:'https://darknetdiaries.com',rss:'https://feeds.megaphone.fm/darknetdiaries'},
+    {icon:'📻',label:'Daily Brief',name:'CyberWire Daily',desc:'Daily 20-min briefing on the top cybersecurity stories. Perfect commute listen.',url:'https://thecyberwire.com/podcasts/daily-podcast',rss:null},
+    {icon:'🧠',label:'Threat Intel',name:'SANS Internet Stormcast',desc:'Daily 5-min threat intel from SANS ISC handlers — CVEs, active exploits, and emerging threats.',url:'https://isc.sans.edu/podcast.html',rss:null},
   ],
   ot: [
     {icon:'🔐',label:'InfoSec',name:'Risky Business',desc:'Regular ICS/OT and critical infrastructure security coverage alongside broader infosec news.',url:'https://risky.biz',rss:'https://risky.biz/feeds/risky-business/'},
@@ -351,8 +404,8 @@ async function fetchPanel(key){
     // sort by keyword relevance for OT/fin/training/cissp tabs
     if(KEYWORDS[key]) items.sort((a,b)=>scoreItem(b,key)-scoreItem(a,key));
     items = items.slice(0,9);
-    const accent = {cyber:'var(--ca)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',cissp:'var(--csa)'}[key];
-    const tag = {cyber:'Cyber & IT',ot:'Industrial OT',hc:'Healthcare',fin:'Finance & Reg',training:'Training',cissp:'CISSP'}[key];
+    const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',cissp:'var(--csa)'}[key];
+    const tag = {it:'IT & Tech',net:'Networking',sec:'Cybersecurity',ot:'Industrial OT',hc:'Healthcare',fin:'Finance & Reg',training:'Training',cissp:'CISSP'}[key];
     if(!items.length){
       document.getElementById('cards-'+key).innerHTML=`<div class="state-box"><span class="si">⚠️</span><p>Couldn't load feeds. Try again in a moment.</p></div>`;
     } else {
@@ -377,7 +430,7 @@ async function fetchPanel(key){
 
 // ── PODCASTS ──────────────────────────────────────────────────────────────
 function renderStaticPods(key){
-  const accent = {cyber:'var(--ca)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',cissp:'var(--csa)'}[key];
+  const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',cissp:'var(--csa)'}[key];
   return `<div class="grid">`+
     PODS_STATIC[key].map(p=>`
       <a class="pc" href="${p.url}" target="_blank" rel="noopener" style="--ac:${accent}">
@@ -391,7 +444,7 @@ function renderStaticPods(key){
 }
 
 async function fetchPodEpisodes(key){
-  const accent = {cyber:'var(--ca)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',cissp:'var(--csa)'}[key];
+  const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',cissp:'var(--csa)'}[key];
   const pods = PODS_STATIC[key].filter(p=>p.rss);
   if(!pods.length) return renderStaticPods(key);
   const results = await Promise.all(pods.map(async p=>{
@@ -421,7 +474,7 @@ async function fetchPodEpisodes(key){
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────────
-['cyber','ot','hc','fin','training','cissp'].forEach(key=>{
+['it','net','sec','ot','hc','fin','training','cissp'].forEach(key=>{
   document.getElementById('pod-'+key).innerHTML = renderStaticPods(key);
 });
 
@@ -438,7 +491,7 @@ document.querySelectorAll('.plb').forEach(btn=>{
     try{
       el.innerHTML = await fetchPodEpisodes(key);
       btn.innerHTML='✓ Live Episodes';
-      const accent = {cyber:'var(--ca)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',cissp:'var(--csa)'}[key];
+      const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',cissp:'var(--csa)'}[key];
       btn.style.color=`color-mix(in srgb, ${accent} 100%, transparent)`;
       btn.style.borderColor=`color-mix(in srgb, ${accent} 100%, transparent)`;
     }catch{
