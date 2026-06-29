@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thomas's Daily Briefing</title>
+<title>Thomas's Daily Brief</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
@@ -14,20 +14,13 @@
     --paper: #f7f6f2;
     --rule: #d8d5ce;
     --muted: #888580;
-    --cyber: #053242;
-    --cyber-light: #0B6280;
-    --cyber-accent: #54B9F1;
-    --ot: #1a3a2a;
-    --ot-accent: #4caf82;
-    --fin: #2a1f0f;
-    --fin-accent: #c9933a;
-    --training: #1f1a2e;
-    --training-accent: #9b6fe0;
     --card-bg: #ffffff;
     --loading-strip: #e8e6e0;
+    --cyber-accent: #54B9F1;
+    --ot-accent: #4caf82;
+    --fin-accent: #c9933a;
+    --training-accent: #9b6fe0;
   }
-
-  html { font-size: 16px; }
 
   body {
     background: var(--paper);
@@ -38,7 +31,6 @@
     min-height: 100vh;
   }
 
-  /* MASTHEAD */
   .masthead {
     border-bottom: 2px solid var(--ink);
     padding: 20px 32px 14px;
@@ -48,8 +40,6 @@
     flex-wrap: wrap;
     gap: 8px;
   }
-
-  .masthead-left {}
 
   .pub-name {
     font-family: 'DM Serif Display', serif;
@@ -75,10 +65,8 @@
     line-height: 1.4;
   }
 
-  /* NAV TABS — the signature element: vertical rule left-border tabs */
   .nav-strip {
     display: flex;
-    gap: 0;
     padding: 0 32px;
     border-bottom: 1px solid var(--rule);
     overflow-x: auto;
@@ -105,38 +93,29 @@
   }
 
   .tab-btn:hover { color: var(--ink); }
-
-  .tab-btn.active {
-    color: var(--ink);
-  }
-
+  .tab-btn.active { color: var(--ink); }
   .tab-btn.active::after {
     content: '';
     position: absolute;
-    bottom: -1px;
-    left: 0;
-    right: 0;
+    bottom: -1px; left: 0; right: 0;
     height: 3px;
     background: var(--tab-color, var(--ink));
   }
 
   .tab-btn[data-tab="cyber"] { --tab-color: var(--cyber-accent); }
-  .tab-btn[data-tab="ot"] { --tab-color: var(--ot-accent); }
-  .tab-btn[data-tab="fin"] { --tab-color: var(--fin-accent); }
+  .tab-btn[data-tab="ot"]    { --tab-color: var(--ot-accent); }
+  .tab-btn[data-tab="fin"]   { --tab-color: var(--fin-accent); }
   .tab-btn[data-tab="training"] { --tab-color: var(--training-accent); }
 
-  /* MAIN */
   .main {
     padding: 28px 32px 60px;
     max-width: 1100px;
     margin: 0 auto;
   }
 
-  /* PANEL */
   .panel { display: none; }
   .panel.active { display: block; }
 
-  /* PANEL HEADER */
   .panel-header {
     display: flex;
     align-items: center;
@@ -145,8 +124,6 @@
     flex-wrap: wrap;
     gap: 12px;
   }
-
-  .panel-title-group {}
 
   .panel-eyebrow {
     font-size: 0.68rem;
@@ -178,7 +155,6 @@
     border-radius: 2px;
     transition: all 0.15s;
   }
-
   .fetch-btn:hover { opacity: 0.8; }
   .fetch-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
@@ -195,14 +171,12 @@
 
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* CARDS GRID */
   .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 16px;
   }
 
-  /* SKELETON */
   .skeleton-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -225,16 +199,15 @@
     border-radius: 2px;
     margin-bottom: 10px;
   }
-  .skeleton-line.short { width: 60%; }
+  .skeleton-line.short  { width: 60%; }
   .skeleton-line.medium { width: 85%; }
-  .skeleton-line.tag { width: 35%; height: 8px; margin-top: 18px; }
+  .skeleton-line.tag    { width: 35%; height: 8px; margin-top: 18px; }
 
   @keyframes shimmer {
-    0% { background-position: 200% 0; }
+    0%   { background-position: 200% 0; }
     100% { background-position: -200% 0; }
   }
 
-  /* NEWS CARD */
   .news-card {
     background: var(--card-bg);
     border: 1px solid var(--rule);
@@ -245,19 +218,17 @@
     gap: 8px;
     transition: box-shadow 0.15s;
     position: relative;
+    text-decoration: none;
+    color: inherit;
   }
-
   .news-card::before {
     content: '';
     position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
+    left: 0; top: 0; bottom: 0;
     width: 3px;
     border-radius: 3px 0 0 3px;
     background: var(--accent-color, var(--rule));
   }
-
   .news-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
 
   .card-tag {
@@ -280,6 +251,10 @@
     color: #444;
     line-height: 1.55;
     flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .card-meta {
@@ -295,16 +270,11 @@
     color: var(--muted);
   }
 
-  .card-relevance {
+  .card-date {
     font-size: 0.66rem;
-    font-weight: 600;
-    padding: 2px 7px;
-    border-radius: 20px;
-    background: color-mix(in srgb, var(--accent-color, var(--rule)) 15%, transparent);
-    color: var(--accent-color, var(--muted));
+    color: var(--muted);
   }
 
-  /* EMPTY / ERROR STATES */
   .state-box {
     border: 1px dashed var(--rule);
     border-radius: 3px;
@@ -312,55 +282,31 @@
     text-align: center;
     color: var(--muted);
   }
+  .state-box .state-icon { font-size: 2rem; margin-bottom: 12px; display: block; }
+  .state-box p { font-size: 0.85rem; max-width: 300px; margin: 0 auto; line-height: 1.6; }
 
-  .state-box .state-icon {
-    font-size: 2rem;
-    margin-bottom: 12px;
-    display: block;
+  .feed-credit {
+    margin-top: 18px;
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
   }
 
-  .state-box p {
-    font-size: 0.85rem;
-    max-width: 300px;
-    margin: 0 auto;
-    line-height: 1.6;
-  }
-
-  /* SUMMARY BAR */
-  .summary-bar {
-    background: var(--ink);
-    color: var(--paper);
-    border-radius: 3px;
-    padding: 14px 20px;
-    margin-bottom: 20px;
-    font-size: 0.84rem;
-    line-height: 1.6;
-    display: none;
-  }
-
-  .summary-bar.visible { display: block; }
-
-  .summary-bar strong {
-    font-family: 'DM Serif Display', serif;
-    font-size: 0.95rem;
-    font-style: italic;
-  }
-
-  /* RESPONSIVE */
   @media (max-width: 640px) {
-    .masthead { padding: 16px 16px 12px; }
+    .masthead  { padding: 16px 16px 12px; }
     .nav-strip { padding: 0 16px; }
-    .main { padding: 20px 16px 48px; }
-    .tab-btn { padding: 10px 12px; font-size: 0.72rem; }
+    .main      { padding: 20px 16px 48px; }
+    .tab-btn   { padding: 10px 12px; font-size: 0.72rem; }
   }
 </style>
 </head>
 <body>
 
 <header class="masthead">
-  <div class="masthead-left">
+  <div>
     <div class="pub-name">The Daily Brief</div>
-    <div class="pub-tagline">Security · OT · Finance · Training — curated by AI</div>
+    <div class="pub-tagline">Security · OT · Finance · Training</div>
   </div>
   <div class="datestamp" id="datestamp"></div>
 </header>
@@ -374,177 +320,74 @@
 
 <main class="main">
 
-  <!-- CYBER PANEL -->
   <div class="panel active" id="panel-cyber">
     <div class="panel-header">
-      <div class="panel-title-group">
-        <div class="panel-eyebrow" style="color: var(--cyber-accent);">IT · Cybersecurity · Microsegmentation · Zero Trust</div>
+      <div>
+        <div class="panel-eyebrow" style="color:var(--cyber-accent)">IT · Cybersecurity · Microsegmentation · Zero Trust</div>
         <div class="panel-title">What's moving in cyber</div>
       </div>
       <button class="fetch-btn" data-panel="cyber">
-        <div class="spinner"></div>
-        <span class="btn-label">Fetch Latest</span>
+        <div class="spinner"></div><span class="btn-label">Fetch Latest</span>
       </button>
     </div>
-    <div class="summary-bar" id="summary-cyber"></div>
     <div class="cards-container" id="cards-cyber">
-      <div class="state-box">
-        <span class="state-icon">📡</span>
-        <p>Hit <strong>Fetch Latest</strong> to pull current headlines on cybersecurity, microsegmentation, zero trust, and IT trends.</p>
-      </div>
+      <div class="state-box"><span class="state-icon">📡</span><p>Hit <strong>Fetch Latest</strong> to load current cybersecurity headlines.</p></div>
     </div>
   </div>
 
-  <!-- OT PANEL -->
   <div class="panel" id="panel-ot">
     <div class="panel-header">
-      <div class="panel-title-group">
-        <div class="panel-eyebrow" style="color: var(--ot-accent);">Healthcare · Hospital OT/IoMT · HIPAA · ICS Security</div>
+      <div>
+        <div class="panel-eyebrow" style="color:var(--ot-accent)">Healthcare · Hospital OT · IoMT · ICS Security</div>
         <div class="panel-title">Healthcare &amp; OT security</div>
       </div>
       <button class="fetch-btn" data-panel="ot">
-        <div class="spinner"></div>
-        <span class="btn-label">Fetch Latest</span>
+        <div class="spinner"></div><span class="btn-label">Fetch Latest</span>
       </button>
     </div>
-    <div class="summary-bar" id="summary-ot"></div>
     <div class="cards-container" id="cards-ot">
-      <div class="state-box">
-        <span class="state-icon">🏥</span>
-        <p>Hit <strong>Fetch Latest</strong> to pull current headlines on hospital OT, IoMT security, healthcare cyber incidents, and HIPAA/HC3 advisories.</p>
-      </div>
+      <div class="state-box"><span class="state-icon">🏥</span><p>Hit <strong>Fetch Latest</strong> to load current hospital OT and healthcare security headlines.</p></div>
     </div>
   </div>
 
-  <!-- FINANCE PANEL -->
   <div class="panel" id="panel-fin">
     <div class="panel-header">
-      <div class="panel-title-group">
-        <div class="panel-eyebrow" style="color: var(--fin-accent);">Financial Services · SEC · DORA · FS-ISAC · Compliance</div>
+      <div>
+        <div class="panel-eyebrow" style="color:var(--fin-accent)">Financial Services · SEC · DORA · Compliance</div>
         <div class="panel-title">Finance &amp; regulatory landscape</div>
       </div>
       <button class="fetch-btn" data-panel="fin">
-        <div class="spinner"></div>
-        <span class="btn-label">Fetch Latest</span>
+        <div class="spinner"></div><span class="btn-label">Fetch Latest</span>
       </button>
     </div>
-    <div class="summary-bar" id="summary-fin"></div>
     <div class="cards-container" id="cards-fin">
-      <div class="state-box">
-        <span class="state-icon">💼</span>
-        <p>Hit <strong>Fetch Latest</strong> to pull current headlines on financial sector cybersecurity regulations, SEC rules, DORA, and FS-ISAC alerts.</p>
-      </div>
+      <div class="state-box"><span class="state-icon">💼</span><p>Hit <strong>Fetch Latest</strong> to load current financial sector security and regulation headlines.</p></div>
     </div>
   </div>
 
-  <!-- TRAINING PANEL -->
   <div class="panel" id="panel-training">
     <div class="panel-header">
-      <div class="panel-title-group">
-        <div class="panel-eyebrow" style="color: var(--training-accent);">Strength · Running · Wrestling · Periodization · Recovery</div>
+      <div>
+        <div class="panel-eyebrow" style="color:var(--training-accent)">Strength · Running · Wrestling · Periodization</div>
         <div class="panel-title">Training &amp; performance</div>
       </div>
       <button class="fetch-btn" data-panel="training">
-        <div class="spinner"></div>
-        <span class="btn-label">Fetch Latest</span>
+        <div class="spinner"></div><span class="btn-label">Fetch Latest</span>
       </button>
     </div>
-    <div class="summary-bar" id="summary-training"></div>
     <div class="cards-container" id="cards-training">
-      <div class="state-box">
-        <span class="state-icon">🏋️</span>
-        <p>Hit <strong>Fetch Latest</strong> to pull current topics on strength training, running, wrestling conditioning, and periodization science.</p>
-      </div>
+      <div class="state-box"><span class="state-icon">🏋️</span><p>Hit <strong>Fetch Latest</strong> to load current strength, running, and wrestling training content.</p></div>
     </div>
   </div>
 
 </main>
 
 <script>
-// ── CONFIG ─────────────────────────────────────────────────────────────────
-const PANELS = {
-  cyber: {
-    accent: '#54B9F1',
-    eyebrow: 'Cyber & IT',
-    summaryPrompt: `You are a cybersecurity analyst summarizing today's most important trends. Write ONE sentence (max 40 words) as an editorial summary of the themes across these headlines. Be sharp and specific.`,
-    searchQuery: `Search for the latest news (June 2026) on: cybersecurity trends, microsegmentation, zero trust network access, IT security incidents, CISA advisories, network segmentation, EDR/XDR, and threat intelligence. Return 6 of the most relevant and recent items.`,
-    cardPrompt: (results) => `You are a senior IT/security analyst. Based on these web search results about cybersecurity trends, microsegmentation, zero trust, and IT security, extract and return ONLY a JSON array of exactly 6 news items. No preamble, no markdown fences, just the raw JSON array.
-
-Each item must have:
-- "tag": a short 2-3 word topic label (e.g. "Zero Trust", "Microsegmentation", "Threat Intel")
-- "headline": a crisp, informative headline (max 12 words)
-- "summary": a 2-sentence summary of why this matters for a security professional (max 50 words)
-- "source": source name or "Web Search"
-- "relevance": one of "High" | "Medium"
-
-Search results:
-${results}
-
-Return ONLY the JSON array.`
-  },
-  ot: {
-    accent: '#4caf82',
-    eyebrow: 'Hospital OT',
-    summaryPrompt: `You are a healthcare cybersecurity analyst. Write ONE editorial sentence (max 40 words) summarizing the key theme across these hospital OT/IoMT security headlines.`,
-    searchQuery: `Search for the latest news (June 2026) on: hospital OT security, healthcare cyber attacks, IoMT device security, HIPAA cybersecurity, HC3 advisories, medical device vulnerabilities, ICS/SCADA in healthcare, ransomware hospitals. Return 6 of the most relevant recent items.`,
-    cardPrompt: (results) => `You are a healthcare OT security expert. Based on these web search results about hospital OT, IoMT, healthcare cybersecurity, extract and return ONLY a JSON array of exactly 6 news items. No preamble, no markdown fences, just the raw JSON array.
-
-Each item must have:
-- "tag": a short 2-3 word topic label (e.g. "IoMT Security", "Ransomware", "HIPAA")
-- "headline": a crisp, informative headline (max 12 words)
-- "summary": a 2-sentence summary of why this matters for a healthcare security professional (max 50 words)
-- "source": source name or "Web Search"
-- "relevance": one of "High" | "Medium"
-
-Search results:
-${results}
-
-Return ONLY the JSON array.`
-  },
-  fin: {
-    accent: '#c9933a',
-    eyebrow: 'Finance & Reg',
-    summaryPrompt: `You are a financial sector cybersecurity analyst. Write ONE editorial sentence (max 40 words) summarizing the key regulatory or security theme across these financial sector headlines.`,
-    searchQuery: `Search for the latest news (June 2026) on: financial sector cybersecurity regulations, SEC cybersecurity rules, DORA compliance, FS-ISAC alerts, banking cyber threats, fintech security, PCI DSS updates, financial services zero trust. Return 6 of the most relevant recent items.`,
-    cardPrompt: (results) => `You are a financial sector security and compliance expert. Based on these web search results about financial regulations, SEC rules, DORA, FS-ISAC, extract and return ONLY a JSON array of exactly 6 news items. No preamble, no markdown fences, just the raw JSON array.
-
-Each item must have:
-- "tag": a short 2-3 word topic label (e.g. "SEC Rules", "DORA", "Ransomware")
-- "headline": a crisp, informative headline (max 12 words)
-- "summary": a 2-sentence summary of why this matters for a financial security professional (max 50 words)
-- "source": source name or "Web Search"
-- "relevance": one of "High" | "Medium"
-
-Search results:
-${results}
-
-Return ONLY the JSON array.`
-  },
-  training: {
-    accent: '#9b6fe0',
-    eyebrow: 'Training',
-    summaryPrompt: `You are a strength and conditioning coach. Write ONE editorial sentence (max 40 words) summarizing the key training insight or trend across these headlines.`,
-    searchQuery: `Search for the latest content (June 2026) on: strength training trends, running periodization, wrestling strength and conditioning, athlete recovery science, weight training programming, cross country training for wrestlers, creatine research, periodization methods. Return 6 of the most relevant recent items.`,
-    cardPrompt: (results) => `You are a sports science and strength coaching expert. Based on these web search results about strength training, running, wrestling conditioning, and athletic performance, extract and return ONLY a JSON array of exactly 6 items. No preamble, no markdown fences, just the raw JSON array.
-
-Each item must have:
-- "tag": a short 2-3 word topic label (e.g. "Strength Training", "Recovery", "Periodization")
-- "headline": a crisp, informative headline (max 12 words)
-- "summary": a 2-sentence summary of the key insight or finding (max 50 words)
-- "source": source name or "Web Search"
-- "relevance": one of "High" | "Medium"
-
-Search results:
-${results}
-
-Return ONLY the JSON array.`
-  }
-};
-
 // ── DATE ───────────────────────────────────────────────────────────────────
 const now = new Date();
 document.getElementById('datestamp').innerHTML =
-  `${now.toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric', year:'numeric'})}<br>${now.toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'})}`;
+  `${now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'})}<br>
+   ${now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})}`;
 
 // ── TABS ───────────────────────────────────────────────────────────────────
 document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -556,10 +399,57 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
+// ── FEEDS CONFIG ────────────────────────────────────────────────────────────
+// rss2json free API — no key needed, 1000 req/day per IP
+const API = 'https://api.rss2json.com/v1/api.json?rss_url=';
+
+const PANELS = {
+  cyber: {
+    accent: '#54B9F1',
+    tag: 'Cyber & IT',
+    feeds: [
+      { url: 'https://feeds.feedburner.com/TheHackersNews',        label: 'The Hacker News' },
+      { url: 'https://krebsonsecurity.com/feed/',                   label: 'Krebs on Security' },
+      { url: 'https://www.darkreading.com/rss.xml',                 label: 'Dark Reading' },
+      { url: 'https://www.bleepingcomputer.com/feed/',              label: 'BleepingComputer' },
+    ]
+  },
+  ot: {
+    accent: '#4caf82',
+    tag: 'Hospital OT',
+    feeds: [
+      { url: 'https://www.cisa.gov/uscert/ncas/alerts.xml',         label: 'CISA Alerts' },
+      { url: 'https://healthitsecurity.com/rss/news.xml',           label: 'HealthITSecurity' },
+      { url: 'https://www.beckershospitalreview.com/rss/healthit.xml', label: "Becker's Health IT" },
+      { url: 'https://www.darkreading.com/rss/vulnerabilities.xml', label: 'Dark Reading Vulns' },
+    ]
+  },
+  fin: {
+    accent: '#c9933a',
+    tag: 'Finance & Reg',
+    feeds: [
+      { url: 'https://www.finextra.com/rss/headlines.aspx',         label: 'Finextra' },
+      { url: 'https://www.bankinfosecurity.com/rss-feeds',          label: 'BankInfoSecurity' },
+      { url: 'https://feeds.feedburner.com/TheHackersNews',         label: 'The Hacker News' },
+      { url: 'https://www.darkreading.com/rss/risk.xml',            label: 'Dark Reading Risk' },
+    ]
+  },
+  training: {
+    accent: '#9b6fe0',
+    tag: 'Training',
+    feeds: [
+      { url: 'https://www.strengthrunning.com/feed/',               label: 'Strength Running' },
+      { url: 'https://www.t-nation.com/rss.xml',                    label: 'T-Nation' },
+      { url: 'https://barbend.com/feed/',                           label: 'BarBend' },
+      { url: 'https://breakingmuscle.com/feed/',                    label: 'Breaking Muscle' },
+    ]
+  }
+};
+
 // ── SKELETON ───────────────────────────────────────────────────────────────
-function renderSkeleton(containerId) {
-  const container = document.getElementById(containerId);
-  container.innerHTML = `<div class="skeleton-grid">` +
+function renderSkeleton(id) {
+  document.getElementById(id).innerHTML =
+    `<div class="skeleton-grid">` +
     Array(6).fill(0).map(() => `
       <div class="skeleton-card">
         <div class="skeleton-line short"></div>
@@ -571,115 +461,76 @@ function renderSkeleton(containerId) {
     `</div>`;
 }
 
-// ── RENDER CARDS ────────────────────────────────────────────────────────────
-function renderCards(containerId, summaryId, items, accent) {
-  const container = document.getElementById(containerId);
-  const summaryEl = document.getElementById(summaryId);
+// ── STRIP HTML ─────────────────────────────────────────────────────────────
+function stripHtml(html) {
+  const d = document.createElement('div');
+  d.innerHTML = html || '';
+  return d.textContent || d.innerText || '';
+}
 
-  if (!items || items.length === 0) {
-    container.innerHTML = `<div class="state-box"><span class="state-icon">⚠️</span><p>Couldn't parse results. Try fetching again.</p></div>`;
+function fmtDate(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  return isNaN(d) ? '' : d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+}
+
+// ── FETCH ONE FEED ─────────────────────────────────────────────────────────
+async function fetchFeed(feedUrl, label) {
+  try {
+    const res = await fetch(`${API}${encodeURIComponent(feedUrl)}&count=3`);
+    const data = await res.json();
+    if (data.status !== 'ok' || !data.items) return [];
+    return data.items.slice(0, 3).map(item => ({
+      headline: item.title || 'Untitled',
+      summary:  stripHtml(item.description || item.content || '').slice(0, 200),
+      link:     item.link || '#',
+      source:   label,
+      date:     fmtDate(item.pubDate)
+    }));
+  } catch(e) {
+    return [];
+  }
+}
+
+// ── RENDER CARDS ────────────────────────────────────────────────────────────
+function renderCards(containerId, items, accent, tag) {
+  const el = document.getElementById(containerId);
+  if (!items.length) {
+    el.innerHTML = `<div class="state-box"><span class="state-icon">⚠️</span><p>Couldn't load feeds right now. Try again in a moment.</p></div>`;
     return;
   }
-
-  container.innerHTML = `<div class="cards-grid">` + items.map(item => `
-    <div class="news-card" style="--accent-color: ${accent}">
-      <div class="card-tag">${item.tag || ''}</div>
-      <div class="card-headline">${item.headline || ''}</div>
-      <div class="card-summary">${item.summary || ''}</div>
-      <div class="card-meta">
-        <div class="card-source">${item.source || 'Web'}</div>
-        <div class="card-relevance" style="--accent-color: ${accent}">${item.relevance || 'Medium'}</div>
-      </div>
-    </div>`).join('') + `</div>`;
-
-  if (summaryEl) summaryEl.classList.add('visible');
+  el.innerHTML =
+    `<div class="cards-grid">` +
+    items.map(item => `
+      <a class="news-card" href="${item.link}" target="_blank" rel="noopener" style="--accent-color:${accent}">
+        <div class="card-tag">${tag}</div>
+        <div class="card-headline">${item.headline}</div>
+        <div class="card-summary">${item.summary}</div>
+        <div class="card-meta">
+          <div class="card-source">${item.source}</div>
+          <div class="card-date">${item.date}</div>
+        </div>
+      </a>`).join('') +
+    `</div>
+     <div class="feed-credit">via rss2json · click any card to read full article</div>`;
 }
 
-// ── CLAUDE API ─────────────────────────────────────────────────────────────
-async function callClaude(messages, maxTokens = 1000) {
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-6',
-      max_tokens: maxTokens,
-      tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-      messages
-    })
-  });
-  if (!response.ok) throw new Error(`API error: ${response.status}`);
-  return response.json();
-}
-
-function extractText(data) {
-  return (data.content || [])
-    .filter(b => b.type === 'text')
-    .map(b => b.text)
-    .join('\n');
-}
-
-function extractSearchResults(data) {
-  // Pull text from tool result blocks too
-  const parts = [];
-  for (const block of (data.content || [])) {
-    if (block.type === 'text') parts.push(block.text);
-    if (block.type === 'tool_result' && block.content) {
-      parts.push(...(block.content || []).filter(c => c.type === 'text').map(c => c.text));
-    }
-  }
-  return parts.join('\n');
-}
-
-// ── FETCH FLOW ─────────────────────────────────────────────────────────────
+// ── FETCH PANEL ─────────────────────────────────────────────────────────────
 async function fetchPanel(panelKey) {
   const cfg = PANELS[panelKey];
   const btn = document.querySelector(`.fetch-btn[data-panel="${panelKey}"]`);
-  const summaryEl = document.getElementById('summary-' + panelKey);
 
   btn.classList.add('loading');
   btn.disabled = true;
-  summaryEl.classList.remove('visible');
   renderSkeleton('cards-' + panelKey);
 
   try {
-    // Step 1: Web search via Claude
-    const searchData = await callClaude([
-      { role: 'user', content: cfg.searchQuery }
-    ], 2000);
-
-    const searchText = extractText(searchData);
-    const allText = searchText || 'No search results available.';
-
-    // Step 2: Extract structured cards
-    const cardsData = await callClaude([
-      { role: 'user', content: cfg.cardPrompt(allText) }
-    ], 1000);
-
-    const cardsRaw = extractText(cardsData).trim();
-    let items = [];
-    try {
-      const clean = cardsRaw.replace(/```json|```/g, '').trim();
-      const match = clean.match(/\[[\s\S]*\]/);
-      items = match ? JSON.parse(match[0]) : JSON.parse(clean);
-    } catch(e) {
-      console.warn('JSON parse failed:', e, cardsRaw);
-    }
-
-    // Step 3: Summary sentence
-    if (items.length > 0) {
-      const summaryData = await callClaude([
-        { role: 'user', content: `${cfg.summaryPrompt}\n\nHeadlines:\n${items.map(i => i.headline).join('\n')}` }
-      ], 200);
-      const summaryText = extractText(summaryData).trim();
-      summaryEl.innerHTML = `<strong>Editor's take:</strong> ${summaryText}`;
-    }
-
-    renderCards('cards-' + panelKey, 'summary-' + panelKey, items, cfg.accent);
-
-  } catch (err) {
-    console.error(err);
+    const results = await Promise.all(cfg.feeds.map(f => fetchFeed(f.url, f.label)));
+    const items = results.flat().slice(0, 9); // up to 9 cards
+    renderCards('cards-' + panelKey, items, cfg.accent, cfg.tag);
+  } catch(e) {
     document.getElementById('cards-' + panelKey).innerHTML =
-      `<div class="state-box"><span class="state-icon">⚠️</span><p>Something went wrong fetching results. Check your connection and try again.<br><small style="opacity:0.6">${err.message}</small></p></div>`;
+      `<div class="state-box"><span class="state-icon">⚠️</span><p>Something went wrong. Try again.<br><small>${e.message}</small></p></div>`;
   } finally {
     btn.classList.remove('loading');
     btn.disabled = false;
