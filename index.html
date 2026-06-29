@@ -163,6 +163,16 @@
     </div>
   </div>
 
+  <!-- ON THIS DAY -->
+  <div class="home-fact" id="home-history" style="background:var(--card-bg);color:var(--ink);border:1px solid var(--rule)">
+    <div class="home-fact-icon">📅</div>
+    <div>
+      <div class="home-fact-label" style="color:var(--muted)">On This Day in History</div>
+      <div class="home-fact-text" id="home-history-text" style="color:var(--ink)">Loading...</div>
+      <div id="home-history-year" style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--muted);margin-top:4px"></div>
+    </div>
+  </div>
+
   <!-- TOP STORIES LABEL -->
   <div style="font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;display:flex;align-items:center;gap:10px">
     Top story from each category
@@ -598,6 +608,76 @@ function pickDaily(arr) {
   return arr[day % arr.length];
 }
 
+// ON THIS DAY data — keyed by MM-DD
+const ON_THIS_DAY = {
+  "01-01":{y:1863,e:"The Emancipation Proclamation takes effect, freeing enslaved people in Confederate states."},
+  "01-07":{y:1979,e:"Vietnamese forces capture Phnom Penh, ending the Khmer Rouge regime in Cambodia."},
+  "01-17":{y:1991,e:"Operation Desert Storm begins as coalition forces launch air strikes against Iraq."},
+  "01-22":{y:1984,e:"Apple's iconic '1984' Macintosh ad airs during the Super Bowl, changing advertising forever."},
+  "01-27":{y:1967,e:"The Outer Space Treaty is signed, prohibiting nuclear weapons in space."},
+  "02-04":{y:2004,e:"Mark Zuckerberg launches 'TheFacebook' from his Harvard dorm room."},
+  "02-11":{y:1990,e:"Nelson Mandela is released from Victor Verster Prison after 27 years."},
+  "02-14":{y:1876,e:"Alexander Graham Bell files a patent for the telephone hours before Elisha Gray."},
+  "02-22":{y:1980,e:"The US Olympic hockey team defeats the Soviet Union in the 'Miracle on Ice' at Lake Placid."},
+  "03-06":{y:1857,e:"The Supreme Court issues the Dred Scott decision, ruling that African Americans were not citizens."},
+  "03-12":{y:1989,e:"Tim Berners-Lee submits his proposal for the World Wide Web to CERN."},
+  "03-15":{y:44,e:"Julius Caesar is assassinated on the Ides of March by members of the Roman Senate."},
+  "03-20":{y:2003,e:"The US-led coalition invades Iraq, beginning Operation Iraqi Freedom."},
+  "03-25":{y:1807,e:"Britain abolishes the slave trade with the Slave Trade Act."},
+  "04-04":{y:1968,e:"Martin Luther King Jr. is assassinated at the Lorraine Motel in Memphis, Tennessee."},
+  "04-12":{y:1961,e:"Yuri Gagarin becomes the first human in space aboard Vostok 1."},
+  "04-15":{y:1912,e:"The RMS Titanic sinks in the North Atlantic after striking an iceberg, killing over 1,500."},
+  "04-22":{y:1970,e:"The first Earth Day is celebrated, launching the modern environmental movement."},
+  "04-30":{y:1975,e:"Saigon falls to North Vietnamese forces, ending the Vietnam War."},
+  "05-06":{y:1954,e:"Roger Bannister runs the first sub-4-minute mile in 3:59.4 in Oxford, England."},
+  "05-08":{y:1945,e:"V-E Day: Germany surrenders unconditionally, ending World War II in Europe."},
+  "05-17":{y:1954,e:"The Supreme Court rules racial segregation in public schools unconstitutional in Brown v. Board of Education."},
+  "05-25":{y:1977,e:"Star Wars opens in theaters, transforming cinema and popular culture forever."},
+  "05-29":{y:1953,e:"Edmund Hillary and Tenzing Norgay become the first people to summit Mount Everest."},
+  "06-06":{y:1944,e:"D-Day: Allied forces land on the beaches of Normandy in the largest seaborne invasion in history."},
+  "06-17":{y:1972,e:"The Watergate burglary occurs, setting off a scandal that will bring down a US presidency."},
+  "06-21":{y:1948,e:"Columbia Records introduces the 33⅓ RPM LP record, revolutionizing the music industry."},
+  "06-25":{y:1950,e:"North Korea invades South Korea, beginning the Korean War."},
+  "06-28":{y:1914,e:"Archduke Franz Ferdinand is assassinated in Sarajevo, triggering World War I."},
+  "06-29":{y:1995,e:"The US Space Shuttle Atlantis docks with the Russian Mir space station for the first time."},
+  "07-04":{y:1776,e:"The United States Declaration of Independence is adopted by the Continental Congress."},
+  "07-16":{y:1969,e:"Apollo 11 launches from Kennedy Space Center, beginning humanity's first journey to the Moon."},
+  "07-20":{y:1969,e:"Neil Armstrong becomes the first human to walk on the Moon: 'One small step for man...'"},
+  "07-26":{y:1948,e:"President Truman signs Executive Order 9981, desegregating the US Armed Forces."},
+  "08-06":{y:1945,e:"The United States drops an atomic bomb on Hiroshima, Japan."},
+  "08-09":{y:1974,e:"Richard Nixon resigns as President of the United States, the only president to do so."},
+  "08-12":{y:1981,e:"IBM introduces the IBM PC, launching the personal computer revolution."},
+  "08-28":{y:1963,e:"Martin Luther King Jr. delivers his 'I Have a Dream' speech at the Lincoln Memorial."},
+  "09-02":{y:1945,e:"Japan signs the instrument of surrender aboard USS Missouri, officially ending World War II."},
+  "09-09":{y:1956,e:"Elvis Presley appears on The Ed Sullivan Show for the first time, drawing 60 million viewers."},
+  "09-11":{y:2001,e:"Terrorist attacks destroy the World Trade Center and damage the Pentagon, killing nearly 3,000."},
+  "09-25":{y:1956,e:"The first transatlantic telephone cable, TAT-1, begins commercial service."},
+  "10-04":{y:1957,e:"The Soviet Union launches Sputnik 1, the first artificial Earth satellite, beginning the Space Age."},
+  "10-14":{y:1947,e:"Chuck Yeager breaks the sound barrier for the first time in the Bell X-1 aircraft."},
+  "10-19":{y:1987,e:"Black Monday: the Dow Jones drops 22.6% in a single day, the largest one-day crash in history."},
+  "10-24":{y:1945,e:"The United Nations officially comes into existence after ratification of its charter."},
+  "10-29":{y:1969,e:"The first message is sent over ARPANET — the precursor to the internet. It crashed after two letters."},
+  "11-09":{y:1989,e:"The Berlin Wall falls as East Germany opens its borders, reuniting families separated for 28 years."},
+  "11-11":{y:1918,e:"World War I ends as an armistice takes effect at the 11th hour of the 11th day of the 11th month."},
+  "11-22":{y:1963,e:"President John F. Kennedy is assassinated in Dallas, Texas."},
+  "12-01":{y:1955,e:"Rosa Parks refuses to give up her bus seat in Montgomery, Alabama, sparking the civil rights movement."},
+  "12-07":{y:1941,e:"Japan attacks Pearl Harbor, drawing the United States into World War II."},
+  "12-17":{y:1903,e:"The Wright Brothers make the first successful powered airplane flight at Kitty Hawk, North Carolina."},
+  "12-25":{y:1991,e:"Mikhail Gorbachev resigns as president of the USSR, formally dissolving the Soviet Union."},
+  "12-31":{y:1999,e:"The world holds its breath for Y2K as the millennium rolls over — and computers mostly keep running."},
+};
+
+function getTodayHistory() {
+  const now = new Date();
+  const mm = String(now.getMonth()+1).padStart(2,'0');
+  const dd = String(now.getDate()).padStart(2,'0');
+  const key = mm+'-'+dd;
+  if (ON_THIS_DAY[key]) return ON_THIS_DAY[key];
+  // fallback: find nearest date
+  const keys = Object.keys(ON_THIS_DAY).sort();
+  return ON_THIS_DAY[keys[Math.floor(keys.length/2)]];
+}
+
 function initHome() {
   // Date
   const now = new Date();
@@ -612,6 +692,11 @@ function initHome() {
   // Fact
   const f = pickDaily(FACTS.slice().reverse()); // offset from quote
   document.getElementById('home-fact-text').textContent = f;
+
+  // On This Day
+  const hist = getTodayHistory();
+  document.getElementById('home-history-text').textContent = hist.e;
+  document.getElementById('home-history-year').textContent = hist.y + ' AD';
 }
 
 // HOME TABS CONFIG for pulling top story
