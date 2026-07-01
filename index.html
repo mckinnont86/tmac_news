@@ -666,9 +666,12 @@ const FACTS = [
   "Phishing attacks account for over 90% of data breaches worldwide.",
 ];
 
-function pickPeriod(arr) {
-  // Changes every 4 hours (86400000ms / day, 6 periods of 4hrs each)
-  const period = Math.floor(Date.now() / (4 * 60 * 60 * 1000));
+function pickPeriod4(arr, offset=0) {
+  const period = Math.floor(Date.now() / (4 * 60 * 60 * 1000)) + offset;
+  return arr[period % arr.length];
+}
+function pickPeriod8(arr, offset=0) {
+  const period = Math.floor(Date.now() / (8 * 60 * 60 * 1000)) + offset;
   return arr[period % arr.length];
 }
 
@@ -732,40 +735,104 @@ const ON_THIS_DAY = {
 };
 
 function getTodayHistory() {
+  // Rotates 3x per day — picks a different entry every 8 hours
+  // Anchors to today's date for first pick, then shifts by period
   const now = new Date();
   const mm = String(now.getMonth()+1).padStart(2,'0');
   const dd = String(now.getDate()).padStart(2,'0');
-  const key = mm+'-'+dd;
-  if (ON_THIS_DAY[key]) return ON_THIS_DAY[key];
-  // fallback: find nearest date
-  const keys = Object.keys(ON_THIS_DAY).sort();
-  return ON_THIS_DAY[keys[Math.floor(keys.length/2)]];
+  const todayKey = mm+'-'+dd;
+  const allKeys = Object.keys(ON_THIS_DAY).sort();
+  const baseIdx = allKeys.indexOf(todayKey) >= 0
+    ? allKeys.indexOf(todayKey)
+    : Math.floor(allKeys.length / 2);
+  const period8 = Math.floor(Date.now() / (8 * 60 * 60 * 1000));
+  const idx = (baseIdx + period8) % allKeys.length;
+  return ON_THIS_DAY[allKeys[idx]];
 }
 
 function initHome() {
   const now = new Date();
   const hour = now.getHours();
 
-  // Time-aware greeting
-  let greeting;
-  if (hour >= 5 && hour < 12)       greeting = 'Good morning, Thomas';
-  else if (hour >= 12 && hour < 17) greeting = 'Good afternoon, Thomas';
-  else if (hour >= 17 && hour < 21) greeting = 'Good evening, Thomas';
-  else                              greeting = 'Working late, Thomas';
+  // Rotating time-aware greetings — pool per time window, picked every 4hrs
+  const GREETINGS = {
+    morning: [
+      'Good morning, Thomas',
+      'Rise and grind, Thomas — the firewall won\'t manage itself',
+      'Morning, Thomas. Coffee first, packets second',
+      'The early bird gets the threat intel',
+      'Good morning — the CISSP exam isn\'t going to pass itself',
+      'Wakey wakey, Thomas. The adversary started 3 hours ago',
+      'Morning. Today\'s a good day to segment something',
+      'Salutations and good tidings on this fine morning, Thomas',
+      'Good morning — G-Mac\'s not going to out-train himself either',
+      'Top of the morning, Thomas. Let\'s build something today',
+      'Morning briefing commencing. Threat level: coffee required',
+      'Good morning. The logs from last night aren\'t going to read themselves',
+    ],
+    afternoon: [
+      'Good afternoon, Thomas',
+      'Afternoon check-in. How\'s the zero trust journey going?',
+      'Post-lunch situational awareness restored, Thomas',
+      'Good afternoon — hope the morning tickets weren\'t too spicy',
+      'Afternoon, Thomas. The network perimeter called. It says it\'s dead',
+      'Good afternoon. You\'ve survived the morning. Impressive',
+      'Greetings, afternoon Thomas. A different man than morning Thomas',
+      'The sun is past the meridian and you\'re still at it. Respect',
+      'Afternoon, Thomas. Somewhere G-Mac is doing wall sits right now',
+      'Good afternoon — the CISSP domains aren\'t going to memorize themselves',
+      'Mid-afternoon intelligence report: you\'re still here. Well done',
+      'Bonjour, Thomas. Oui, it is the afternoon',
+    ],
+    evening: [
+      'Good evening, Thomas',
+      'Evening, Thomas. Time to close the loop on today\'s incidents',
+      'Good evening — hope the day\'s threat surface was manageable',
+      'Evening. The network sleeps. You, apparently, do not',
+      'Good evening, Thomas. Dinner first, then maybe one more domain',
+      'Evening briefing initiated. Status: survived another Tuesday',
+      'Ah, evening — when the real security work begins',
+      'Good evening, Thomas. The firewall held. Today',
+      'Evening. G-Mac better be in recovery mode by now',
+      'Welcome to the evening shift, Thomas',
+      'Good evening — one more CISSP chapter before bed?',
+      'The day winds down. The threat actors do not. Good evening',
+    ],
+    late: [
+      'Working late, Thomas',
+      'You\'re still here. The network appreciates your dedication',
+      'Late night ops. Respect',
+      'Thomas. Go to sleep. The logs will be here in the morning',
+      'It\'s late. The threat actors thank you for your service hours',
+      'Night owl mode activated, Thomas',
+      'Sleep is a performance enhancer. Just saying',
+      'Late night session detected. Hydration status: unknown',
+      'The CISSP exam does not require sleep deprivation. But here we are',
+      'Burning the midnight oil, Thomas. Classic',
+      'System check: human operator running low on sleep. Recommend reboot',
+      'G-Mac is asleep. You should be too. But here we are',
+    ],
+  };
 
-  document.getElementById('home-greeting').textContent = greeting;
+  let pool;
+  if (hour >= 5 && hour < 12)       pool = GREETINGS.morning;
+  else if (hour >= 12 && hour < 17) pool = GREETINGS.afternoon;
+  else if (hour >= 17 && hour < 21) pool = GREETINGS.evening;
+  else                              pool = GREETINGS.late;
+
+  document.getElementById('home-greeting').textContent = pickPeriod4(pool, 7);
 
   // Date
   document.getElementById('home-date-full').textContent =
     now.toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric', year:'numeric'});
 
   // Quote — rotates every 4 hours
-  const q = pickPeriod(QUOTES);
+  const q = pickPeriod4(QUOTES);
   document.getElementById('home-quote-text').textContent = '"' + q.text + '"';
   document.getElementById('home-quote-attr').textContent = '— ' + q.attr;
 
   // Fact — offset by 1 period so it differs from quote
-  const f = pickPeriod(FACTS.slice().reverse());
+  const f = pickPeriod8(FACTS.slice().reverse(), 3);
   document.getElementById('home-fact-text').textContent = f;
 
   // On This Day — still date-based, changes daily
