@@ -146,7 +146,7 @@
 <!-- HOME -->
 <div class="panel active" id="panel-home">
   <div style="margin-bottom:22px">
-    <div style="font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--muted);margin-bottom:4px">Good morning, Thomas</div>
+    <div style="font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--muted);margin-bottom:4px" id="home-greeting"></div>
     <div style="font-family:'DM Serif Display',serif;font-size:1.5rem;line-height:1.1" id="home-date-full"></div>
   </div>
 
@@ -666,9 +666,10 @@ const FACTS = [
   "Phishing attacks account for over 90% of data breaches worldwide.",
 ];
 
-function pickDaily(arr) {
-  const day = Math.floor(Date.now() / 86400000);
-  return arr[day % arr.length];
+function pickPeriod(arr) {
+  // Changes every 4 hours (86400000ms / day, 6 periods of 4hrs each)
+  const period = Math.floor(Date.now() / (4 * 60 * 60 * 1000));
+  return arr[period % arr.length];
 }
 
 // ON THIS DAY data — keyed by MM-DD
@@ -742,21 +743,32 @@ function getTodayHistory() {
 }
 
 function initHome() {
-  // Date
   const now = new Date();
+  const hour = now.getHours();
+
+  // Time-aware greeting
+  let greeting;
+  if (hour >= 5 && hour < 12)       greeting = 'Good morning, Thomas';
+  else if (hour >= 12 && hour < 17) greeting = 'Good afternoon, Thomas';
+  else if (hour >= 17 && hour < 21) greeting = 'Good evening, Thomas';
+  else                              greeting = 'Working late, Thomas';
+
+  document.getElementById('home-greeting').textContent = greeting;
+
+  // Date
   document.getElementById('home-date-full').textContent =
     now.toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric', year:'numeric'});
 
-  // Quote
-  const q = pickDaily(QUOTES);
+  // Quote — rotates every 4 hours
+  const q = pickPeriod(QUOTES);
   document.getElementById('home-quote-text').textContent = '"' + q.text + '"';
   document.getElementById('home-quote-attr').textContent = '— ' + q.attr;
 
-  // Fact
-  const f = pickDaily(FACTS.slice().reverse()); // offset from quote
+  // Fact — offset by 1 period so it differs from quote
+  const f = pickPeriod(FACTS.slice().reverse());
   document.getElementById('home-fact-text').textContent = f;
 
-  // On This Day
+  // On This Day — still date-based, changes daily
   const hist = getTodayHistory();
   document.getElementById('home-history-text').textContent = hist.e;
   document.getElementById('home-history-year').textContent = hist.y + ' AD';
