@@ -827,7 +827,7 @@ function initHome() {
     now.toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric', year:'numeric'});
 
   // Quote — rotates every 4 hours
-  const q = pickPeriod4(QUOTES);
+  const q = pickPeriod8(QUOTES, 1);
   document.getElementById('home-quote-text').textContent = '"' + q.text + '"';
   document.getElementById('home-quote-attr').textContent = '— ' + q.attr;
 
