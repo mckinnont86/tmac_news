@@ -374,13 +374,20 @@ const NEWS_FEEDS = {
     {url:'https://www.menshealth.com/rss/all.xml/',    label:'Men\'s Health'},
     {url:'https://www.outsideonline.com/feed/',        label:'Outside Online'},
     {url:'https://www.boxrox.com/feed/',               label:'BOXROX'},
+    {url:'https://www.eatthis.com/feed/',              label:'Eat This, Not That'},
+    {url:'https://www.precisionnutrition.com/feed',    label:'Precision Nutrition'},
+    {url:'https://techcrunch.com/feed/',               label:'TechCrunch'},
     {url:'https://www.wired.com/feed/category/science/latest/rss', label:'Wired Science'},
   ],
   cissp: [
+    {url:'https://www.helpnetsecurity.com/feed/',       label:'Help Net Security'},
+    {url:'https://www.govinfosecurity.com/rss-feeds',   label:'GovInfoSecurity'},
+    {url:'https://www.bankinfosecurity.com/rss-feeds',  label:'BankInfoSecurity'},
+    {url:'https://securityaffairs.com/feed',            label:'Security Affairs'},
+    {url:'https://www.schneier.com/feed/atom/',         label:'Schneier on Security'},
+    {url:'https://cyberscoop.com/feed/',                label:'CyberScoop'},
     {url:'https://feeds.feedburner.com/TheHackersNews', label:'The Hacker News'},
     {url:'https://krebsonsecurity.com/feed/',           label:'Krebs on Security'},
-    {url:'https://www.helpnetsecurity.com/feed/',       label:'Help Net Security'},
-    {url:'https://www.bankinfosecurity.com/rss-feeds',  label:'BankInfoSecurity'},
   ]
 };
 
@@ -392,12 +399,12 @@ const KEYWORDS = {
   ot:       ['ics','scada','industrial','plc','operational technology','critical infrastructure','power grid','energy sector','pipeline','water utility','manufacturing','factory','purdue','modbus','dnp3','opc','dragos','claroty','nozomi','ot security','ics security','industrial control','infrastructure attack','utility','grid attack','water treatment','oil and gas','control system','automation','supervisory','remote terminal','infrastructure','energy','grid','sector attack','facility','operational'],
   hc:       ['hospital','healthcare','health','medical','patient','hipaa','clinical','ehr','emr','iomt','pharmacy','telehealth','nursing','physician','medicare','medicaid','fda','provider','health system','health care','health data','health insurance','medtech','medical device','care delivery','ransomware hospital','health breach','health record','enrollment','cms ','health plan','behavioral health'],
   fin:      ['bank','financial institution','fintech','sec rule','dora regulation','payment system','fraud','money laundering','swift','financial regulator','fdic','occ ','financial crime','crypto exchange','defi','trading platform','market manipulation','financial data breach','pci dss','card skimming','atm fraud','wire transfer','financial compliance'],
-  training: ['strength training','weight lifting','powerlifting','wrestling','cross country','running performance','marathon','periodization','progressive overload','creatine','protein intake','sports nutrition','athlete recovery','sleep recovery','foam rolling','mobility','injury prevention','vo2 max','lactate threshold','wrestling technique','wrestling camp','wrestling tournament','ncaa wrestling','high school wrestling','combat sport','grappling'],
-  cissp:    ['cissp','isc2','cbk','security domain','risk management framework','cryptography','pki','access control','identity management','incident response plan','security architecture','asset classification','security assessment','software security','security governance','nist framework','iso 27001','sox compliance','gdpr','security certification','security audit'],
+  training: ['strength','workout','exercise','fitness','training','lifting','muscle','wrestling','running','athlete','nutrition','protein','creatine','recovery','sleep','injury','performance','weight','body','cardio','endurance','sport','coach','gym','crossfit','powerlifting','marathon','diet','supplement','health','stamina','agility','mobility','flexibility','conditioning','periodization','vo2','lactate','wrestling','grappling','combat','mma','weight class','cut weight','bulk','lean'],
+  cissp:    ['cissp','isc2','risk management','governance','cryptography','encryption','pki','certificate','access control','identity','authentication','authorization','incident response','security architecture','asset management','vulnerability','security assessment','penetration test','audit','compliance','nist','iso 27001','gdpr','sox','security policy','data classification','bcdr','business continuity','disaster recovery','security awareness','privilege','zero trust','iam','soc ','security operations','threat modeling','secure sdlc','application security'],
 };
 
 // Tabs that REQUIRE at least 1 keyword match to show an article (strict mode)
-const STRICT_TABS = new Set(['hc','fin','training','cissp']);
+const STRICT_TABS = new Set(['hc','fin','training']);
 
 // ── PODCAST DATA (static shows + working rss feeds) ───────────────────────
 const PODS_STATIC = {
