@@ -305,7 +305,7 @@ function activateTab(key) {
   document.querySelector(`.tab-btn[data-tab="${key}"]`).classList.add('active');
   document.getElementById('panel-' + key).classList.add('active');
   // Auto-fetch news if this tab hasn't been loaded yet
-  if (key !== 'home' && key !== 'cissp' && !loadedTabs.has(key)) {
+  if (key !== 'home' && !loadedTabs.has(key)) {
     loadedTabs.add(key);
     fetchPanel(key);
   }
