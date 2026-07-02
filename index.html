@@ -560,33 +560,7 @@ async function fetchPodEpisodes(key){
 
 
 // ── HOME PAGE ──────────────────────────────────────────────────────────────
-const QUOTES = [
-  {text:"The best way to predict the future is to create it.",attr:"Peter Drucker"},
-  {text:"An investment in knowledge pays the best interest.",attr:"Benjamin Franklin"},
-  {text:"It does not matter how slowly you go as long as you do not stop.",attr:"Confucius"},
-  {text:"The secret of getting ahead is getting started.",attr:"Mark Twain"},
-  {text:"Success is not final, failure is not fatal: it is the courage to continue that counts.",attr:"Winston Churchill"},
-  {text:"Do something today that your future self will thank you for.",attr:"Sean Patrick Flanery"},
-  {text:"Discipline is the bridge between goals and accomplishment.",attr:"Jim Rohn"},
-  {text:"Champions aren't made in gyms. Champions are made from something they have deep inside them.",attr:"Muhammad Ali"},
-  {text:"Sweat is just fat crying.",attr:"Unknown"},
-  {text:"The more that you read, the more things you will know.",attr:"Dr. Seuss"},
-  {text:"Security is always excessive until it's not enough.",attr:"Robbie Sinclair"},
-  {text:"The price of anything is the amount of life you exchange for it.",attr:"Henry David Thoreau"},
-  {text:"Hard work beats talent when talent doesn't work hard.",attr:"Tim Notke"},
-  {text:"A ship in harbor is safe, but that is not what ships are for.",attr:"John A. Shedd"},
-  {text:"You don't have to be great to start, but you have to start to be great.",attr:"Zig Ziglar"},
-  {text:"The only way to do great work is to love what you do.",attr:"Steve Jobs"},
-  {text:"Fall seven times, stand up eight.",attr:"Japanese Proverb"},
-  {text:"Knowledge is power.",attr:"Francis Bacon"},
-  {text:"Either write something worth reading or do something worth writing.",attr:"Benjamin Franklin"},
-  {text:"Strength does not come from winning. Your struggles develop your strengths.",attr:"Arnold Schwarzenegger"},
-  {text:"The groundwork for all happiness is good health.",attr:"Leigh Hunt"},
-  {text:"In the middle of every difficulty lies opportunity.",attr:"Albert Einstein"},
-  {text:"Every expert was once a beginner.",attr:"Helen Hayes"},
-  {text:"The network perimeter is dead. Identity is the new perimeter.",attr:"Unknown"},
-  {text:"Amateurs practice until they get it right. Professionals practice until they can't get it wrong.",attr:"Unknown"},
-];
+
 
 const FACTS = [
   "The average person makes about 35,000 decisions per day — most of them unconscious.",
@@ -698,6 +672,54 @@ function getTodayHistory() {
   const period8 = Math.floor(Date.now() / (8 * 60 * 60 * 1000));
   const idx = (baseIdx + period8) % allKeys.length;
   return ON_THIS_DAY[allKeys[idx]];
+}
+
+
+// Fallback quotes if API fails
+const FALLBACK_QUOTES = [
+  {text:"The best way to predict the future is to create it.", attr:"Peter Drucker"},
+  {text:"Discipline is the bridge between goals and accomplishment.", attr:"Jim Rohn"},
+  {text:"Champions aren't made in gyms. Champions are made from something they have deep inside them.", attr:"Muhammad Ali"},
+  {text:"An investment in knowledge pays the best interest.", attr:"Benjamin Franklin"},
+  {text:"The secret of getting ahead is getting started.", attr:"Mark Twain"},
+  {text:"Hard work beats talent when talent doesn't work hard.", attr:"Tim Notke"},
+  {text:"Fall seven times, stand up eight.", attr:"Japanese Proverb"},
+  {text:"In the middle of every difficulty lies opportunity.", attr:"Albert Einstein"},
+  {text:"Strength does not come from winning. Your struggles develop your strengths.", attr:"Arnold Schwarzenegger"},
+  {text:"Do something today that your future self will thank you for.", attr:"Sean Patrick Flanery"},
+  {text:"Security is always excessive until it's not enough.", attr:"Robbie Sinclair"},
+  {text:"The network perimeter is dead. Identity is the new perimeter.", attr:"Unknown"},
+  {text:"Amateurs practice until they get it right. Professionals practice until they can't get it wrong.", attr:"Unknown"},
+  {text:"Every expert was once a beginner.", attr:"Helen Hayes"},
+  {text:"The groundwork for all happiness is good health.", attr:"Leigh Hunt"},
+  {text:"A ship in harbor is safe, but that is not what ships are for.", attr:"John A. Shedd"},
+  {text:"You don't have to be great to start, but you have to start to be great.", attr:"Zig Ziglar"},
+  {text:"The price of anything is the amount of life you exchange for it.", attr:"Henry David Thoreau"},
+  {text:"Knowledge is power.", attr:"Francis Bacon"},
+  {text:"Success is not final, failure is not fatal: it is the courage to continue that counts.", attr:"Winston Churchill"},
+];
+
+async function fetchQuote() {
+  const el = document.getElementById('home-quote-text');
+  const attr = document.getElementById('home-quote-attr');
+  try {
+    const r = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://zenquotes.io/api/quotes'));
+    const wrapper = await r.json();
+    const quotes = JSON.parse(wrapper.contents);
+    if (quotes && quotes.length) {
+      // Use 8hr period to pick consistently within the session
+      const period = Math.floor(Date.now() / (8 * 60 * 60 * 1000));
+      const q = quotes[period % quotes.length];
+      el.textContent = '\u201c' + q.q + '\u201d';
+      attr.textContent = '\u2014 ' + (q.a || 'Unknown');
+      return;
+    }
+  } catch(e) {}
+  // Fallback
+  const period = Math.floor(Date.now() / (8 * 60 * 60 * 1000));
+  const q = FALLBACK_QUOTES[period % FALLBACK_QUOTES.length];
+  el.textContent = '\u201c' + q.text + '\u201d';
+  attr.textContent = '\u2014 ' + q.attr;
 }
 
 function initHome() {
