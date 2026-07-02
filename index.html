@@ -297,13 +297,27 @@ document.getElementById('ds').innerHTML =
   '<br>' + now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
 
 // TABS
+const loadedTabs = new Set(); // track which tabs have been fetched
+
+function activateTab(key) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelector(`.tab-btn[data-tab="${key}"]`).classList.add('active');
+  document.getElementById('panel-' + key).classList.add('active');
+  // Auto-fetch news if this tab hasn't been loaded yet
+  if (key !== 'home' && key !== 'cissp' && !loadedTabs.has(key)) {
+    loadedTabs.add(key);
+    fetchPanel(key);
+  }
+  // Home: load headlines automatically first visit
+  if (key === 'home' && !loadedTabs.has('home')) {
+    loadedTabs.add('home');
+    loadHomeHeadlines();
+  }
+}
+
 document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
-  });
+  btn.addEventListener('click', () => activateTab(btn.dataset.tab));
 });
 
 // ── VERIFIED WORKING FEEDS (tested against rss2json) ──────────────────────
@@ -893,6 +907,8 @@ async function loadHomeHeadlines() {
 
 document.getElementById('home-fetch-btn').addEventListener('click', loadHomeHeadlines);
 initHome();
+// Auto-load the default tab on page open
+activateTab('home');
 
 // ── INIT ──────────────────────────────────────────────────────────────────
 ['it','net','sec','ot','hc','fin','training','cissp'].forEach(key=>{
