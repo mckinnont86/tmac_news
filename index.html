@@ -803,10 +803,9 @@ function initHome() {
   document.getElementById('home-date-full').textContent =
     now.toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric', year:'numeric'});
 
-  // Quote — rotates every 4 hours
-  const q = pickPeriod8(QUOTES, 1);
-  document.getElementById('home-quote-text').textContent = '"' + q.text + '"';
-  document.getElementById('home-quote-attr').textContent = '— ' + q.attr;
+  // Quote — fetched live from ZenQuotes (8hr rotation), falls back to hardcoded
+  fetchQuote();
+
 
   // Fact — offset by 1 period so it differs from quote
   const f = pickPeriod8(FACTS.slice().reverse(), 3);
