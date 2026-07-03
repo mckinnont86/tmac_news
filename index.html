@@ -990,19 +990,29 @@ const ON_THIS_DAY = {
 };
 
 function getTodayHistory() {
-  // Rotates 3x per day — picks a different entry every 8 hours
-  // Anchors to today's date for first pick, then shifts by period
   const now = new Date();
   const mm = String(now.getMonth()+1).padStart(2,'0');
   const dd = String(now.getDate()).padStart(2,'0');
   const todayKey = mm+'-'+dd;
+
+  // If today has an entry, show it (rotates through nearby dates every 8hrs)
+  // If not, show a clearly-labeled historical event with its actual date
   const allKeys = Object.keys(ON_THIS_DAY).sort();
-  const baseIdx = allKeys.indexOf(todayKey) >= 0
-    ? allKeys.indexOf(todayKey)
-    : Math.floor(allKeys.length / 2);
   const period8 = Math.floor(Date.now() / (8 * 60 * 60 * 1000));
-  const idx = (baseIdx + period8) % allKeys.length;
-  return ON_THIS_DAY[allKeys[idx]];
+
+  if (ON_THIS_DAY[todayKey]) {
+    // Today has an exact match — show it
+    return { ...ON_THIS_DAY[todayKey], date: 'Today in ' + ON_THIS_DAY[todayKey].y };
+  } else {
+    // No entry for today — pick a random historical event, clearly labeled with its real date
+    const idx = period8 % allKeys.length;
+    const key = allKeys[idx];
+    const entry = ON_THIS_DAY[key];
+    const [m, d] = key.split('-');
+    const dateLabel = new Date(2000, parseInt(m)-1, parseInt(d))
+      .toLocaleDateString('en-US', {month:'long', day:'numeric'});
+    return { ...entry, date: dateLabel + ', ' + entry.y };
+  }
 }
 
 
@@ -1095,7 +1105,7 @@ function initHome() {
   // On This Day — still date-based, changes daily
   const hist = getTodayHistory();
   document.getElementById('home-history-text').textContent = hist.e;
-  document.getElementById('home-history-year').textContent = hist.y + ' AD';
+  document.getElementById('home-history-year').textContent = hist.date || (hist.y + ' AD');
 }
 
 // HOME TABS CONFIG for pulling top story
