@@ -9,7 +9,7 @@
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   :root{
     --ink:#0f1117;--paper:#f7f6f2;--rule:#d8d5ce;--muted:#888580;--card-bg:#ffffff;--ls:#e8e6e0;
-    --ca:#54B9F1;--na:#3a86e8;--sea:#e05555;--oa:#4caf82;--hca:#2a9d8f;--fa:#c9933a;--ta:#9b6fe0;--csa:#c084fc;
+    --ca:#54B9F1;--na:#3a86e8;--sea:#e05555;--oa:#4caf82;--hca:#2a9d8f;--fa:#c9933a;--ta:#9b6fe0;--mwa:#10b981;--csa:#c084fc;
   }
   body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.6;min-height:100vh}
   .masthead{border-bottom:2px solid var(--ink);padding:20px 32px 14px;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:8px}
@@ -31,6 +31,7 @@
   .tab-btn[data-tab=hc]{--tc:var(--hca)}
   .tab-btn[data-tab=fin]{--tc:var(--fa)}
   .tab-btn[data-tab=training]{--tc:var(--ta)}
+  .tab-btn[data-tab=mw]{--tc:var(--mwa)}
   .tab-btn[data-tab=cissp]{--tc:var(--csa)}
   .main{padding:28px 32px 60px;max-width:1100px;margin:0 auto}
   .panel{display:none}.panel.active{display:block}
@@ -136,6 +137,7 @@
   <button class="tab-btn" data-tab="hc">🏥 Healthcare</button>
   <button class="tab-btn" data-tab="fin">💼 Finance & Reg</button>
   <button class="tab-btn" data-tab="training">💪 Training</button>
+  <button class="tab-btn" data-tab="mw">💰 Money & Markets</button>
   <button class="tab-btn" data-tab="cissp">🎓 CISSP</button>
 </nav>
 
@@ -265,6 +267,17 @@
   <div id="pod-training"></div>
 </div>
 
+<!-- MONEY & MARKETS -->
+<div class="panel" id="panel-mw">
+  <div class="ph">
+    <div><div class="pe" style="color:var(--mwa)">Investing · Retirement · Economy · Personal Finance · Markets</div><div class="pt">Money & Markets</div></div>
+    <button class="fetch-btn" data-panel="mw"><div class="sp"></div><span class="bl">Fetch News</span></button>
+  </div>
+  <div id="cards-mw"><div class="state-box"><span class="si">💰</span><p>Loading current investing, retirement, and personal finance headlines...</p></div></div>
+  <div class="psh"><div class="sl" style="color:var(--mwa)">🎙 Podcasts</div><button class="plb" data-pod="mw"><div class="sp"></div>Load Latest Episodes</button></div>
+  <div id="pod-mw"></div>
+</div>
+
 <!-- CISSP -->
 <div class="panel" id="panel-cissp">
   <div class="ph">
@@ -379,6 +392,28 @@ const NEWS_FEEDS = {
     {url:'https://techcrunch.com/feed/',               label:'TechCrunch'},
     {url:'https://www.wired.com/feed/category/science/latest/rss', label:'Wired Science'},
   ],
+  mw: [
+    {url:'https://www.kiplinger.com/feed/rss',                      label:'Kiplinger'},
+    {url:'https://money.com/feed/',                                  label:'Money Magazine'},
+    {url:'https://www.cnbc.com/id/10000664/device/rss/rss.html',    label:'CNBC Personal Finance'},
+    {url:'https://www.cnbc.com/id/15839069/device/rss/rss.html',    label:'CNBC Investing'},
+    {url:'https://www.cnbc.com/id/20910258/device/rss/rss.html',    label:'CNBC Economy'},
+    {url:'https://www.fool.com/feeds/index.aspx',                   label:'Motley Fool'},
+    {url:'https://seekingalpha.com/feed.xml',                       label:'Seeking Alpha'},
+    {url:'https://www.bloomberg.com/feeds/markets/news.rss',        label:'Bloomberg'},
+    {url:'https://feeds.a.dj.com/rss/RSSMarketsMain.xml',           label:'WSJ Markets'},
+    {url:'https://www.bogleheads.org/blog/feed/',                   label:'Bogleheads'},
+    {url:'https://finance.yahoo.com/rss/',                          label:'Yahoo Finance'},
+    {url:'https://www.federalreserve.gov/feeds/press_all.xml',      label:'Federal Reserve'},
+  ],
+  mw: [
+    {icon:'💰',label:'Personal Finance',name:'Planet Money (NPR)',desc:'NPR explains complex economic and financial stories in an entertaining, accessible way.',url:'https://www.npr.org/podcasts/510289/planet-money',rss:'https://feeds.npr.org/510289/podcast.xml'},
+    {icon:'📈',label:'Investing',name:'Motley Fool Money',desc:'Weekly investing news, stock picks, and market analysis from the Motley Fool team.',url:'https://www.fool.com/podcasts/motley-fool-money/',rss:null},
+    {icon:'🏦',label:'Retirement',name:'Retirement Answer Man',desc:'Roger Whitney covers retirement planning, Social Security, RMDs, and income strategies.',url:'https://www.rogerwhitney.com/retirementanswerman/',rss:null},
+    {icon:'📊',label:'Markets',name:'Bloomberg Surveillance',desc:'Daily markets coverage with top economists, investors, and policymakers.',url:'https://www.bloomberg.com/podcasts/surveillance',rss:null},
+    {icon:'🧮',label:'Financial Independence',name:'ChooseFI',desc:'Financial independence, index investing, tax optimization, and early retirement strategies.',url:'https://www.choosefi.com/podcast/',rss:null},
+    {icon:'🎯',label:'Wealth Building',name:'We Study Billionaires',desc:'Deep dives into how the world\'s most successful investors think and build wealth.',url:'https://www.theinvestorspodcast.com/',rss:null},
+  ],
   cissp: [
     {url:'https://www.helpnetsecurity.com/feed/',       label:'Help Net Security'},
     {url:'https://www.govinfosecurity.com/rss-feeds',   label:'GovInfoSecurity'},
@@ -400,6 +435,7 @@ const KEYWORDS = {
   hc:       ['hospital','healthcare','health','medical','patient','hipaa','clinical','ehr','emr','iomt','pharmacy','telehealth','nursing','physician','medicare','medicaid','fda','provider','health system','health care','health data','health insurance','medtech','medical device','care delivery','ransomware hospital','health breach','health record','enrollment','cms ','health plan','behavioral health'],
   fin:      ['bank','financial institution','fintech','sec rule','dora regulation','payment system','fraud','money laundering','swift','financial regulator','fdic','occ ','financial crime','crypto exchange','defi','trading platform','market manipulation','financial data breach','pci dss','card skimming','atm fraud','wire transfer','financial compliance'],
   training: ['strength','workout','exercise','fitness','training','lifting','muscle','wrestling','running','athlete','nutrition','protein','creatine','recovery','sleep','injury','performance','weight','body','cardio','endurance','sport','coach','gym','crossfit','powerlifting','marathon','diet','supplement','health','stamina','agility','mobility','flexibility','conditioning','periodization','vo2','lactate','wrestling','grappling','combat','mma','weight class','cut weight','bulk','lean'],
+  mw:       ['invest','stock','market','fund','etf','401k','ira','retirement','portfolio','dividend','bond','yield','inflation','interest rate','fed ','federal reserve','economy','recession','gdpr','wealth','savings','budget','debt','mortgage','financial','money','asset','equity','s&p 500','sp500','nasdaq','dow','crypto','bitcoin','treasury','earning','revenue','profit','loss','compound','index fund','vanguard','fidelity','schwab','roth','social security','pension','estate','tax','capital gain','rebalance','allocation'],
   cissp:    ['cissp','isc2','risk management','governance','cryptography','encryption','pki','certificate','access control','identity','authentication','authorization','incident response','security architecture','asset management','vulnerability','security assessment','penetration test','audit','compliance','nist','iso 27001','gdpr','sox','security policy','data classification','bcdr','business continuity','disaster recovery','security awareness','privilege','zero trust','iam','soc ','security operations','threat modeling','secure sdlc','application security'],
 };
 
@@ -452,6 +488,28 @@ const PODS_STATIC = {
     {icon:'🔬',label:'Recovery & Science',name:'Huberman Lab',desc:'Sleep, recovery, nutrition protocols, and neuroscience of performance. Great for athlete recovery stack.',url:'https://hubermanlab.com/podcast/',rss:'https://feeds.megaphone.fm/hubermanlab'},
     {icon:'🧬',label:'Nutrition Science',name:'Found My Fitness (Rhonda Patrick)',desc:'Deep dives on creatine, omega-3s, nutrition science — directly applicable to supplement decisions.',url:'https://www.foundmyfitness.com/podcast',rss:null},
     {icon:'🧠',label:'Wrestling Mindset',name:'Wrestle & Flow',desc:'Mental performance, mindset, and competitive edge for wrestlers at all levels.',url:'https://podcasts.apple.com/us/podcast/wrestle-flow/id1484089817',rss:null},
+  ],
+  mw: [
+    {url:'https://www.kiplinger.com/feed/rss',                      label:'Kiplinger'},
+    {url:'https://money.com/feed/',                                  label:'Money Magazine'},
+    {url:'https://www.cnbc.com/id/10000664/device/rss/rss.html',    label:'CNBC Personal Finance'},
+    {url:'https://www.cnbc.com/id/15839069/device/rss/rss.html',    label:'CNBC Investing'},
+    {url:'https://www.cnbc.com/id/20910258/device/rss/rss.html',    label:'CNBC Economy'},
+    {url:'https://www.fool.com/feeds/index.aspx',                   label:'Motley Fool'},
+    {url:'https://seekingalpha.com/feed.xml',                       label:'Seeking Alpha'},
+    {url:'https://www.bloomberg.com/feeds/markets/news.rss',        label:'Bloomberg'},
+    {url:'https://feeds.a.dj.com/rss/RSSMarketsMain.xml',           label:'WSJ Markets'},
+    {url:'https://www.bogleheads.org/blog/feed/',                   label:'Bogleheads'},
+    {url:'https://finance.yahoo.com/rss/',                          label:'Yahoo Finance'},
+    {url:'https://www.federalreserve.gov/feeds/press_all.xml',      label:'Federal Reserve'},
+  ],
+  mw: [
+    {icon:'💰',label:'Personal Finance',name:'Planet Money (NPR)',desc:'NPR explains complex economic and financial stories in an entertaining, accessible way.',url:'https://www.npr.org/podcasts/510289/planet-money',rss:'https://feeds.npr.org/510289/podcast.xml'},
+    {icon:'📈',label:'Investing',name:'Motley Fool Money',desc:'Weekly investing news, stock picks, and market analysis from the Motley Fool team.',url:'https://www.fool.com/podcasts/motley-fool-money/',rss:null},
+    {icon:'🏦',label:'Retirement',name:'Retirement Answer Man',desc:'Roger Whitney covers retirement planning, Social Security, RMDs, and income strategies.',url:'https://www.rogerwhitney.com/retirementanswerman/',rss:null},
+    {icon:'📊',label:'Markets',name:'Bloomberg Surveillance',desc:'Daily markets coverage with top economists, investors, and policymakers.',url:'https://www.bloomberg.com/podcasts/surveillance',rss:null},
+    {icon:'🧮',label:'Financial Independence',name:'ChooseFI',desc:'Financial independence, index investing, tax optimization, and early retirement strategies.',url:'https://www.choosefi.com/podcast/',rss:null},
+    {icon:'🎯',label:'Wealth Building',name:'We Study Billionaires',desc:'Deep dives into how the world\'s most successful investors think and build wealth.',url:'https://www.theinvestorspodcast.com/',rss:null},
   ],
   cissp: [
     {icon:'🎓',label:'All Domains',name:'CISSP Cyber Training Podcast',desc:'Sean Gerber covers all 8 CISSP domains episode by episode — layer on commutes alongside your weekly domain reading.',url:'https://cissp.cybertraining365.com/podcast/',rss:null},
@@ -515,8 +573,8 @@ async function fetchPanel(key){
     // sort by keyword relevance score (highest first)
     if(KEYWORDS[key]) items.sort((a,b)=>scoreItem(b,key)-scoreItem(a,key));
     items = items.slice(0,9);
-    const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',cissp:'var(--csa)'}[key];
-    const tag = {it:'IT & Tech',net:'Networking',sec:'Cybersecurity',ot:'Industrial OT',hc:'Healthcare',fin:'Finance & Reg',training:'Training',cissp:'CISSP'}[key];
+    const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',mw:'var(--mwa)',cissp:'var(--csa)'}[key];
+    const tag = {it:'IT & Tech',net:'Networking',sec:'Cybersecurity',ot:'Industrial OT',hc:'Healthcare',fin:'Finance & Reg',training:'Training',mw:'Money & Markets',cissp:'CISSP'}[key];
     if(!items.length){
       document.getElementById('cards-'+key).innerHTML=`<div class="state-box"><span class="si">⚠️</span><p>Couldn't load feeds. Try again in a moment.</p></div>`;
     } else {
@@ -541,7 +599,7 @@ async function fetchPanel(key){
 
 // ── PODCASTS ──────────────────────────────────────────────────────────────
 function renderStaticPods(key){
-  const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',cissp:'var(--csa)'}[key];
+  const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',mw:'var(--mwa)',cissp:'var(--csa)'}[key];
   return `<div class="grid">`+
     PODS_STATIC[key].map(p=>`
       <a class="pc" href="${p.url}" target="_blank" rel="noopener" style="--ac:${accent}">
@@ -555,7 +613,7 @@ function renderStaticPods(key){
 }
 
 async function fetchPodEpisodes(key){
-  const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',cissp:'var(--csa)'}[key];
+  const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',mw:'var(--mwa)',cissp:'var(--csa)'}[key];
   const pods = PODS_STATIC[key].filter(p=>p.rss);
   if(!pods.length) return renderStaticPods(key);
   const results = await Promise.all(pods.map(async p=>{
@@ -1499,7 +1557,7 @@ initHome();
 activateTab('home');
 
 // ── INIT ──────────────────────────────────────────────────────────────────
-['it','net','sec','ot','hc','fin','training','cissp'].forEach(key=>{
+['it','net','sec','ot','hc','fin','training','mw','cissp'].forEach(key=>{
   document.getElementById('pod-'+key).innerHTML = renderStaticPods(key);
 });
 
@@ -1516,7 +1574,7 @@ document.querySelectorAll('.plb').forEach(btn=>{
     try{
       el.innerHTML = await fetchPodEpisodes(key);
       btn.innerHTML='✓ Live Episodes';
-      const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',cissp:'var(--csa)'}[key];
+      const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',mw:'var(--mwa)',cissp:'var(--csa)'}[key];
       btn.style.color=`color-mix(in srgb, ${accent} 100%, transparent)`;
       btn.style.borderColor=`color-mix(in srgb, ${accent} 100%, transparent)`;
     }catch{
