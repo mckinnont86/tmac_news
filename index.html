@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>McGrid</title>
 <style>
@@ -216,7 +219,7 @@
     .content-area{background:var(--paper)}
   }
 
-  .mobile-header{display:none}
+  .mobile-header{display:none;height:0;max-height:0;overflow:hidden;visibility:hidden}
   @media(max-width:859px){.mobile-header{display:block}}
 </style>
 </head>
