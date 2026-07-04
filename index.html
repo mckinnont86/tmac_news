@@ -9,7 +9,7 @@
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   :root{
     --ink:#0f1117;--paper:#f7f6f2;--rule:#d8d5ce;--muted:#888580;--card-bg:#ffffff;--ls:#e8e6e0;
-    --ca:#54B9F1;--na:#3a86e8;--sea:#e05555;--oa:#4caf82;--hca:#2a9d8f;--fa:#c9933a;--ta:#9b6fe0;--mwa:#10b981;--csa:#c084fc;
+    --ca:#54B9F1;--na:#3a86e8;--sea:#e05555;--oa:#4caf82;--hca:#2a9d8f;--fa:#c9933a;--ta:#9b6fe0;--mwa:#10b981;--aia:#f97316;--ltca:#06b6d4;--csa:#c084fc;
   }
   body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.6;min-height:100vh}
   .masthead{border-bottom:2px solid var(--ink);padding:20px 32px 14px;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:8px}
@@ -32,6 +32,8 @@
   .tab-btn[data-tab=fin]{--tc:var(--fa)}
   .tab-btn[data-tab=training]{--tc:var(--ta)}
   .tab-btn[data-tab=mw]{--tc:var(--mwa)}
+  .tab-btn[data-tab=ai]{--tc:var(--aia)}
+  .tab-btn[data-tab=ltc]{--tc:var(--ltca)}
   .tab-btn[data-tab=cissp]{--tc:var(--csa)}
   .main{padding:28px 32px 60px;max-width:1100px;margin:0 auto}
   .panel{display:none}.panel.active{display:block}
@@ -123,7 +125,7 @@
 <header class="masthead">
   <div>
     <div class="pub-name">The Daily Brief</div>
-    <div class="pub-tag">IT · Networking · Security · OT · Healthcare · Finance · Training · CISSP</div>
+    <div class="pub-tag">IT · Networking · Security · OT · Healthcare · Finance · Training · AI · Code · CISSP</div>
   </div>
   <div class="datestamp" id="ds"></div>
 </header>
@@ -138,6 +140,8 @@
   <button class="tab-btn" data-tab="fin">💼 Finance & Reg</button>
   <button class="tab-btn" data-tab="training">💪 Training</button>
   <button class="tab-btn" data-tab="mw">💰 Money & Markets</button>
+  <button class="tab-btn" data-tab="ai">🤖 AI & Dev News</button>
+  <button class="tab-btn" data-tab="ltc">📚 Learn to Code</button>
   <button class="tab-btn" data-tab="cissp">🎓 CISSP</button>
 </nav>
 
@@ -278,6 +282,71 @@
   <div id="pod-mw"></div>
 </div>
 
+<!-- AI & DEV NEWS -->
+<div class="panel" id="panel-ai">
+  <div class="ph">
+    <div><div class="pe" style="color:var(--aia)">AI Models · LLMs · Machine Learning · Dev Tools · Industry Moves</div><div class="pt">AI & Dev News</div></div>
+    <button class="fetch-btn" data-panel="ai"><div class="sp"></div><span class="bl">Fetch News</span></button>
+  </div>
+  <div id="cards-ai"><div class="state-box"><span class="si">🤖</span><p>Loading current AI, machine learning, and developer news...</p></div></div>
+  <div class="psh"><div class="sl" style="color:var(--aia)">🎙 Podcasts</div><button class="plb" data-pod="ai"><div class="sp"></div>Load Latest Episodes</button></div>
+  <div id="pod-ai"></div>
+</div>
+
+<!-- LEARN TO CODE -->
+<div class="panel" id="panel-ltc">
+  <div class="ph">
+    <div><div class="pe" style="color:var(--ltca)">Python · Scripting · Claude API · Claude Code · Tutorials · Projects</div><div class="pt">Learn to Code</div></div>
+    <button class="fetch-btn" data-panel="ltc"><div class="sp"></div><span class="bl">Fetch News</span></button>
+  </div>
+
+  <!-- CLAUDE QUICK LINKS — always visible -->
+  <div class="sl" style="color:var(--ltca)">🔗 Claude Resources</div>
+  <div class="grid" style="margin-bottom:24px">
+    <a class="nc" href="https://docs.anthropic.com" target="_blank" rel="noopener" style="--ac:var(--ltca)">
+      <div class="ct">Documentation</div>
+      <div class="ch">Anthropic Docs</div>
+      <div class="cs">Full API reference, model guides, prompt engineering docs, and SDK documentation for Python and TypeScript.</div>
+      <div class="cm"><div class="csrc">docs.anthropic.com</div></div>
+    </a>
+    <a class="nc" href="https://docs.anthropic.com/en/docs/claude-code/overview" target="_blank" rel="noopener" style="--ac:var(--ltca)">
+      <div class="ct">Claude Code</div>
+      <div class="ch">Claude Code Docs</div>
+      <div class="cs">Agentic coding CLI — installation, slash commands, permissions, MCP integration, and best practices for using Claude in your terminal.</div>
+      <div class="cm"><div class="csrc">Claude Code Overview</div></div>
+    </a>
+    <a class="nc" href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank" rel="noopener" style="--ac:var(--ltca)">
+      <div class="ct">Prompt Engineering</div>
+      <div class="ch">Prompting Guide</div>
+      <div class="cs">Official guide to getting the best from Claude — chain of thought, XML tags, system prompts, few-shot examples, and tool use patterns.</div>
+      <div class="cm"><div class="csrc">Anthropic Docs</div></div>
+    </a>
+    <a class="nc" href="https://console.anthropic.com/workbench" target="_blank" rel="noopener" style="--ac:var(--ltca)">
+      <div class="ct">Workbench</div>
+      <div class="ch">Anthropic Console</div>
+      <div class="cs">Test prompts, explore models, compare outputs, and prototype API calls directly in your browser — no code required to start.</div>
+      <div class="cm"><div class="csrc">console.anthropic.com</div></div>
+    </a>
+    <a class="nc" href="https://www.python.org/doc/" target="_blank" rel="noopener" style="--ac:var(--ltca)">
+      <div class="ct">Python</div>
+      <div class="ch">Python Official Docs</div>
+      <div class="cs">The canonical Python reference — language reference, standard library, tutorials, and the Python Package Index (PyPI) for third-party packages.</div>
+      <div class="cm"><div class="csrc">python.org/doc</div></div>
+    </a>
+    <a class="nc" href="https://github.com/anthropics/anthropic-cookbook" target="_blank" rel="noopener" style="--ac:var(--ltca)">
+      <div class="ct">Cookbook</div>
+      <div class="ch">Anthropic Cookbook</div>
+      <div class="cs">Practical code examples and notebooks for common Claude use cases — RAG, tool use, vision, embeddings, agents, and multimodal workflows.</div>
+      <div class="cm"><div class="csrc">github.com/anthropics</div></div>
+    </a>
+  </div>
+
+  <div class="sl" style="color:var(--ltca)">📡 Latest Tutorials & Dev Articles</div>
+  <div id="cards-ltc"><div class="state-box"><span class="si">📚</span><p>Loading Python tutorials, scripting guides, and coding articles...</p></div></div>
+  <div class="psh" style="margin-top:24px"><div class="sl" style="color:var(--ltca)">🎙 Podcasts</div><button class="plb" data-pod="ltc"><div class="sp"></div>Load Latest Episodes</button></div>
+  <div id="pod-ltc"></div>
+</div>
+
 <!-- CISSP -->
 <div class="panel" id="panel-cissp">
   <div class="ph">
@@ -414,6 +483,27 @@ const NEWS_FEEDS = {
     {icon:'🧮',label:'Financial Independence',name:'ChooseFI',desc:'Financial independence, index investing, tax optimization, and early retirement strategies.',url:'https://www.choosefi.com/podcast/',rss:null},
     {icon:'🎯',label:'Wealth Building',name:'We Study Billionaires',desc:'Deep dives into how the world\'s most successful investors think and build wealth.',url:'https://www.theinvestorspodcast.com/',rss:null},
   ],
+  ai: [
+    {url:'https://techcrunch.com/category/artificial-intelligence/feed/', label:'TechCrunch AI'},
+    {url:'https://www.artificialintelligence-news.com/feed/',             label:'AI News'},
+    {url:'https://openai.com/blog/rss.xml',                              label:'OpenAI Blog'},
+    {url:'https://deepmind.google/blog/rss.xml',                         label:'Google DeepMind'},
+    {url:'https://huggingface.co/blog/feed.xml',                         label:'Hugging Face'},
+    {url:'https://towardsdatascience.com/feed',                          label:'Towards Data Science'},
+    {url:'https://thegradient.pub/rss/',                                 label:'The Gradient'},
+    {url:'https://www.wired.com/feed/tag/ai/latest/rss',                 label:'Wired AI'},
+    {url:'https://news.mit.edu/rss/topic/artificial-intelligence2',      label:'MIT AI News'},
+  ],
+  ltc: [
+    {url:'https://blog.python.org/feeds/posts/default',                  label:'Python Blog'},
+    {url:'https://dev.to/feed',                                          label:'DEV Community'},
+    {url:'https://github.blog/feed/',                                    label:'GitHub Blog'},
+    {url:'https://towardsdatascience.com/feed',                          label:'Towards Data Science'},
+    {url:'https://machinelearningmastery.com/feed/',                     label:'ML Mastery'},
+    {url:'https://infoq.com/feed/',                                      label:'InfoQ'},
+    {url:'https://smashingmagazine.com/feed/',                           label:'Smashing Magazine'},
+    {url:'https://css-tricks.com/feed/',                                 label:'CSS-Tricks'},
+  ],
   cissp: [
     {url:'https://www.helpnetsecurity.com/feed/',       label:'Help Net Security'},
     {url:'https://www.govinfosecurity.com/rss-feeds',   label:'GovInfoSecurity'},
@@ -436,11 +526,13 @@ const KEYWORDS = {
   fin:      ['bank','financial institution','fintech','sec rule','dora regulation','payment system','fraud','money laundering','swift','financial regulator','fdic','occ ','financial crime','crypto exchange','defi','trading platform','market manipulation','financial data breach','pci dss','card skimming','atm fraud','wire transfer','financial compliance'],
   training: ['strength','workout','exercise','fitness','training','lifting','muscle','wrestling','running','athlete','nutrition','protein','creatine','recovery','sleep','injury','performance','weight','body','cardio','endurance','sport','coach','gym','crossfit','powerlifting','marathon','diet','supplement','health','stamina','agility','mobility','flexibility','conditioning','periodization','vo2','lactate','wrestling','grappling','combat','mma','weight class','cut weight','bulk','lean'],
   mw:       ['invest','stock','market','fund','etf','401k','ira','retirement','portfolio','dividend','bond','yield','inflation','interest rate','fed ','federal reserve','economy','recession','gdpr','wealth','savings','budget','debt','mortgage','financial','money','asset','equity','s&p 500','sp500','nasdaq','dow','crypto','bitcoin','treasury','earning','revenue','profit','loss','compound','index fund','vanguard','fidelity','schwab','roth','social security','pension','estate','tax','capital gain','rebalance','allocation'],
+  ai:       ['artificial intelligence','machine learning','llm','large language model','gpt','claude','gemini','openai','anthropic','deepmind','transformer','neural network','deep learning','model','inference','training data','fine-tuning','rag','retrieval','embedding','agent','agentic','multimodal','diffusion','generative','ai model','benchmark','hugging face','mistral','llama','copilot','ai safety','alignment','hallucination','prompt','token','context window','ai tool','foundation model'],
+  ltc:      ['python','scripting','coding','programming','tutorial','learn','beginner','developer','api','sdk','library','package','function','class','loop','variable','debug','script','automation','bash','shell','git','github','jupyter','notebook','pandas','numpy','flask','django','fastapi','sql','database','web scraping','regex','cli','command line','claude code','anthropic api','prompt engineering','langchain','openai api','code review','refactor','deploy','docker','kubernetes','devops'],
   cissp:    ['cissp','isc2','risk management','governance','cryptography','encryption','pki','certificate','access control','identity','authentication','authorization','incident response','security architecture','asset management','vulnerability','security assessment','penetration test','audit','compliance','nist','iso 27001','gdpr','sox','security policy','data classification','bcdr','business continuity','disaster recovery','security awareness','privilege','zero trust','iam','soc ','security operations','threat modeling','secure sdlc','application security'],
 };
 
 // Tabs that REQUIRE at least 1 keyword match to show an article (strict mode)
-const STRICT_TABS = new Set(['hc','fin','training']);
+const STRICT_TABS = new Set(['hc','fin','training','ltc']);
 
 // ── PODCAST DATA (static shows + working rss feeds) ───────────────────────
 const PODS_STATIC = {
@@ -511,6 +603,41 @@ const PODS_STATIC = {
     {icon:'🧮',label:'Financial Independence',name:'ChooseFI',desc:'Financial independence, index investing, tax optimization, and early retirement strategies.',url:'https://www.choosefi.com/podcast/',rss:null},
     {icon:'🎯',label:'Wealth Building',name:'We Study Billionaires',desc:'Deep dives into how the world\'s most successful investors think and build wealth.',url:'https://www.theinvestorspodcast.com/',rss:null},
   ],
+  ai: [
+    {url:'https://techcrunch.com/category/artificial-intelligence/feed/', label:'TechCrunch AI'},
+    {url:'https://www.artificialintelligence-news.com/feed/',             label:'AI News'},
+    {url:'https://openai.com/blog/rss.xml',                              label:'OpenAI Blog'},
+    {url:'https://deepmind.google/blog/rss.xml',                         label:'Google DeepMind'},
+    {url:'https://huggingface.co/blog/feed.xml',                         label:'Hugging Face'},
+    {url:'https://towardsdatascience.com/feed',                          label:'Towards Data Science'},
+    {url:'https://thegradient.pub/rss/',                                 label:'The Gradient'},
+    {url:'https://www.wired.com/feed/tag/ai/latest/rss',                 label:'Wired AI'},
+    {url:'https://news.mit.edu/rss/topic/artificial-intelligence2',      label:'MIT AI News'},
+  ],
+  ltc: [
+    {url:'https://blog.python.org/feeds/posts/default',                  label:'Python Blog'},
+    {url:'https://dev.to/feed',                                          label:'DEV Community'},
+    {url:'https://github.blog/feed/',                                    label:'GitHub Blog'},
+    {url:'https://towardsdatascience.com/feed',                          label:'Towards Data Science'},
+    {url:'https://machinelearningmastery.com/feed/',                     label:'ML Mastery'},
+    {url:'https://infoq.com/feed/',                                      label:'InfoQ'},
+    {url:'https://smashingmagazine.com/feed/',                           label:'Smashing Magazine'},
+    {url:'https://css-tricks.com/feed/',                                 label:'CSS-Tricks'},
+  ],
+  ai: [
+    {icon:'🤖',label:'AI Research',name:'Lex Fridman Podcast',desc:'Long-form interviews with AI researchers, engineers, and founders — OpenAI, Anthropic, DeepMind, and more.',url:'https://lexfridman.com/podcast/',rss:null},
+    {icon:'📊',label:'ML Explained',name:'The TWIML AI Podcast',desc:'This Week in Machine Learning covers cutting-edge ML research and applications with practitioners.',url:'https://twimlai.com/podcast/twimlai/',rss:null},
+    {icon:'🔬',label:'AI Safety',name:'80,000 Hours Podcast',desc:'Deep dives on AI safety, alignment, and the long-term implications of advanced AI systems.',url:'https://80000hours.org/podcast/',rss:null},
+    {icon:'🚀',label:'Builders',name:'Latent Space Podcast',desc:'AI engineers building products — covers Claude, GPT-4, open-source models, and real-world AI applications.',url:'https://www.latent.space/podcast',rss:null},
+    {icon:'💡',label:'AI Business',name:'No Priors',desc:'Sarah Guo and Elad Gil interview AI founders and investors on what they are building and why.',url:'https://www.no-priors.com/',rss:null},
+  ],
+  ltc: [
+    {icon:'🐍',label:'Python',name:'Talk Python To Me',desc:'Michael Kennedy interviews Python experts on libraries, frameworks, tools, and best practices.',url:'https://talkpython.fm/',rss:null},
+    {icon:'💻',label:'Dev Skills',name:'Syntax FM',desc:'Wes Bos and Scott Tolinski on web development, JavaScript, APIs, tooling, and career growth.',url:'https://syntax.fm/',rss:null},
+    {icon:'🤖',label:'Claude & API',name:'Anthropic Courses (YouTube)',desc:'Official tutorials on prompt engineering, Claude API, tool use, and building AI-powered applications.',url:'https://www.youtube.com/@Anthropic',rss:null},
+    {icon:'🔧',label:'Scripting',name:'Command Line Heroes',desc:'Red Hat\'s series on the history and future of coding, scripting, open source, and developer culture.',url:'https://www.redhat.com/en/command-line-heroes',rss:null},
+    {icon:'📚',label:'ML Mastery',name:'Practical AI',desc:'Practical applications of AI and ML — covers APIs, libraries, Python tools, and real-world projects.',url:'https://changelog.com/practicalai',rss:null},
+  ],
   cissp: [
     {icon:'🎓',label:'All Domains',name:'CISSP Cyber Training Podcast',desc:'Sean Gerber covers all 8 CISSP domains episode by episode — layer on commutes alongside your weekly domain reading.',url:'https://cissp.cybertraining365.com/podcast/',rss:null},
     {icon:'🗺️',label:'Domain Deep Dives',name:'Destination Certification',desc:'Rob Witcher\'s mind map series — one video/episode per domain. Exceptional for visual learners.',url:'https://www.youtube.com/@DestinationCertification',rss:null},
@@ -573,8 +700,8 @@ async function fetchPanel(key){
     // sort by keyword relevance score (highest first)
     if(KEYWORDS[key]) items.sort((a,b)=>scoreItem(b,key)-scoreItem(a,key));
     items = items.slice(0,9);
-    const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',mw:'var(--mwa)',cissp:'var(--csa)'}[key];
-    const tag = {it:'IT & Tech',net:'Networking',sec:'Cybersecurity',ot:'Industrial OT',hc:'Healthcare',fin:'Finance & Reg',training:'Training',mw:'Money & Markets',cissp:'CISSP'}[key];
+    const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',mw:'var(--mwa)',ai:'var(--aia)',ltc:'var(--ltca)',cissp:'var(--csa)'}[key];
+    const tag = {it:'IT & Tech',net:'Networking',sec:'Cybersecurity',ot:'Industrial OT',hc:'Healthcare',fin:'Finance & Reg',training:'Training',mw:'Money & Markets',ai:'AI & Dev',ltc:'Learn to Code',cissp:'CISSP'}[key];
     if(!items.length){
       document.getElementById('cards-'+key).innerHTML=`<div class="state-box"><span class="si">⚠️</span><p>Couldn't load feeds. Try again in a moment.</p></div>`;
     } else {
@@ -599,7 +726,7 @@ async function fetchPanel(key){
 
 // ── PODCASTS ──────────────────────────────────────────────────────────────
 function renderStaticPods(key){
-  const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',mw:'var(--mwa)',cissp:'var(--csa)'}[key];
+  const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',mw:'var(--mwa)',ai:'var(--aia)',ltc:'var(--ltca)',cissp:'var(--csa)'}[key];
   return `<div class="grid">`+
     PODS_STATIC[key].map(p=>`
       <a class="pc" href="${p.url}" target="_blank" rel="noopener" style="--ac:${accent}">
@@ -613,7 +740,7 @@ function renderStaticPods(key){
 }
 
 async function fetchPodEpisodes(key){
-  const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',mw:'var(--mwa)',cissp:'var(--csa)'}[key];
+  const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',mw:'var(--mwa)',ai:'var(--aia)',ltc:'var(--ltca)',cissp:'var(--csa)'}[key];
   const pods = PODS_STATIC[key].filter(p=>p.rss);
   if(!pods.length) return renderStaticPods(key);
   const results = await Promise.all(pods.map(async p=>{
@@ -1486,6 +1613,8 @@ const HOME_TABS = [
   {key:'hc',  label:'🏥 Healthcare',   accent:'var(--hca)', tab:'hc'},
   {key:'fin', label:'💼 Finance & Reg',accent:'var(--fa)',  tab:'fin'},
   {key:'training',label:'💪 Training', accent:'var(--ta)',  tab:'training'},
+  {key:'ai',   label:'🤖 AI & Dev',    accent:'var(--aia)', tab:'ai'},
+  {key:'ltc',  label:'📚 Learn to Code',accent:'var(--ltca)',tab:'ltc'},
   {key:'cissp',label:'🎓 CISSP',       accent:'var(--csa)', tab:'cissp'},
 ];
 
@@ -1557,7 +1686,7 @@ initHome();
 activateTab('home');
 
 // ── INIT ──────────────────────────────────────────────────────────────────
-['it','net','sec','ot','hc','fin','training','mw','cissp'].forEach(key=>{
+['it','net','sec','ot','hc','fin','training','mw','ai','ltc','cissp'].forEach(key=>{
   document.getElementById('pod-'+key).innerHTML = renderStaticPods(key);
 });
 
@@ -1574,7 +1703,7 @@ document.querySelectorAll('.plb').forEach(btn=>{
     try{
       el.innerHTML = await fetchPodEpisodes(key);
       btn.innerHTML='✓ Live Episodes';
-      const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',mw:'var(--mwa)',cissp:'var(--csa)'}[key];
+      const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',mw:'var(--mwa)',ai:'var(--aia)',ltc:'var(--ltca)',cissp:'var(--csa)'}[key];
       btn.style.color=`color-mix(in srgb, ${accent} 100%, transparent)`;
       btn.style.borderColor=`color-mix(in srgb, ${accent} 100%, transparent)`;
     }catch{
