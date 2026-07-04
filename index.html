@@ -11,7 +11,12 @@
     --ink:#0f1117;--paper:#f7f6f2;--rule:#d8d5ce;--muted:#888580;--card-bg:#ffffff;--ls:#e8e6e0;
     --ca:#54B9F1;--na:#3a86e8;--sea:#e05555;--oa:#4caf82;--hca:#2a9d8f;--fa:#c9933a;--ta:#9b6fe0;--mwa:#10b981;--aia:#f97316;--ltca:#06b6d4;--diya:#d97706;--csa:#c084fc;
   }
-  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.6;min-height:100vh}
+  @media(prefers-color-scheme:dark){
+    :root{
+      --ink:#e8e6e2;--paper:#0f1117;--rule:#2a2d35;--muted:#6b7280;--card-bg:#1a1d26;--ls:#1e2130;
+    }
+  }
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.6;min-height:100vh;transition:background .2s,color .2s}
   .masthead{border-bottom:2px solid var(--ink);padding:20px 32px 14px;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:8px}
   .pub-name{font-family:'DM Serif Display',serif;font-size:clamp(1.6rem,4vw,2.4rem);letter-spacing:-.02em;line-height:1}
   .pub-tag{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:3px;font-weight:500}
@@ -167,6 +172,47 @@
     .app-shell{flex-direction:column}
     .masthead{padding:14px 16px 10px}
     .main{padding:18px 14px 48px}
+  }
+
+  @media(prefers-color-scheme:dark){
+    .nc{background:var(--card-bg);border-color:var(--rule)}
+    .nc::before{opacity:.9}
+    .cs{color:#9ca3af}
+    .cm .csrc,.cm .cdt{color:var(--muted)}
+    .pc{background:var(--card-bg);border-color:var(--rule)}
+    .pd{color:#9ca3af}
+    .epc{background:var(--card-bg);border-color:var(--rule)}
+    .ed{color:#9ca3af}
+    .sk-card{background:var(--card-bg);border-color:var(--rule)}
+    .state-box{border-color:var(--rule)}
+    .home-quote{background:var(--card-bg);border-left-color:var(--rule)}
+    .home-quote-text{color:var(--ink)}
+    .home-card{background:var(--card-bg);border-color:var(--rule)}
+    .phase-card{background:var(--card-bg);border-color:var(--rule)}
+    .phase-b{color:#9ca3af}
+    .home-fact-text{color:rgba(255,255,255,.85)}
+    .banner{background:#120a1a}
+    .fetch-btn{background:var(--ink);color:var(--paper);border-color:var(--rule)}
+    .plb{border-color:var(--rule);color:var(--muted)}
+    .plb:hover{border-color:var(--ink);color:var(--ink)}
+    .sl::after{background:var(--rule)}
+    .masthead{border-bottom-color:var(--rule)}
+    .nav-strip{background:var(--card-bg);border-bottom-color:var(--rule)}
+    .tab-btn{color:var(--muted)}
+    .tab-btn.active{color:var(--ink)}
+    .psh .sl{color:var(--muted)}
+    .home-load-btn{background:var(--ink);border-color:var(--rule)}
+    /* DIY section */
+    .nc[style*="--ac:#3b82f6"]{background:var(--card-bg)}
+    /* season cards inline styles */
+    div[style*="background:#fff"]{background:var(--card-bg) !important;border-color:var(--rule) !important}
+    div[style*="background:var(--card-bg)"]{background:var(--card-bg)}
+    div[style*="color:#444"]{color:#9ca3af}
+    div[style*="color:#555"]{color:#9ca3af}
+    a[style*="color:#444"]{color:#9ca3af}
+    a[style*="color:#555"]{color:#9ca3af}
+    /* content area */
+    .content-area{background:var(--paper)}
   }
 </style>
 </head>
