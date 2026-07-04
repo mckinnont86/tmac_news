@@ -357,7 +357,7 @@
 <aside class="sidebar">
   <div class="sidebar-brand">
     <div class="sidebar-name">McGrid</div>
-    <div class="sidebar-tag">Intelligence · Everything</div>
+    <div class="sidebar-tag" id="sb-tagline"></div>
     <div class="sidebar-date" id="sb-date"></div>
   </div>
   <nav class="sidebar-nav">
@@ -417,7 +417,7 @@
 <div class="mobile-header" id="mobileHeader"><header class="masthead">
   <div>
     <div class="pub-name">McGrid</div>
-    <div class="pub-tag">Intelligence · Training · Finance · Security · Home · Everything</div>
+    <div class="pub-tag" id="mob-tagline"></div>
   </div>
   <div class="datestamp" id="ds"></div>
 </header>
@@ -2251,6 +2251,70 @@ initHome();
 activateTab('home');
 renderDIYSeasons();
 
+
+
+// ── ROTATING TAGLINES ─────────────────────────────────────────────────────
+const TAGLINES = [
+  'Your daily command center.',
+  'Stay sharp. Stay informed.',
+  'Everything that matters. Nothing that doesn\'t.',
+  'Built for the curious and the driven.',
+  'Intelligence without the noise.',
+  'Security. Training. Life. All of it.',
+  'Know more. Do more.',
+  'Your edge, delivered daily.',
+  'For those who never stop learning.',
+  'Signal over noise. Always.',
+];
+
+(function() {
+  const KEY_ORDER = 'mcgrid_tagline_order';
+  const KEY_IDX   = 'mcgrid_tagline_idx';
+  const PERIOD    = 12 * 60 * 60 * 1000; // 12 hours in ms
+
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function getTagline() {
+    let order = JSON.parse(localStorage.getItem(KEY_ORDER) || 'null');
+    let idx   = parseInt(localStorage.getItem(KEY_IDX)   || '0');
+    const period = Math.floor(Date.now() / PERIOD);
+
+    // If no order yet or idx went past end, generate a fresh shuffle
+    if (!order || idx >= order.length) {
+      order = shuffle(TAGLINES.map((_, i) => i));
+      idx   = 0;
+      localStorage.setItem(KEY_ORDER, JSON.stringify(order));
+    }
+
+    // Advance index once per 12hr period (store period so we only advance once)
+    const lastPeriod = parseInt(localStorage.getItem('mcgrid_tagline_period') || '0');
+    if (period > lastPeriod) {
+      idx = (idx + 1) % order.length;
+      if (idx === 0) {
+        // Exhausted all — reshuffle for next cycle
+        order = shuffle(TAGLINES.map((_, i) => i));
+      }
+      localStorage.setItem(KEY_ORDER, JSON.stringify(order));
+      localStorage.setItem(KEY_IDX, String(idx));
+      localStorage.setItem('mcgrid_tagline_period', String(period));
+    }
+
+    return TAGLINES[order[idx]];
+  }
+
+  const tag = getTagline();
+  const el  = document.getElementById('sb-tagline');
+  const el2 = document.getElementById('mob-tagline');
+  if (el)  el.textContent  = tag;
+  if (el2) el2.textContent = tag;
+})();
 
 // ── INIT ──────────────────────────────────────────────────────────────────
 ['it','net','sec','ot','hc','fin','training','mw','ai','ltc','diy','tv','golf','cissp'].forEach(key=>{
