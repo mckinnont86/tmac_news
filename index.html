@@ -462,7 +462,8 @@ const NEWS_FEEDS = {
     {url:'https://www.wired.com/feed/category/science/latest/rss', label:'Wired Science'},
   ],
   mw: [
-    {url:'https://www.kiplinger.com/feed/rss',                      label:'Kiplinger'},
+    {url:'https://www.cnbc.com/id/10001147/device/rss/rss.html',    label:'CNBC Finance'},
+    {url:'https://www.bankinfosecurity.com/rss-feeds',                  label:'BankInfoSecurity'},
     {url:'https://money.com/feed/',                                  label:'Money Magazine'},
     {url:'https://www.cnbc.com/id/10000664/device/rss/rss.html',    label:'CNBC Personal Finance'},
     {url:'https://www.cnbc.com/id/15839069/device/rss/rss.html',    label:'CNBC Investing'},
@@ -525,14 +526,14 @@ const KEYWORDS = {
   hc:       ['hospital','healthcare','health','medical','patient','hipaa','clinical','ehr','emr','iomt','pharmacy','telehealth','nursing','physician','medicare','medicaid','fda','provider','health system','health care','health data','health insurance','medtech','medical device','care delivery','ransomware hospital','health breach','health record','enrollment','cms ','health plan','behavioral health'],
   fin:      ['bank','financial institution','fintech','sec rule','dora regulation','payment system','fraud','money laundering','swift','financial regulator','fdic','occ ','financial crime','crypto exchange','defi','trading platform','market manipulation','financial data breach','pci dss','card skimming','atm fraud','wire transfer','financial compliance'],
   training: ['strength','workout','exercise','fitness','training','lifting','muscle','wrestling','running','athlete','nutrition','protein','creatine','recovery','sleep','injury','performance','weight','body','cardio','endurance','sport','coach','gym','crossfit','powerlifting','marathon','diet','supplement','health','stamina','agility','mobility','flexibility','conditioning','periodization','vo2','lactate','wrestling','grappling','combat','mma','weight class','cut weight','bulk','lean'],
-  mw:       ['invest','stock','market','fund','etf','401k','ira','retirement','portfolio','dividend','bond','yield','inflation','interest rate','fed ','federal reserve','economy','recession','gdpr','wealth','savings','budget','debt','mortgage','financial','money','asset','equity','s&p 500','sp500','nasdaq','dow','crypto','bitcoin','treasury','earning','revenue','profit','loss','compound','index fund','vanguard','fidelity','schwab','roth','social security','pension','estate','tax','capital gain','rebalance','allocation'],
+  mw:       ['invest','stock','market','fund','etf','401k','ira','retirement','portfolio','dividend','bond','yield','inflation','interest rate','federal reserve','economy','recession','wealth','savings','budget','debt','mortgage','financial','money','asset','equity','sp500','nasdaq','dow','crypto','bitcoin','treasury','earning','revenue','profit','loss','compound','index fund','vanguard','fidelity','schwab','roth','social security','pension','estate','tax','capital gain','rebalance','allocation','loan','credit','bankruptcy','gold','oil','crude','bullish','bearish','rally','share','quarter','rate cut','rate hike','gdp','jobs report','unemployment','payroll','housing','home price','rent','dollar','euro','currency','hedge','short','options','futures','commodity','real estate','net worth','cash flow','annuity','mutual fund'],
   ai:       ['artificial intelligence','machine learning','llm','large language model','gpt','claude','gemini','openai','anthropic','deepmind','transformer','neural network','deep learning','model','inference','training data','fine-tuning','rag','retrieval','embedding','agent','agentic','multimodal','diffusion','generative','ai model','benchmark','hugging face','mistral','llama','copilot','ai safety','alignment','hallucination','prompt','token','context window','ai tool','foundation model'],
   ltc:      ['python','scripting','coding','programming','tutorial','learn','beginner','developer','api','sdk','library','package','function','class','loop','variable','debug','script','automation','bash','shell','git','github','jupyter','notebook','pandas','numpy','flask','django','fastapi','sql','database','web scraping','regex','cli','command line','claude code','anthropic api','prompt engineering','langchain','openai api','code review','refactor','deploy','docker','kubernetes','devops'],
   cissp:    ['cissp','isc2','risk management','governance','cryptography','encryption','pki','certificate','access control','identity','authentication','authorization','incident response','security architecture','asset management','vulnerability','security assessment','penetration test','audit','compliance','nist','iso 27001','gdpr','sox','security policy','data classification','bcdr','business continuity','disaster recovery','security awareness','privilege','zero trust','iam','soc ','security operations','threat modeling','secure sdlc','application security'],
 };
 
 // Tabs that REQUIRE at least 1 keyword match to show an article (strict mode)
-const STRICT_TABS = new Set(['hc','fin','training','ltc']);
+const STRICT_TABS = new Set(['hc','training','ltc']);
 
 // ── PODCAST DATA (static shows + working rss feeds) ───────────────────────
 const PODS_STATIC = {
@@ -582,7 +583,8 @@ const PODS_STATIC = {
     {icon:'🧠',label:'Wrestling Mindset',name:'Wrestle & Flow',desc:'Mental performance, mindset, and competitive edge for wrestlers at all levels.',url:'https://podcasts.apple.com/us/podcast/wrestle-flow/id1484089817',rss:null},
   ],
   mw: [
-    {url:'https://www.kiplinger.com/feed/rss',                      label:'Kiplinger'},
+    {url:'https://www.cnbc.com/id/10001147/device/rss/rss.html',    label:'CNBC Finance'},
+    {url:'https://www.bankinfosecurity.com/rss-feeds',                  label:'BankInfoSecurity'},
     {url:'https://money.com/feed/',                                  label:'Money Magazine'},
     {url:'https://www.cnbc.com/id/10000664/device/rss/rss.html',    label:'CNBC Personal Finance'},
     {url:'https://www.cnbc.com/id/15839069/device/rss/rss.html',    label:'CNBC Investing'},
