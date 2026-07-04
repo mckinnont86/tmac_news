@@ -119,11 +119,82 @@
   .home-load-btn .sp{width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none}
   .home-load-btn.loading .sp{display:block}
   .home-load-btn.loading .bl{opacity:.6}
-  @media(max-width:640px){.masthead{padding:16px 16px 12px}.main{padding:20px 16px 48px}.tab-btn{padding:7px 7px;font-size:.63rem;letter-spacing:.02em}}
+  
+
+  /* Desktop: show sidebar, hide top nav */
+  @media(min-width:860px){
+    .masthead{display:none}
+    .nav-strip{display:none}
+    .sidebar{display:flex}
+    .app-shell{flex-direction:row}
+  }
+  /* Mobile: hide sidebar, show top nav */
+  @media(max-width:859px){
+    .sidebar{display:none}
+    .app-shell{flex-direction:column}
+    .masthead{padding:14px 16px 10px}
+    .main{padding:18px 14px 48px}
+  }
 </style>
 </head>
 <body>
 
+<div class="app-shell">
+
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-name">McGrid</div>
+    <div class="sidebar-tag">Intelligence · Everything</div>
+    <div class="sidebar-date" id="sb-date"></div>
+  </div>
+  <nav class="sidebar-nav">
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-label">Home</div>
+      <button class="sb-btn active" data-tab="home">🏠 Dashboard<span class="sb-dot"></span></button>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-label">Technology</div>
+      <button class="sb-btn" data-tab="it">💻 IT<span class="sb-dot"></span></button>
+      <button class="sb-btn" data-tab="net">🌐 Networking<span class="sb-dot"></span></button>
+      <button class="sb-btn" data-tab="sec">🔐 Cybersecurity<span class="sb-dot"></span></button>
+      <button class="sb-btn" data-tab="ai">🤖 AI & Dev News<span class="sb-dot"></span></button>
+      <button class="sb-btn" data-tab="ot">🏭 Industrial OT<span class="sb-dot"></span></button>
+      <button class="sb-btn" data-tab="hc">🏥 Healthcare<span class="sb-dot"></span></button>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-label">Finance & Life</div>
+      <button class="sb-btn" data-tab="fin">💼 Finance & Reg<span class="sb-dot"></span></button>
+      <button class="sb-btn" data-tab="mw">💰 Money & Markets<span class="sb-dot"></span></button>
+      <button class="sb-btn" data-tab="diy">🏠 Home & DIY<span class="sb-dot"></span></button>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-label">Growth</div>
+      <button class="sb-btn" data-tab="training">💪 Training<span class="sb-dot"></span></button>
+      <button class="sb-btn" data-tab="ltc">📚 Learn to Code<span class="sb-dot"></span></button>
+      <button class="sb-btn" data-tab="cissp">🎓 CISSP<span class="sb-dot"></span></button>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-label">Family</div>
+      <a class="sb-link" href="https://mckinnont86.github.io/gmac_fitness/" target="_blank" rel="noopener">
+        💪 G-Mac McLifts <span class="sb-link-ext">↗</span>
+      </a>
+      <a class="sb-link" href="https://mckinnont86.github.io/gmac_nutrition/" target="_blank" rel="noopener">
+        🥗 G-Mac Nutrition <span class="sb-link-ext">↗</span>
+      </a>
+      <a class="sb-link" href="https://mckinnont86.github.io/cmac_fitness/" target="_blank" rel="noopener">
+        🏋️ C-Mac Lifts <span class="sb-link-ext">↗</span>
+      </a>
+    </div>
+
+  </nav>
+</aside>
+
+<div class="content-area">
 <header class="masthead">
   <div>
     <div class="pub-name">McGrid</div>
@@ -511,14 +582,16 @@ const now = new Date();
 document.getElementById('ds').innerHTML =
   now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}) +
   '<br>' + now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+const sbDate = document.getElementById('sb-date');
+if(sbDate) sbDate.textContent = now.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}) + ' · ' + now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
 
 // TABS
-const loadedTabs = new Set(); // track which tabs have been fetched
+const loadedTabs = new Set();
 
 function activateTab(key) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-btn,.sb-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.querySelector(`.tab-btn[data-tab="${key}"]`).classList.add('active');
+  document.querySelectorAll(`[data-tab="${key}"]`).forEach(b => b.classList.add('active'));
   document.getElementById('panel-' + key).classList.add('active');
   // Auto-fetch news if this tab hasn't been loaded yet
   if (key !== 'home' && !loadedTabs.has(key)) {
@@ -1916,6 +1989,10 @@ document.querySelectorAll('.fetch-btn').forEach(btn=>{
   btn.addEventListener('click',()=>fetchPanel(btn.dataset.panel));
 });
 
+document.querySelectorAll('.sb-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>activateTab(btn.dataset.tab));
+});
+
 document.querySelectorAll('.plb').forEach(btn=>{
   btn.addEventListener('click', async()=>{
     const key = btn.dataset.pod;
@@ -1935,5 +2012,7 @@ document.querySelectorAll('.plb').forEach(btn=>{
   });
 });
 </script>
+</div>
+</div>
 </body>
 </html>
