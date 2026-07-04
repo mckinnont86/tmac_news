@@ -9,7 +9,7 @@
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   :root{
     --ink:#0f1117;--paper:#f7f6f2;--rule:#d8d5ce;--muted:#888580;--card-bg:#ffffff;--ls:#e8e6e0;
-    --ca:#54B9F1;--na:#3a86e8;--sea:#e05555;--oa:#4caf82;--hca:#2a9d8f;--fa:#c9933a;--ta:#9b6fe0;--mwa:#10b981;--aia:#f97316;--ltca:#06b6d4;--csa:#c084fc;
+    --ca:#54B9F1;--na:#3a86e8;--sea:#e05555;--oa:#4caf82;--hca:#2a9d8f;--fa:#c9933a;--ta:#9b6fe0;--mwa:#10b981;--aia:#f97316;--ltca:#06b6d4;--diya:#d97706;--csa:#c084fc;
   }
   body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.6;min-height:100vh}
   .masthead{border-bottom:2px solid var(--ink);padding:20px 32px 14px;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:8px}
@@ -34,6 +34,7 @@
   .tab-btn[data-tab=mw]{--tc:var(--mwa)}
   .tab-btn[data-tab=ai]{--tc:var(--aia)}
   .tab-btn[data-tab=ltc]{--tc:var(--ltca)}
+  .tab-btn[data-tab=diy]{--tc:var(--diya)}
   .tab-btn[data-tab=cissp]{--tc:var(--csa)}
   .main{padding:28px 32px 60px;max-width:1100px;margin:0 auto}
   .panel{display:none}.panel.active{display:block}
@@ -125,7 +126,7 @@
 <header class="masthead">
   <div>
     <div class="pub-name">The Daily Brief</div>
-    <div class="pub-tag">IT · Networking · Security · OT · Healthcare · Finance · Training · AI · Code · CISSP</div>
+    <div class="pub-tag">IT · Networking · Security · OT · Healthcare · Finance · Training · AI · Code · Home · CISSP</div>
   </div>
   <div class="datestamp" id="ds"></div>
 </header>
@@ -142,6 +143,7 @@
   <button class="tab-btn" data-tab="mw">💰 Money & Markets</button>
   <button class="tab-btn" data-tab="ai">🤖 AI & Dev News</button>
   <button class="tab-btn" data-tab="ltc">📚 Learn to Code</button>
+  <button class="tab-btn" data-tab="diy">🏠 Home & DIY</button>
   <button class="tab-btn" data-tab="cissp">🎓 CISSP</button>
 </nav>
 
@@ -387,6 +389,141 @@
   <div id="pod-ltc"></div>
 </div>
 
+<!-- HOME & DIY -->
+<div class="panel" id="panel-diy">
+  <div class="ph">
+    <div><div class="pe" style="color:var(--diya)">Maintenance Schedules · Seasonal Checklists · How-To · Repairs</div><div class="pt">Home & DIY</div></div>
+    <button class="fetch-btn" data-panel="diy"><div class="sp"></div><span class="bl">Fetch Articles</span></button>
+  </div>
+
+  <!-- SEASONAL CALENDAR — always visible -->
+  <div class="sl" style="color:var(--diya)">📅 Seasonal Maintenance Calendar</div>
+  <div class="grid" style="margin-bottom:24px" id="diy-seasons">
+
+    <div class="nc" style="--ac:#3b82f6" id="diy-winter">
+      <div class="ct">❄️ Winter · Dec – Feb</div>
+      <div class="ch">Cold Weather Priorities</div>
+      <div class="cs" style="-webkit-line-clamp:unset;overflow:visible">
+        <b>Monthly:</b> Check/replace furnace filter · Test smoke &amp; CO detectors · Check for ice dams<br><br>
+        <b>December:</b> Insulate exposed pipes · Check weatherstripping on doors/windows · Stock emergency supplies (flashlights, batteries, generator fuel) · Service snowblower<br><br>
+        <b>January:</b> Check attic insulation for heat loss · Inspect crawl space for moisture/freezing · Keep cabinet doors open under sinks in freezing temps<br><br>
+        <b>February:</b> Schedule HVAC spring tune-up · Check roof for ice damage · Inspect basement walls for cracks from freeze/thaw cycles
+      </div>
+    </div>
+
+    <div class="nc" style="--ac:#22c55e" id="diy-spring">
+      <div class="ct">🌱 Spring · Mar – May</div>
+      <div class="ch">Post-Winter Inspection</div>
+      <div class="cs" style="-webkit-line-clamp:unset;overflow:visible">
+        <b>Monthly:</b> Test smoke &amp; CO detectors · Check HVAC filter · Inspect for pest activity<br><br>
+        <b>March:</b> Inspect roof for winter damage (missing shingles, flashing) · Clean gutters of winter debris · Check exterior caulking and siding · Test sump pump before rain season<br><br>
+        <b>April:</b> Service AC unit — clean condenser coils, check refrigerant · Flush water heater of sediment · Check deck/patio for winter heaving · Inspect driveway for cracks<br><br>
+        <b>May:</b> Clean dryer vent duct · Check and clean window screens · Turn on irrigation, inspect for leaks · Reseed bare lawn patches · Trim trees away from house
+      </div>
+    </div>
+
+    <div class="nc" style="--ac:#f97316" id="diy-summer">
+      <div class="ct">☀️ Summer · Jun – Aug</div>
+      <div class="ch">Peak Season Upkeep</div>
+      <div class="cs" style="-webkit-line-clamp:unset;overflow:visible">
+        <b>Monthly:</b> Check AC filter (monthly in heavy use) · Inspect for pest entry points · Check irrigation system<br><br>
+        <b>June:</b> Deep clean refrigerator coils · Inspect and clean bathroom exhaust fans · Check exterior paint for peeling · Seal deck/wood surfaces<br><br>
+        <b>July:</b> Check attic for proper ventilation and heat buildup · Inspect window &amp; door seals · Clean range hood filters · Lubricate garage door hardware<br><br>
+        <b>August:</b> Flush and inspect water heater anode rod · Check sump pump · Schedule chimney inspection before fall · Check caulking around tubs/showers
+      </div>
+    </div>
+
+    <div class="nc" style="--ac:#a16207" id="diy-fall">
+      <div class="ct">🍂 Fall · Sep – Nov</div>
+      <div class="ch">Pre-Winter Prep</div>
+      <div class="cs" style="-webkit-line-clamp:unset;overflow:visible">
+        <b>Monthly:</b> Replace furnace filter · Test smoke &amp; CO detectors · Check weatherstripping<br><br>
+        <b>September:</b> Clean and store outdoor furniture · Drain and winterize irrigation system · Inspect roof before winter · Check attic insulation levels · Service heating system<br><br>
+        <b>October:</b> Clean gutters after leaf fall · Drain outdoor hose bibs and shut off valves · Caulk exterior gaps and cracks · Reverse ceiling fans clockwise for heat retention · Check fireplace damper and chimney cap<br><br>
+        <b>November:</b> Insulate pipes in unheated spaces · Check sump pump before ground freezes · Test generator · Stock emergency kit · Arrange snow removal service if needed
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MONTHLY QUICK REFERENCE -->
+  <div class="sl" style="color:var(--diya)">🔁 Always-On Monthly Tasks</div>
+  <div style="background:#fff;border:1px solid var(--rule);border-radius:3px;padding:18px 20px;margin-bottom:24px;border-left:3px solid var(--diya)">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px 24px;font-size:.82rem;line-height:1.7;color:#444">
+      <div><b style="color:var(--diya)">HVAC</b><br>Replace furnace/AC filter (1–3 months) · Check vents for blockage</div>
+      <div><b style="color:var(--diya)">Safety</b><br>Test smoke detectors · Test CO detectors · Check fire extinguisher</div>
+      <div><b style="color:var(--diya)">Water</b><br>Check under sinks for leaks · Inspect toilet for running · Check water heater for rust/drips</div>
+      <div><b style="color:var(--diya)">Exterior</b><br>Walk the perimeter — look for new cracks, pest activity, standing water</div>
+      <div><b style="color:var(--diya)">Appliances</b><br>Clean refrigerator door seals · Check dishwasher spray arms · Run garbage disposal with ice</div>
+      <div><b style="color:var(--diya)">Electrical</b><br>Test GFCI outlets (kitchen/bath) · Check for tripped breakers · Inspect extension cord use</div>
+    </div>
+  </div>
+
+  <!-- MAINTENANCE INTERVALS -->
+  <div class="sl" style="color:var(--diya)">⏱ Service Intervals Reference</div>
+  <div class="grid" style="margin-bottom:24px">
+    <div class="nc" style="--ac:var(--diya)">
+      <div class="ct">Every Month</div>
+      <div class="ch">Monthly Checks</div>
+      <div class="cs" style="-webkit-line-clamp:unset;overflow:visible;font-size:.79rem">
+        · HVAC filter inspection (replace if dirty)<br>
+        · Smoke &amp; CO detector test<br>
+        · Check for leaks under all sinks<br>
+        · GFCI outlet test<br>
+        · Clean range hood grease filter
+      </div>
+    </div>
+    <div class="nc" style="--ac:var(--diya)">
+      <div class="ct">Every 6 Months</div>
+      <div class="ch">Biannual Service</div>
+      <div class="cs" style="-webkit-line-clamp:unset;overflow:visible;font-size:.79rem">
+        · Deep clean dryer vent duct<br>
+        · Flush water heater sediment<br>
+        · Check/clean refrigerator coils<br>
+        · Inspect weatherstripping<br>
+        · Clean bathroom exhaust fans<br>
+        · Test sump pump operation
+      </div>
+    </div>
+    <div class="nc" style="--ac:var(--diya)">
+      <div class="ct">Every Year</div>
+      <div class="ch">Annual Service</div>
+      <div class="cs" style="-webkit-line-clamp:unset;overflow:visible;font-size:.79rem">
+        · HVAC tune-up (spring AC, fall heat)<br>
+        · Chimney inspection &amp; sweep<br>
+        · Roof inspection<br>
+        · Inspect attic insulation<br>
+        · Clean gutters (spring &amp; fall)<br>
+        · Water heater anode rod check<br>
+        · Pest inspection
+      </div>
+    </div>
+    <div class="nc" style="--ac:var(--diya)">
+      <div class="ct">Every 2–5 Years</div>
+      <div class="ch">Longer Intervals</div>
+      <div class="cs" style="-webkit-line-clamp:unset;overflow:visible;font-size:.79rem">
+        · Repaint exterior (5–7 yrs)<br>
+        · Reseal driveway (3–5 yrs)<br>
+        · Replace smoke detectors (10 yrs)<br>
+        · Replace water heater (8–12 yrs)<br>
+        · Repoint chimney mortar (as needed)<br>
+        · Septic pump-out (3–5 yrs)<br>
+        · Whole-home re-caulk (5 yrs)
+      </div>
+    </div>
+  </div>
+
+  <!-- LIVE ARTICLES -->
+  <div class="sl" style="color:var(--diya)">📡 Latest How-To Articles</div>
+  <div id="cards-diy"><div class="state-box"><span class="si">🏠</span><p>Hit <strong>Fetch Articles</strong> above to load the latest home maintenance how-to content.</p></div></div>
+
+  <div class="psh" style="margin-top:24px">
+    <div class="sl" style="color:var(--diya)">🎙 Podcasts</div>
+    <button class="plb" data-pod="diy"><div class="sp"></div>Load Latest Episodes</button>
+  </div>
+  <div id="pod-diy"></div>
+</div>
+
 <!-- CISSP -->
 <div class="panel" id="panel-cissp">
   <div class="ph">
@@ -538,6 +675,12 @@ const NEWS_FEEDS = {
     {url:'https://smashingmagazine.com/feed/',                           label:'Smashing Magazine'},
     {url:'https://css-tricks.com/feed/',                                 label:'CSS-Tricks'},
   ],
+  diy: [
+    {url:'https://www.familyhandyman.com/feed/',         label:'Family Handyman'},
+    {url:'https://www.bobvila.com/feed',                  label:'Bob Vila'},
+    {url:'https://www.askthebuilder.com/feed/',           label:'Ask the Builder'},
+    {url:'https://todayshomeowner.com/feed/',             label:"Today's Homeowner"},
+  ],
   cissp: [
     {url:'https://www.helpnetsecurity.com/feed/',       label:'Help Net Security'},
     {url:'https://www.govinfosecurity.com/rss-feeds',   label:'GovInfoSecurity'},
@@ -562,11 +705,12 @@ const KEYWORDS = {
   mw:       ['invest','stock','market','fund','etf','401k','ira','retirement','portfolio','dividend','bond','yield','inflation','interest rate','federal reserve','economy','recession','wealth','savings','budget','debt','mortgage','financial','money','asset','equity','sp500','nasdaq','dow','crypto','bitcoin','treasury','earning','revenue','profit','loss','compound','index fund','vanguard','fidelity','schwab','roth','social security','pension','estate','tax','capital gain','rebalance','allocation','loan','credit','bankruptcy','gold','oil','crude','bullish','bearish','rally','share','quarter','rate cut','rate hike','gdp','jobs report','unemployment','payroll','housing','home price','rent','dollar','euro','currency','hedge','short','options','futures','commodity','real estate','net worth','cash flow','annuity','mutual fund'],
   ai:       ['artificial intelligence','machine learning','llm','large language model','gpt','claude','gemini','openai','anthropic','deepmind','transformer','neural network','deep learning','model','inference','training data','fine-tuning','rag','retrieval','embedding','agent','agentic','multimodal','diffusion','generative','ai model','benchmark','hugging face','mistral','llama','copilot','ai safety','alignment','hallucination','prompt','token','context window','ai tool','foundation model'],
   ltc:      ['python','scripting','coding','programming','tutorial','learn','beginner','developer','api','sdk','library','package','function','class','loop','variable','debug','script','automation','bash','shell','git','github','jupyter','notebook','pandas','numpy','flask','django','fastapi','sql','database','web scraping','regex','cli','command line','claude code','anthropic api','prompt engineering','langchain','openai api','code review','refactor','deploy','docker','kubernetes','devops'],
+  diy:      ['repair','replace','fix','install','maintenance','inspect','clean','seal','caulk','paint','plumb','electric','hvac','furnace','filter','gutter','roof','leak','drain','pipe','insulation','attic','basement','crawl','drywall','floor','tile','grout','deck','fence','lawn','garden','irrigation','pest','mold','moisture','ventilation','water heater','sump pump','chimney','fireplace','garage','door','window','weatherstrip','foundation','driveway','siding','shingle','framing','concrete','pressure wash','stain','primer','clog','toilet','faucet','circuit','breaker','outlet','switch'],
   cissp:    ['cissp','isc2','risk management','governance','cryptography','encryption','pki','certificate','access control','identity','authentication','authorization','incident response','security architecture','asset management','vulnerability','security assessment','penetration test','audit','compliance','nist','iso 27001','gdpr','sox','security policy','data classification','bcdr','business continuity','disaster recovery','security awareness','privilege','zero trust','iam','soc ','security operations','threat modeling','secure sdlc','application security'],
 };
 
 // Tabs that REQUIRE at least 1 keyword match to show an article (strict mode)
-const STRICT_TABS = new Set(['hc','training','ltc']);
+const STRICT_TABS = new Set(['hc','training','ltc','diy']);
 
 // ── PODCAST DATA (static shows + working rss feeds) ───────────────────────
 const PODS_STATIC = {
@@ -659,6 +803,12 @@ const PODS_STATIC = {
     {icon:'🔧',label:'Scripting',name:'Command Line Heroes',desc:'Red Hat\'s series on the history and future of coding, scripting, open source, and developer culture.',url:'https://www.redhat.com/en/command-line-heroes',rss:null},
     {icon:'📚',label:'ML Mastery',name:'Practical AI',desc:'Practical applications of AI and ML — covers APIs, libraries, Python tools, and real-world projects.',url:'https://changelog.com/practicalai',rss:null},
   ],
+  diy: [
+    {icon:'🔨',label:'DIY & Repair',name:'The Money Pit Home Improvement Show',desc:'Tom Kraeutler covers home repairs, maintenance, and improvement projects — practical answers to real homeowner questions.',url:'https://www.moneypit.com/podcast',rss:null},
+    {icon:'🏠',label:'Home Maintenance',name:"Today's Homeowner Podcast",desc:'Danny Lipford answers common home maintenance questions with expert tips on repairs, upgrades, and seasonal upkeep.',url:'https://todayshomeowner.com/podcast/',rss:null},
+    {icon:'🪚',label:'How-To',name:'Family Handyman Podcast',desc:'Step-by-step guidance on home repairs and DIY projects from the editors of Family Handyman magazine.',url:'https://www.familyhandyman.com/podcast/',rss:null},
+    {icon:'🔧',label:'Trades & Craft',name:'Ask This Old House',desc:'Licensed contractors answer homeowner questions on plumbing, electrical, HVAC, and structural repairs.',url:'https://www.thisoldhouse.com/ask-this-old-house',rss:null},
+  ],
   cissp: [
     {icon:'🎓',label:'All Domains',name:'CISSP Cyber Training Podcast',desc:'Sean Gerber covers all 8 CISSP domains episode by episode — layer on commutes alongside your weekly domain reading.',url:'https://cissp.cybertraining365.com/podcast/',rss:null},
     {icon:'🗺️',label:'Domain Deep Dives',name:'Destination Certification',desc:'Rob Witcher\'s mind map series — one video/episode per domain. Exceptional for visual learners.',url:'https://www.youtube.com/@DestinationCertification',rss:null},
@@ -721,8 +871,8 @@ async function fetchPanel(key){
     // sort by keyword relevance score (highest first)
     if(KEYWORDS[key]) items.sort((a,b)=>scoreItem(b,key)-scoreItem(a,key));
     items = items.slice(0,9);
-    const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',mw:'var(--mwa)',ai:'var(--aia)',ltc:'var(--ltca)',cissp:'var(--csa)'}[key];
-    const tag = {it:'IT & Tech',net:'Networking',sec:'Cybersecurity',ot:'Industrial OT',hc:'Healthcare',fin:'Finance & Reg',training:'Training',mw:'Money & Markets',ai:'AI & Dev',ltc:'Learn to Code',cissp:'CISSP'}[key];
+    const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',mw:'var(--mwa)',ai:'var(--aia)',ltc:'var(--ltca)',diy:'var(--diya)',cissp:'var(--csa)'}[key];
+    const tag = {it:'IT & Tech',net:'Networking',sec:'Cybersecurity',ot:'Industrial OT',hc:'Healthcare',fin:'Finance & Reg',training:'Training',mw:'Money & Markets',ai:'AI & Dev',ltc:'Learn to Code',diy:'Home & DIY',cissp:'CISSP'}[key];
     if(!items.length){
       document.getElementById('cards-'+key).innerHTML=`<div class="state-box"><span class="si">⚠️</span><p>Couldn't load feeds. Try again in a moment.</p></div>`;
     } else {
@@ -747,7 +897,7 @@ async function fetchPanel(key){
 
 // ── PODCASTS ──────────────────────────────────────────────────────────────
 function renderStaticPods(key){
-  const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',mw:'var(--mwa)',ai:'var(--aia)',ltc:'var(--ltca)',cissp:'var(--csa)'}[key];
+  const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',mw:'var(--mwa)',ai:'var(--aia)',ltc:'var(--ltca)',diy:'var(--diya)',cissp:'var(--csa)'}[key];
   return `<div class="grid">`+
     PODS_STATIC[key].map(p=>`
       <a class="pc" href="${p.url}" target="_blank" rel="noopener" style="--ac:${accent}">
@@ -761,7 +911,7 @@ function renderStaticPods(key){
 }
 
 async function fetchPodEpisodes(key){
-  const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',mw:'var(--mwa)',ai:'var(--aia)',ltc:'var(--ltca)',cissp:'var(--csa)'}[key];
+  const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',mw:'var(--mwa)',ai:'var(--aia)',ltc:'var(--ltca)',diy:'var(--diya)',cissp:'var(--csa)'}[key];
   const pods = PODS_STATIC[key].filter(p=>p.rss);
   if(!pods.length) return renderStaticPods(key);
   const results = await Promise.all(pods.map(async p=>{
@@ -1635,6 +1785,7 @@ const HOME_TABS = [
   {key:'fin', label:'💼 Finance & Reg',accent:'var(--fa)',  tab:'fin'},
   {key:'training',label:'💪 Training', accent:'var(--ta)',  tab:'training'},
   {key:'mw',   label:'💰 Money',        accent:'var(--mwa)', tab:'mw'},
+  {key:'diy',  label:'🏠 Home & DIY',   accent:'var(--diya)',tab:'diy'},
   {key:'ai',   label:'🤖 AI & Dev',    accent:'var(--aia)', tab:'ai'},
   {key:'ltc',  label:'📚 Learn to Code',accent:'var(--ltca)',tab:'ltc'},
   {key:'cissp',label:'🎓 CISSP',       accent:'var(--csa)', tab:'cissp'},
@@ -1708,7 +1859,7 @@ initHome();
 activateTab('home');
 
 // ── INIT ──────────────────────────────────────────────────────────────────
-['it','net','sec','ot','hc','fin','training','mw','ai','ltc','cissp'].forEach(key=>{
+['it','net','sec','ot','hc','fin','training','mw','ai','ltc','diy','cissp'].forEach(key=>{
   document.getElementById('pod-'+key).innerHTML = renderStaticPods(key);
 });
 
@@ -1725,7 +1876,7 @@ document.querySelectorAll('.plb').forEach(btn=>{
     try{
       el.innerHTML = await fetchPodEpisodes(key);
       btn.innerHTML='✓ Live Episodes';
-      const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',mw:'var(--mwa)',ai:'var(--aia)',ltc:'var(--ltca)',cissp:'var(--csa)'}[key];
+      const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',mw:'var(--mwa)',ai:'var(--aia)',ltc:'var(--ltca)',diy:'var(--diya)',cissp:'var(--csa)'}[key];
       btn.style.color=`color-mix(in srgb, ${accent} 100%, transparent)`;
       btn.style.borderColor=`color-mix(in srgb, ${accent} 100%, transparent)`;
     }catch{
