@@ -824,6 +824,16 @@ async function fetchPanel(key){
     if(STRICT_TABS.has(key) && KEYWORDS[key]) {
       items = items.filter(i => scoreItem(i, key) > 0);
     }
+    // tab-specific blocklists — exclude irrelevant topics
+    const BLOCKLIST = {
+      diy: ['pool','swimming pool','above-ground pool','pool vacuum','pool debris'],
+    };
+    if(BLOCKLIST[key]) {
+      items = items.filter(i => {
+        const txt = (i.headline + ' ' + i.summary).toLowerCase();
+        return !BLOCKLIST[key].some(b => txt.includes(b));
+      });
+    }
     // sort by keyword relevance score (highest first)
     if(KEYWORDS[key]) items.sort((a,b)=>scoreItem(b,key)-scoreItem(a,key));
     items = items.slice(0,9);
