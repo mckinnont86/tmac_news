@@ -221,21 +221,23 @@
     a[style*="color:#555"]{color:#9ca3af}
     /* content area */
     .content-area{background:var(--paper)}
-  }
 
-  .mobile-header{display:none;height:0;max-height:0;overflow:hidden;visibility:hidden}
-  .is-desktop .mobile-header{display:none!important;height:0!important;max-height:0!important;overflow:hidden!important;visibility:hidden!important;margin:0!important;padding:0!important}
-  @media(max-width:859px){.mobile-header{display:block}}
+  .mobile-header{display:none}
+  @media(max-width:859px){.mobile-header{display:block!important}}
 </style>
-<style>
-  @media(min-width:860px){
-    .mobile-header{display:none!important;height:0!important;max-height:0!important;
-      overflow:hidden!important;visibility:hidden!important;margin:0!important;padding:0!important}
-  }
-</style>
+
 <script>
-  // Runs synchronously before body renders
-  if(window.innerWidth>=860){document.documentElement.classList.add('is-desktop')}
+(function(){
+  function setMobileHeader(){
+    var el=document.getElementById('mobileHeader');
+    if(!el) return;
+    el.style.display = window.innerWidth >= 860 ? 'none' : 'block';
+  }
+  document.addEventListener('DOMContentLoaded', setMobileHeader);
+  window.addEventListener('resize', setMobileHeader);
+  // Also run immediately if DOM is ready
+  if(document.readyState !== 'loading') setMobileHeader();
+})();
 </script>
 </head>
 <body>
@@ -302,7 +304,7 @@
 
 <div class="content-area">
 
-<div class="mobile-header"><header class="masthead">
+<div class="mobile-header" id="mobileHeader"><header class="masthead">
   <div>
     <div class="pub-name">McGrid</div>
     <div class="pub-tag">Intelligence · Training · Finance · Security · Home · Everything</div>
