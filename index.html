@@ -163,7 +163,7 @@
   @media(min-width:860px){
     .sidebar{display:flex}
     .masthead{display:none !important;height:0;overflow:hidden;border:0;padding:0;margin:0}
-    .nav-strip{display:none !important;height:0;overflow:hidden}
+    .nav-strip{display:none !important;height:0;overflow:hidden;padding:0;border:0}
     .app-shell{flex-direction:row}
     .main{padding:28px 32px 60px}
   }
@@ -2063,6 +2063,16 @@ initHome();
 // Auto-load the default tab on page open
 activateTab('home');
 renderDIYSeasons();
+// On desktop, ensure masthead/nav take no space
+function applyLayout() {
+  const isDesktop = window.innerWidth >= 860;
+  const masthead = document.querySelector('.masthead');
+  const navStrip = document.querySelector('.nav-strip');
+  if (masthead) masthead.style.display = isDesktop ? 'none' : '';
+  if (navStrip) navStrip.style.display = isDesktop ? 'none' : '';
+}
+applyLayout();
+window.addEventListener('resize', applyLayout);
 
 // ── INIT ──────────────────────────────────────────────────────────────────
 ['it','net','sec','ot','hc','fin','training','mw','ai','ltc','diy','cissp'].forEach(key=>{
