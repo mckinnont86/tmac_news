@@ -162,8 +162,7 @@
   .content-area{flex:1;min-width:0;display:flex;flex-direction:column;height:100vh;overflow-y:auto}
   @media(min-width:860px){
     .sidebar{display:flex}
-    .masthead{display:none !important;height:0;overflow:hidden;border:0;padding:0;margin:0}
-    .nav-strip{display:none !important;height:0;overflow:hidden;padding:0;border:0}
+    
     .app-shell{flex-direction:row}
     .main{padding:28px 32px 60px}
   }
@@ -216,6 +215,9 @@
     /* content area */
     .content-area{background:var(--paper)}
   }
+
+  .mobile-header{display:none}
+  @media(max-width:859px){.mobile-header{display:block}}
 </style>
 </head>
 <body>
@@ -279,14 +281,14 @@
 </aside>
 
 <div class="content-area">
-<header class="masthead">
+
+<div class="mobile-header"><header class="masthead">
   <div>
     <div class="pub-name">McGrid</div>
     <div class="pub-tag">Intelligence · Training · Finance · Security · Home · Everything</div>
   </div>
   <div class="datestamp" id="ds"></div>
 </header>
-
 <nav class="nav-strip">
   <button class="tab-btn active" data-tab="home">🏠 Home</button>
   <button class="tab-btn" data-tab="it">💻 IT</button>
@@ -302,6 +304,7 @@
   <button class="tab-btn" data-tab="diy">🏠 Home & DIY</button>
   <button class="tab-btn" data-tab="cissp">🎓 CISSP</button>
 </nav>
+</div>
 
 <main class="main">
 
@@ -2063,16 +2066,7 @@ initHome();
 // Auto-load the default tab on page open
 activateTab('home');
 renderDIYSeasons();
-// On desktop, ensure masthead/nav take no space
-function applyLayout() {
-  const isDesktop = window.innerWidth >= 860;
-  const masthead = document.querySelector('.masthead');
-  const navStrip = document.querySelector('.nav-strip');
-  if (masthead) masthead.style.display = isDesktop ? 'none' : '';
-  if (navStrip) navStrip.style.display = isDesktop ? 'none' : '';
-}
-applyLayout();
-window.addEventListener('resize', applyLayout);
+
 
 // ── INIT ──────────────────────────────────────────────────────────────────
 ['it','net','sec','ot','hc','fin','training','mw','ai','ltc','diy','cissp'].forEach(key=>{
