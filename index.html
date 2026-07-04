@@ -224,8 +224,19 @@
   }
 
   .mobile-header{display:none;height:0;max-height:0;overflow:hidden;visibility:hidden}
+  .is-desktop .mobile-header{display:none!important;height:0!important;max-height:0!important;overflow:hidden!important;visibility:hidden!important;margin:0!important;padding:0!important}
   @media(max-width:859px){.mobile-header{display:block}}
 </style>
+<style>
+  @media(min-width:860px){
+    .mobile-header{display:none!important;height:0!important;max-height:0!important;
+      overflow:hidden!important;visibility:hidden!important;margin:0!important;padding:0!important}
+  }
+</style>
+<script>
+  // Runs synchronously before body renders
+  if(window.innerWidth>=860){document.documentElement.classList.add('is-desktop')}
+</script>
 </head>
 <body>
 
@@ -697,14 +708,6 @@
 </main>
 
 <script>
-// HIDE MOBILE HEADER ON DESKTOP — runs before paint
-(function(){
-  if(window.innerWidth >= 860) {
-    var mh = document.querySelector('.mobile-header');
-    if(mh) mh.parentNode.removeChild(mh);
-  }
-})();
-
 // DATE
 const now = new Date();
 document.getElementById('ds').innerHTML =
