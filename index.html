@@ -222,25 +222,136 @@
     /* content area */
     .content-area{background:var(--paper)}
 
-  .mobile-header{display:none}
-  @media(max-width:859px){.mobile-header{display:block!important}}
+  /* ── MOBILE HAMBURGER MENU ── */
+  .mobile-header { display: none; }
+  .mob-bar { display: none; }
+
+  @media(max-width:859px) {
+    .mob-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 16px; background: #0f1117; color: #fff;
+      border-bottom: 1px solid rgba(255,255,255,.1); position: sticky; top: 0; z-index: 100;
+    }
+    .mob-bar-name { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: #fff; }
+    .mob-bar-date { font-family: 'JetBrains Mono', monospace; font-size: .65rem; color: rgba(255,255,255,.4); }
+    .mob-hamburger {
+      background: none; border: none; cursor: pointer; padding: 4px;
+      display: flex; flex-direction: column; gap: 5px;
+    }
+    .mob-hamburger span {
+      display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px;
+      transition: all .2s;
+    }
+    .mob-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .mob-hamburger.open span:nth-child(2) { opacity: 0; }
+    .mob-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+    .mob-drawer {
+      position: fixed; top: 0; left: -280px; width: 260px; height: 100vh;
+      background: #0f1117; z-index: 200; overflow-y: auto;
+      transition: left .25s ease; box-shadow: 4px 0 20px rgba(0,0,0,.4);
+      padding-top: 0;
+    }
+    .mob-drawer.open { left: 0; }
+    .mob-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,.5);
+      z-index: 190; display: none;
+    }
+    .mob-overlay.open { display: block; }
+    .mob-drawer-header {
+      padding: 18px 16px 14px; border-bottom: 1px solid rgba(255,255,255,.1);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .mob-drawer-name { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: #fff; }
+    .mob-close {
+      background: none; border: none; color: rgba(255,255,255,.5); font-size: 1.2rem;
+      cursor: pointer; padding: 4px 8px; line-height: 1;
+    }
+    .mob-close:hover { color: #fff; }
+    .mob-nav { padding: 10px 8px; }
+    .mob-group { margin-bottom: 4px; }
+    .mob-group-label {
+      font-size: .6rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+      color: rgba(255,255,255,.3); padding: 8px 8px 3px;
+    }
+    .mob-btn {
+      display: flex; align-items: center; gap: 8px; width: 100%;
+      background: none; border: none; cursor: pointer; padding: 8px 10px;
+      border-radius: 4px; font-family: 'Inter', sans-serif; font-size: .82rem;
+      font-weight: 400; color: rgba(255,255,255,.6); text-align: left; white-space: nowrap;
+    }
+    .mob-btn:hover { background: rgba(255,255,255,.07); color: #fff; }
+    .mob-btn.active { background: rgba(255,255,255,.12); color: #fff; font-weight: 500; }
+    .mob-link {
+      display: flex; align-items: center; gap: 8px; padding: 8px 10px;
+      border-radius: 4px; font-family: 'Inter', sans-serif; font-size: .82rem;
+      color: rgba(255,255,255,.6); text-decoration: none;
+    }
+    .mob-link:hover { background: rgba(255,255,255,.07); color: #fff; }
+    .mob-link-ext { font-size: .6rem; margin-left: auto; opacity: .4; }
+    .main { padding: 16px 14px 48px; }
+    .app-shell { flex-direction: column; }
+    .sidebar { display: none !important; }
+  }
+
 </style>
 
-<script>
-(function(){
-  function setMobileHeader(){
-    var el=document.getElementById('mobileHeader');
-    if(!el) return;
-    el.style.display = window.innerWidth >= 860 ? 'none' : 'block';
-  }
-  document.addEventListener('DOMContentLoaded', setMobileHeader);
-  window.addEventListener('resize', setMobileHeader);
-  // Also run immediately if DOM is ready
-  if(document.readyState !== 'loading') setMobileHeader();
-})();
-</script>
 </head>
 <body>
+
+<div class="mob-bar">
+  <div>
+    <div class="mob-bar-name">McGrid</div>
+    <div class="mob-bar-date" id="mob-date"></div>
+  </div>
+  <button class="mob-hamburger" id="mob-hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+
+<div class="mob-overlay" id="mob-overlay"></div>
+
+<div class="mob-drawer" id="mob-drawer">
+  <div class="mob-drawer-header">
+    <div class="mob-drawer-name">McGrid</div>
+    <button class="mob-close" id="mob-close">✕</button>
+  </div>
+  <nav class="mob-nav">
+    <div class="mob-group">
+      <div class="mob-group-label">Home</div>
+      <button class="mob-btn active" data-tab="home">🏠 Dashboard</button>
+    </div>
+    <div class="mob-group">
+      <div class="mob-group-label">Technology</div>
+      <button class="mob-btn" data-tab="it">💻 IT</button>
+      <button class="mob-btn" data-tab="net">🌐 Networking</button>
+      <button class="mob-btn" data-tab="sec">🔐 Cybersecurity</button>
+      <button class="mob-btn" data-tab="ai">🤖 AI & Dev News</button>
+      <button class="mob-btn" data-tab="ot">🏭 Industrial OT</button>
+      <button class="mob-btn" data-tab="hc">🏥 Healthcare</button>
+    </div>
+    <div class="mob-group">
+      <div class="mob-group-label">Finance & Life</div>
+      <button class="mob-btn" data-tab="fin">💼 Finance & Reg</button>
+      <button class="mob-btn" data-tab="mw">💰 Money & Markets</button>
+      <button class="mob-btn" data-tab="diy">🏠 Home & DIY</button>
+      <button class="mob-btn" data-tab="tv">✈️ Travel</button>
+      <button class="mob-btn" data-tab="golf">⛳ Golf</button>
+    </div>
+    <div class="mob-group">
+      <div class="mob-group-label">Growth</div>
+      <button class="mob-btn" data-tab="training">💪 Training</button>
+      <button class="mob-btn" data-tab="ltc">📚 Learn to Code</button>
+      <button class="mob-btn" data-tab="cissp">🎓 CISSP</button>
+    </div>
+    <div class="mob-group">
+      <div class="mob-group-label">Family</div>
+      <a class="mob-link" href="https://mckinnont86.github.io/cmac_fitness/" target="_blank" rel="noopener">🏋️ C-Mac Lifts <span class="mob-link-ext">↗</span></a>
+      <a class="mob-link" href="https://mckinnont86.github.io/gmac_fitness/" target="_blank" rel="noopener">💪 G-Mac McLifts <span class="mob-link-ext">↗</span></a>
+      <a class="mob-link" href="https://mckinnont86.github.io/gmac_nutrition/" target="_blank" rel="noopener">🥑 G-Mac Nutrition <span class="mob-link-ext">↗</span></a>
+      <a class="mob-link" href="https://mckinnont86.github.io/gmac_wrestling/" target="_blank" rel="noopener">🤼 G-Mac Wrestling <span class="mob-link-ext">↗</span></a>
+    </div>
+  </nav>
+</div>
 
 <div class="app-shell">
 
@@ -722,7 +833,7 @@ if(sbDate) sbDate.textContent = now.toLocaleDateString('en-US',{weekday:'short',
 const loadedTabs = new Set();
 
 function activateTab(key) {
-  document.querySelectorAll('.tab-btn,.sb-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-btn,.sb-btn,.mob-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll(`[data-tab="${key}"]`).forEach(b => b.classList.add('active'));
   document.getElementById('panel-' + key).classList.add('active');
@@ -2173,6 +2284,34 @@ document.querySelectorAll('.plb').forEach(btn=>{
     }
   });
 });
+
+// ── MOBILE HAMBURGER ──────────────────────────────────────────────────────
+function openDrawer() {
+  document.getElementById('mob-drawer').classList.add('open');
+  document.getElementById('mob-overlay').classList.add('open');
+  document.getElementById('mob-hamburger').classList.add('open');
+}
+function closeDrawer() {
+  document.getElementById('mob-drawer').classList.remove('open');
+  document.getElementById('mob-overlay').classList.remove('open');
+  document.getElementById('mob-hamburger').classList.remove('open');
+}
+var mobHamburger = document.getElementById('mob-hamburger');
+var mobClose = document.getElementById('mob-close');
+var mobOverlay = document.getElementById('mob-overlay');
+if(mobHamburger) mobHamburger.addEventListener('click', openDrawer);
+if(mobClose) mobClose.addEventListener('click', closeDrawer);
+if(mobOverlay) mobOverlay.addEventListener('click', closeDrawer);
+document.querySelectorAll('.mob-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.mob-btn,.sb-btn,.tab-btn').forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active');
+    activateTab(btn.dataset.tab);
+    closeDrawer();
+  });
+});
+var mobDate = document.getElementById('mob-date');
+if(mobDate) mobDate.textContent = now.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
 </script>
 </div>
 </div>
