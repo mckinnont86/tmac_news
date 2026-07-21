@@ -956,8 +956,9 @@ const NEWS_FEEDS = {
     {url:'https://todayshomeowner.com/feed/',             label:"Today's Homeowner"},
   ],
   tv: [
-    {url:'https://www.roadaffair.com/feed/',               label:'Road Affair'},
     {url:'https://www.thecommontraveler.com/feed/',        label:'The Common Traveler'},
+    {url:'https://www.outsideonline.com/feed/',            label:'Outside Online'},
+    {url:'https://www.tripstodiscover.com/feed/',          label:'Trips to Discover'},
     {url:'https://www.cntraveler.com/feed/rss',            label:'Condé Nast Traveler'},
     {url:'https://www.nomadicmatt.com/feed/',              label:'Nomadic Matt'},
   ],
@@ -1153,7 +1154,7 @@ async function fetchPanel(key){
     // tab-specific blocklists — exclude irrelevant topics
     const BLOCKLIST = {
       diy: ['pool','swimming pool','above-ground pool','pool vacuum','pool debris'],
-      tv:  ['credit card','travel card','travel rewards','miles card','points card','gear review','best luggage','best backpack','travel insurance','travel pillow','travel adapter','travel hack','cheap flight','airline miles','frequent flyer','loyalty program','travel credit','card review','best card for travel','travel wallet'],
+      tv:  ['credit card','travel card','travel rewards','miles card','points card','gear review','best luggage','best backpack','travel insurance','travel pillow','travel adapter','travel hack','cheap flight','airline miles','frequent flyer','loyalty program','travel credit','card review','best card for travel','travel wallet','best airbnb','best airbnbs','airbnb in','vrbo','vacation rental','best hotels in','best resorts in','best hostels','where to stay in','places to stay'],
     };
     if(BLOCKLIST[key]) {
       items = items.filter(i => {
