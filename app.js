@@ -45,7 +45,7 @@ const NEWS_FEEDS = {
     {url:'https://www.helpnetsecurity.com/feed/',                    label:'Help Net Security'},
   ],
   net: [
-    {url:'https://packetpushers.net/feed/',             label:'Packet Pushers'},
+    {url:'https://feeds.packetpushers.net/packetpushersfullfeed/',             label:'Packet Pushers'},
     {url:'https://www.networkworld.com/feed/',           label:'Network World'},
     {url:'https://www.helpnetsecurity.com/feed/',       label:'Help Net Security'},
     {url:'https://feeds.feedburner.com/TheHackersNews', label:'The Hacker News'},
@@ -88,60 +88,51 @@ const NEWS_FEEDS = {
     {url:'https://www.boxrox.com/feed/',               label:'BOXROX'},
     {url:'https://www.eatthis.com/feed/',              label:'Eat This, Not That'},
     {url:'https://www.precisionnutrition.com/feed',    label:'Precision Nutrition'},
-    {url:'https://techcrunch.com/feed/',               label:'TechCrunch'},
-    {url:'https://www.wired.com/feed/category/science/latest/rss', label:'Wired Science'},
   ],
   mw: [
     {url:'https://www.cnbc.com/id/10001147/device/rss/rss.html',    label:'CNBC Finance'},
     {url:'https://www.bankinfosecurity.com/rss-feeds',                  label:'BankInfoSecurity'},
-    {url:'https://money.com/feed/',                                  label:'Money Magazine'},
+    {url:'https://money.com/money/feed/',                                  label:'Money Magazine'},
     {url:'https://www.cnbc.com/id/10000664/device/rss/rss.html',    label:'CNBC Personal Finance'},
     {url:'https://www.cnbc.com/id/15839069/device/rss/rss.html',    label:'CNBC Investing'},
     {url:'https://www.cnbc.com/id/20910258/device/rss/rss.html',    label:'CNBC Economy'},
-    {url:'https://www.fool.com/feeds/index.aspx',                   label:'Motley Fool'},
+    {url:'https://www.fool.com/a/feeds/foolwatch?apikey=foolwatch-feed',                   label:'Motley Fool'},
     {url:'https://seekingalpha.com/feed.xml',                       label:'Seeking Alpha'},
     {url:'https://www.bloomberg.com/feeds/markets/news.rss',        label:'Bloomberg'},
-    {url:'https://feeds.a.dj.com/rss/RSSMarketsMain.xml',           label:'WSJ Markets'},
-    {url:'https://www.bogleheads.org/blog/feed/',                   label:'Bogleheads'},
-    {url:'https://finance.yahoo.com/rss/',                          label:'Yahoo Finance'},
     {url:'https://www.federalreserve.gov/feeds/press_all.xml',      label:'Federal Reserve'},
   ],
 
   ai: [
     {url:'https://techcrunch.com/category/artificial-intelligence/feed/', label:'TechCrunch AI'},
-    {url:'https://www.artificialintelligence-news.com/feed/',             label:'AI News'},
-    {url:'https://openai.com/blog/rss.xml',                              label:'OpenAI Blog'},
+    {url:'https://openai.com/news/rss.xml',                              label:'OpenAI Blog'},
     {url:'https://deepmind.google/blog/rss.xml',                         label:'Google DeepMind'},
     {url:'https://huggingface.co/blog/feed.xml',                         label:'Hugging Face'},
-    {url:'https://towardsdatascience.com/feed',                          label:'Towards Data Science'},
+    {url:'https://towardsdatascience.com/feed/',                          label:'Towards Data Science'},
     {url:'https://www.wired.com/feed/tag/ai/latest/rss',                 label:'Wired AI'},
   ],
   ltc: [
     {url:'https://blog.python.org/feeds/posts/default',  label:'Python Blog'},
     {url:'https://dev.to/feed',                          label:'DEV Community'},
     {url:'https://github.blog/feed/',                    label:'GitHub Blog'},
-    {url:'https://towardsdatascience.com/feed',          label:'Towards Data Science'},
+    {url:'https://towardsdatascience.com/feed/',          label:'Towards Data Science'},
     {url:'https://machinelearningmastery.com/feed/',     label:'ML Mastery'},
     {url:'https://www.freecodecamp.org/news/rss/',       label:'freeCodeCamp'},
     {url:'https://thenewstack.io/feed',                  label:'The New Stack'},
   ],
   diy: [
     {url:'https://www.familyhandyman.com/feed/',         label:'Family Handyman'},
-    {url:'https://www.bobvila.com/feed',                  label:'Bob Vila'},
+    {url:'https://www.bobvila.com/feed/',                  label:'Bob Vila'},
     {url:'https://www.askthebuilder.com/feed/',           label:'Ask the Builder'},
-    {url:'https://todayshomeowner.com/feed/',             label:"Today's Homeowner"},
   ],
   tv: [
-    {url:'https://www.thecommontraveler.com/feed/',        label:'The Common Traveler'},
+    {url:'https://www.thecommontraveler.net/feed/',        label:'The Common Traveler'},
     {url:'https://www.outsideonline.com/feed/',            label:'Outside Online'},
-    {url:'https://www.tripstodiscover.com/feed/',          label:'Trips to Discover'},
     {url:'https://www.cntraveler.com/feed/rss',            label:'Condé Nast Traveler'},
-    {url:'https://www.nomadicmatt.com/feed/',              label:'Nomadic Matt'},
   ],
   golf: [
-    {url:'https://www.golf.com/feed/',                     label:'Golf.com'},
+    {url:'https://golf.com/feed/',                     label:'Golf.com'},
     {url:'https://mygolfspy.com/feed/',                    label:'MyGolfSpy'},
-    {url:'https://www.golfadvisor.com/articles.rss',       label:'Golf Advisor'},
+    {url:'https://www.golfpass.com/travel-advisor/articles.rss',       label:'Golf Advisor'},
   ],
   cissp: [
     {url:'https://www.helpnetsecurity.com/feed/',        label:'Help Net Security'},
@@ -159,18 +150,18 @@ const NEWS_FEEDS = {
 const KEYWORDS = {
   it:       ['cloud computing','artificial intelligence','machine learning','saas','devops','kubernetes','docker','aws','azure','google cloud','software development','digital transformation','data center','enterprise software','open source','platform engineering','generative ai','llm','chatgpt','copilot','automation','it operations','apple','microsoft','google','meta','nvidia','chip','semiconductor'],
   net:      ['network','firewall','router','switch','vpn','dns','ddos','bandwidth','latency','packet','protocol','tcp','udp','port scan','botnet','proxy','cdn','traffic','wireless','wi-fi','5g','microsegmentation','sd-wan','sdn','vlan','bgp','ospf','mpls','zero trust network','overlay','vxlan','routing','netops','packet pushers','network security','network architecture','network monitoring','network engineer','network infrastructure','network access'],
-  sec:      ['ransomware','malware','data breach','exploit','vulnerability','cve-','zero-day','phishing','nation-state','threat actor','apt ','cyberattack','hacker','trojan','spyware','botnet','credential stuffing','brute force','social engineering','cyber incident','dark web','stolen data','threat intelligence','siem','edr','xdr','ioc','threat hunt','penetration test','red team','bug bounty'],
-  ot:       ['ics','scada','industrial','plc','operational technology','critical infrastructure','power grid','energy sector','pipeline','water utility','manufacturing','factory','purdue','modbus','dnp3','opc','dragos','claroty','nozomi','ot security','ics security','industrial control','infrastructure attack','utility','grid attack','water treatment','oil and gas','control system','automation','supervisory','remote terminal','infrastructure','energy','grid','sector attack','facility','operational'],
-  hc:       ['hospital','healthcare','health','medical','patient','hipaa','clinical','ehr','emr','iomt','pharmacy','telehealth','nursing','physician','medicare','medicaid','fda','provider','health system','health care','health data','health insurance','medtech','medical device','care delivery','ransomware hospital','health breach','health record','enrollment','cms ','health plan','behavioral health'],
-  fin:      ['bank','financial institution','fintech','sec rule','dora regulation','payment system','fraud','money laundering','swift','financial regulator','fdic','occ ','financial crime','crypto exchange','defi','trading platform','market manipulation','financial data breach','pci dss','card skimming','atm fraud','wire transfer','financial compliance'],
-  training: ['strength','workout','exercise','fitness','training','lifting','muscle','wrestling','running','athlete','nutrition','protein','creatine','recovery','sleep','injury','performance','weight','body','cardio','endurance','sport','coach','gym','crossfit','powerlifting','marathon','diet','supplement','health','stamina','agility','mobility','flexibility','conditioning','periodization','vo2','lactate','wrestling','grappling','combat','mma','weight class','cut weight','bulk','lean'],
-  mw:       ['invest','stock','market','fund','etf','401k','ira','retirement','portfolio','dividend','bond','yield','inflation','interest rate','federal reserve','economy','recession','wealth','savings','budget','debt','mortgage','financial','money','asset','equity','sp500','nasdaq','dow','crypto','bitcoin','treasury','earning','revenue','profit','loss','compound','index fund','vanguard','fidelity','schwab','roth','social security','pension','estate','tax','capital gain','rebalance','allocation','loan','credit','bankruptcy','gold','oil','crude','bullish','bearish','rally','share','quarter','rate cut','rate hike','gdp','jobs report','unemployment','payroll','housing','home price','rent','dollar','euro','currency','hedge','short','options','futures','commodity','real estate','net worth','cash flow','annuity','mutual fund'],
+  sec:      ['ransomware','malware','data breach','exploit','vulnerability','cve-','zero-day','phishing','nation-state','threat actor','apt','cyberattack','hacker','trojan','spyware','botnet','credential stuffing','brute force','social engineering','cyber incident','dark web','stolen data','threat intelligence','siem','edr','xdr','ioc','threat hunt','penetration test','red team','bug bounty'],
+  ot:       ['ics','scada','industrial','plc','operational technology','critical infrastructure','power grid','energy sector','pipeline','water utility','manufacturing','factory','purdue','modbus','dnp3','opc','dragos','claroty','nozomi','ot security','ics security','industrial control','infrastructure attack','utility','grid attack','water treatment','oil and gas','control system','supervisory','remote terminal','infrastructure','energy','grid','sector attack','facility','operational'],
+  hc:       ['hospital','healthcare','medical','patient','hipaa','clinical','ehr','emr','iomt','pharmacy','telehealth','nursing','physician','medicare','medicaid','fda','healthcare provider','health provider','health system','health care','health data','health insurance','medtech','medical device','care delivery','ransomware hospital','health breach','health record','enrollment','cms','health plan','behavioral health'],
+  fin:      ['bank','financial institution','fintech','sec rule','dora regulation','payment system','fraud','money laundering','swift','financial regulator','fdic','occ','financial crime','crypto exchange','defi','trading platform','market manipulation','financial data breach','pci dss','card skimming','atm fraud','wire transfer','financial compliance'],
+  training: ['strength','workout','exercise','fitness','lifting','muscle','wrestling','running','athlete','nutrition','protein','creatine','recovery','sleep','injury','cardio','endurance','sport','coach','gym','crossfit','powerlifting','marathon','diet','supplement','health','stamina','agility','mobility','flexibility','conditioning','periodization','vo2','lactate','grappling','combat','mma','weight class','cut weight','bulk','lean'],
+  mw:       ['invest','stock','market','fund','etf','401k','ira','retirement','portfolio','dividend','bond','yield','inflation','interest rate','federal reserve','economy','recession','wealth','savings','budget','debt','mortgage','financial','money','asset','equity','sp500','nasdaq','dow','crypto','bitcoin','treasury','earning','revenue','profit','loss','compound','index fund','vanguard','fidelity','schwab','roth','social security','pension','estate','tax','capital gain','rebalance','allocation','loan','credit','bankruptcy','gold','oil','crude','bullish','bearish','rally','share','quarter','rate cut','rate hike','gdp','jobs report','unemployment','payroll','housing','home price','rent','dollar','euro','currency','hedge','short selling','options','futures','commodity','real estate','net worth','cash flow','annuity','mutual fund'],
   ai:       ['artificial intelligence','machine learning','llm','large language model','gpt','claude','gemini','openai','anthropic','deepmind','transformer','neural network','deep learning','model','inference','training data','fine-tuning','rag','retrieval','embedding','agent','agentic','multimodal','diffusion','generative','ai model','benchmark','hugging face','mistral','llama','copilot','ai safety','alignment','hallucination','prompt','token','context window','ai tool','foundation model'],
   ltc:      ['python','scripting','coding','programming','tutorial','learn','developer','api','sdk','library','framework','function','debug','script','automation','bash','shell','git','github','jupyter','notebook','pandas','numpy','flask','django','fastapi','sql','database','regex','cli','claude code','anthropic','prompt engineering','langchain','openai','code review','deploy','docker','kubernetes','devops','javascript','typescript','react','node','css','html','software engineer','open source','ai agent','llm','rag','machine learning','data science','algorithm','data structure','web dev','backend','frontend','build','architecture','technical','stack overflow','compiler','runtime','async','pipeline','model','inference'],
   diy:      ['repair','replace','fix','install','maintenance','inspect','clean','seal','caulk','paint','plumb','electric','hvac','furnace','filter','gutter','roof','leak','drain','pipe','insulation','attic','basement','crawl','drywall','floor','tile','grout','deck','fence','lawn','garden','irrigation','pest','mold','moisture','ventilation','water heater','sump pump','chimney','fireplace','garage','door','window','weatherstrip','foundation','driveway','siding','shingle','framing','concrete','pressure wash','stain','primer','clog','toilet','faucet','circuit','breaker','outlet','switch','home improvement','diy','build','yard','pool','radiator','cost guide','renovation','remodel','project','material','contractor','power tool','lumber','hardware','flooring','cabinet','kitchen','bathroom','plumbing','wiring','insulate','exterior','interior','landscaping','sprinkler','hvac system','heating','cooling','appliance','weatherize'],
-  tv:       ['national park','state park','road trip','US destination','american','united states','family adventure','hiking trail','waterfall','beach','mountain','canyon','city guide','things to do','day trip','weekend getaway','camping','family vacation','theme park','Disney','kids travel','hidden gem','scenic drive','outdoor adventure','travel with kids','best places in','southern','midwest','northeast','southwest','pacific northwest','appalachian','smoky mountains','yellowstone','grand canyon','zion','yosemite','acadia','outer banks','florida','texas','colorado','tennessee','arizona','utah','maine','carolina'],
+  tv:       ['national park','state park','road trip','us destination','american','united states','family adventure','hiking trail','waterfall','beach','mountain','canyon','city guide','things to do','day trip','weekend getaway','camping','family vacation','theme park','disney','kids travel','hidden gem','scenic drive','outdoor adventure','travel with kids','best places in','southern','midwest','northeast','southwest','pacific northwest','appalachian','smoky mountains','yellowstone','grand canyon','zion','yosemite','acadia','outer banks','florida','texas','colorado','tennessee','arizona','utah','maine','carolina'],
   golf:     ['golf','course','fairway','tee','birdie','eagle','bogey','par','pga','lpga','driver','iron','wedge','putter','handicap','green','bunker','round of golf','golf trip','golf resort','golf course','links','augusta','masters','open championship','ryder cup','equipment','swing','lesson','golf travel','golf tips'],
-  cissp:    ['cissp','isc2','risk management','governance','cryptography','encryption','pki','certificate','access control','identity','authentication','authorization','incident response','security architecture','asset management','vulnerability','security assessment','penetration test','audit','compliance','nist','iso 27001','gdpr','sox','security policy','data classification','bcdr','business continuity','disaster recovery','security awareness','privilege','zero trust','iam','soc ','security operations','threat modeling','secure sdlc','application security'],
+  cissp:    ['cissp','isc2','risk management','governance','cryptography','encryption','pki','certificate','access control','identity','authentication','authorization','incident response','security architecture','asset management','vulnerability','security assessment','penetration test','audit','compliance','nist','iso 27001','gdpr','sox','security policy','data classification','bcdr','business continuity','disaster recovery','security awareness','privilege','zero trust','iam','soc','security operations','threat modeling','secure sdlc','application security'],
 };
 
 // Tabs that REQUIRE at least 1 keyword match to show an article (strict mode)
@@ -185,26 +176,26 @@ const PODS_STATIC = {
     {icon:'🚀',label:'DevOps',name:'Ship It! (Changelog)',desc:'DevOps, infrastructure, Kubernetes, and platform engineering conversations.',url:'https://changelog.com/shipit',rss:null},
   ],
   net: [
-    {icon:'🌐',label:'Networking Deep Dive',name:'Packet Pushers Heavy Networking',desc:'BGP, SDN, SD-WAN, microsegmentation — technical networking from practitioners. Perfect for SE work.',url:'https://packetpushers.net/podcast/heavy-networking/',rss:'https://packetpushers.net/feed/podcast/'},
+    {icon:'🌐',label:'Networking Deep Dive',name:'Packet Pushers Heavy Networking',desc:'BGP, SDN, SD-WAN, microsegmentation — technical networking from practitioners. Perfect for SE work.',url:'https://packetpushers.net/podcast/heavy-networking/',rss:'https://feeds.packetpushers.net/PacketPushersWeeklyPodcast/'},
     {icon:'🔒',label:'Zero Trust',name:'Zero Trust Security Podcast',desc:'Zero trust architecture, microsegmentation, and identity-first network design.',url:'https://www.illumio.com/resource-center/podcasts',rss:null},
     {icon:'🛡️',label:'Network Security',name:'Security Now',desc:'Steve Gibson on TLS, encryption, network protocols and architecture — great depth on network security.',url:'https://twit.tv/shows/security-now',rss:null},
     {icon:'📡',label:'Network Engineering',name:'Network Collective',desc:'Routing, switching, architecture, and the future of enterprise networking from working engineers.',url:'https://networkcollective.com/podcast/',rss:null},
   ],
   sec: [
     {icon:'🔐',label:'InfoSec',name:'Risky Business',desc:'Weekly infosec news and practitioner interviews. The gold standard for staying current on threats.',url:'https://risky.biz',rss:'https://risky.biz/feeds/risky-business/'},
-    {icon:'🕵️',label:'True Crime Cyber',name:'Darknet Diaries',desc:'True stories from the dark side — hacks, breaches, nation-state attacks, and cybercrime.',url:'https://darknetdiaries.com',rss:'https://feeds.megaphone.fm/darknetdiaries'},
+    {icon:'🕵️',label:'True Crime Cyber',name:'Darknet Diaries',desc:'True stories from the dark side — hacks, breaches, nation-state attacks, and cybercrime.',url:'https://darknetdiaries.com',rss:'https://podcast.darknetdiaries.com/'},
     {icon:'📻',label:'Daily Brief',name:'CyberWire Daily',desc:'Daily 20-min briefing on the top cybersecurity stories. Perfect commute listen.',url:'https://thecyberwire.com/podcasts/daily-podcast',rss:null},
     {icon:'🧠',label:'Threat Intel',name:'SANS Internet Stormcast',desc:'Daily 5-min threat intel from SANS ISC handlers — CVEs, active exploits, and emerging threats.',url:'https://isc.sans.edu/podcast.html',rss:null},
   ],
   ot: [
     {icon:'🔐',label:'InfoSec',name:'Risky Business',desc:'Regular ICS/OT and critical infrastructure security coverage alongside broader infosec news.',url:'https://risky.biz',rss:'https://risky.biz/feeds/risky-business/'},
-    {icon:'🕵️',label:'ICS/OT Stories',name:'Darknet Diaries',desc:'Episodes on industrial attacks, critical infrastructure incidents, and SCADA-specific breaches.',url:'https://darknetdiaries.com',rss:'https://feeds.megaphone.fm/darknetdiaries'},
+    {icon:'🕵️',label:'ICS/OT Stories',name:'Darknet Diaries',desc:'Episodes on industrial attacks, critical infrastructure incidents, and SCADA-specific breaches.',url:'https://darknetdiaries.com',rss:'https://podcast.darknetdiaries.com/'},
     {icon:'🏛️',label:'Federal/CISA',name:'Grounded in CISA',desc:'Official CISA podcast — ICS-CERT advisories, critical infrastructure threats, and federal guidance.',url:'https://www.cisa.gov/news-events/podcasts',rss:null},
     {icon:'⚙️',label:'OT/IoT',name:'The Industrial Security Podcast',desc:'Claroty\'s podcast on OT/ICS/IoT security with practitioner interviews and incident analysis.',url:'https://claroty.com/resources/podcasts',rss:null},
   ],
   hc: [
     {icon:'🔐',label:'InfoSec',name:'Risky Business',desc:'Frequent healthcare sector breach coverage, ransomware hospital incidents, and vendor analysis.',url:'https://risky.biz',rss:'https://risky.biz/feeds/risky-business/'},
-    {icon:'🕵️',label:'Healthcare Incidents',name:'Darknet Diaries',desc:'True stories from hospital breaches and healthcare-specific cybercrime cases.',url:'https://darknetdiaries.com',rss:'https://feeds.megaphone.fm/darknetdiaries'},
+    {icon:'🕵️',label:'Healthcare Incidents',name:'Darknet Diaries',desc:'True stories from hospital breaches and healthcare-specific cybercrime cases.',url:'https://darknetdiaries.com',rss:'https://podcast.darknetdiaries.com/'},
     {icon:'🏥',label:'Healthcare IT',name:'HIMSS Podcasts',desc:'Healthcare IT security, HIPAA compliance, medical device vulnerabilities, and health system resilience.',url:'https://www.himss.org/podcasts',rss:null},
     {icon:'🏦',label:'FinSec/Healthcare',name:'BankInfoSecurity Podcast',desc:'ISMG covers healthcare sector threats heavily alongside financial security — HC3-relevant content.',url:'https://www.bankinfosecurity.com/podcasts',rss:null},
   ],
@@ -217,7 +208,7 @@ const PODS_STATIC = {
   training: [
     {icon:'🏋️',label:'Strength',name:'Juggernaut Training Systems',desc:'Chad Wesley Smith on programming, periodization, and strength for combat sports athletes.',url:'https://www.jtsstrength.com/podcasts/',rss:null},
     {icon:'🏃',label:'Running',name:'Strength Running Podcast',desc:'Jason Fitzgerald on running periodization, injury prevention, and XC/wrestling hybrid training.',url:'https://www.strengthrunning.com/category/podcast/',rss:null},
-    {icon:'🤼',label:'Wrestling',name:'FloWrestling Radio Live',desc:'Wrestling news, recruiting, tournament previews, technique breakdowns, college wrestling.',url:'https://www.flowrestling.org/podcasts',rss:'https://feeds.simplecast.com/Q7U0ZQLM'},
+    {icon:'🤼',label:'Wrestling',name:'FloWrestling Radio Live',desc:'Wrestling news, recruiting, tournament previews, technique breakdowns, college wrestling.',url:'https://www.flowrestling.org/podcasts',rss:null},
     {icon:'💪',label:'Strength Science',name:'RP Strength Podcast',desc:'Dr. Mike Israetel on hypertrophy, nutrition timing, and evidence-based training.',url:'https://rpstrength.com/rp-strength-podcast/',rss:null},
     {icon:'🔬',label:'Recovery & Science',name:'Huberman Lab',desc:'Sleep, recovery, nutrition protocols, and neuroscience of performance. Great for athlete recovery stack.',url:'https://hubermanlab.com/podcast/',rss:'https://feeds.megaphone.fm/hubermanlab'},
     {icon:'🧬',label:'Nutrition Science',name:'Found My Fitness (Rhonda Patrick)',desc:'Deep dives on creatine, omega-3s, nutrition science — directly applicable to supplement decisions.',url:'https://www.foundmyfitness.com/podcast',rss:null},
@@ -272,7 +263,7 @@ const PODS_STATIC = {
     {icon:'🗺️',label:'Domain Deep Dives',name:'Destination Certification',desc:'Rob Witcher\'s mind map series — one video per domain. Exceptional for visual learners.',url:'https://www.youtube.com/@DestinationCertification',rss:null},
     {icon:'🔐',label:'Domains 3 & 4',name:'Risky Business',desc:'Deep cryptography and network security content maps to CISSP Domains 3 and 4.',url:'https://risky.biz',rss:'https://risky.biz/feeds/risky-business/'},
     {icon:'📻',label:'Domain 1',name:'CyberWire Daily',desc:'Keeps risk management and current threat landscape fresh with minimal time cost.',url:'https://thecyberwire.com/podcasts/daily-podcast',rss:null},
-    {icon:'🕵️',label:'Domain 7',name:'Darknet Diaries',desc:'Real incident case studies reinforce Domain 7 (Security Operations).',url:'https://darknetdiaries.com',rss:'https://feeds.megaphone.fm/darknetdiaries'},
+    {icon:'🕵️',label:'Domain 7',name:'Darknet Diaries',desc:'Real incident case studies reinforce Domain 7 (Security Operations).',url:'https://darknetdiaries.com',rss:'https://podcast.darknetdiaries.com/'},
   ]
 
 };
@@ -332,7 +323,7 @@ async function getFeedItems(url, force=false){
   return items || (c ? c.items : []);
 }
 const RL_MSG = 'The news feed service is rate-limiting this page. Showing what was saved; try again in a few minutes.';
-function fmtDate(s){if(!s)return'';const d=new Date(s);return isNaN(d)?'':d.toLocaleDateString('en-US',{month:'short',day:'numeric'})}
+function fmtDate(s){if(!s)return'';if(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(s))s=s.replace(' ','T')+'Z';const d=new Date(s);return isNaN(d)?'':d.toLocaleDateString('en-US',{month:'short',day:'numeric'})}
 
 function skeleton(){
   return `<div class="grid">`+Array(6).fill(0).map(()=>`
@@ -357,10 +348,28 @@ async function fetchFeed(url, label, force=false){
   }catch{return []}
 }
 
+// Keyword matching: a keyword must begin at the start of a word ("sport" no
+// longer matches "transport"); keywords of 4 chars or fewer must be a whole
+// word (optionally plural), so "par" doesn't match "part" or "tee" "teen".
+// Longer keywords still match as prefixes ("invest" -> "investing").
+const KW_RE = {};
+for (const [tab, list] of Object.entries(KEYWORDS)) {
+  KW_RE[tab] = [...new Set(list.map(k => k.toLowerCase()))].map(k => {
+    const e = k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const tail = k === 'apt' ? '(?:s|\\d+)?(?![a-z0-9])'
+               : /[a-z0-9]$/.test(k) && k.length <= 4 ? 's?(?![a-z0-9])' : '';
+    return new RegExp('(?:^|[^a-z0-9])' + e + tail);
+  });
+}
+function kwScore(text, tab){
+  const res = KW_RE[tab]; if(!res) return 0;
+  const txt = String(text||'').toLowerCase();
+  let n = 0; for (const re of res) if (re.test(txt)) n++;
+  return n;
+}
 function scoreItem(item, tab){
   if(!KEYWORDS[tab]) return 1;
-  const txt = (item.headline+' '+item.summary).toLowerCase();
-  return KEYWORDS[tab].filter(k=>txt.includes(k)).length;
+  return kwScore((item.headline+' '+item.summary).replace(/&amp;/g,'&').replace(/&#39;/g,"'").replace(/&quot;/g,'"'), tab);
 }
 
 async function fetchPanel(key, force=false){
@@ -435,7 +444,7 @@ function renderStaticPods(key){
 async function fetchPodEpisodes(key){
   const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',mw:'var(--mwa)',ai:'var(--aia)',ltc:'var(--ltca)',diy:'var(--diya)',tv:'var(--tva)',golf:'var(--ga)',cissp:'var(--csa)'}[key];
   const pods = PODS_STATIC[key].filter(p=>p.rss);
-  if(!pods.length) return renderStaticPods(key);
+  if(!pods.length) return {html: renderStaticPods(key), live: false};
   const results = await Promise.all(pods.map(async p=>{
     try{
       const items = await getFeedItems(p.rss, true);
@@ -449,15 +458,15 @@ async function fetchPodEpisodes(key){
     }catch{return []}
   }));
   const eps = results.flat();
-  if(!eps.length) return renderStaticPods(key);
-  return `<div class="grid">`+
+  if(!eps.length) return {html: renderStaticPods(key), live: false};
+  return {live: true, html: `<div class="grid">`+
     eps.map(e=>`
       <a class="epc" href="${e.link}" target="_blank" rel="noopener" style="--ac:${accent}">
         <div class="es">${e.icon} ${e.show} · ${e.label}</div>
         <div class="et">${e.title}</div>
         <div class="ed">${e.desc}</div>
         <div class="em">${e.date}</div>
-      </a>`).join('')+`</div>`;
+      </a>`).join('')+`</div>`};
 }
 
 
@@ -468,7 +477,7 @@ const QUOTES = [
   // Leadership & Excellence
   {t:"The best way to predict the future is to create it.",a:"Peter Drucker"},
   {t:"Management is doing things right; leadership is doing the right things.",a:"Peter Drucker"},
-  {t:"What gets measured gets managed.",a:"Peter Drucker"},
+  {t:"What gets measured gets managed.",a:"Attributed to Peter Drucker"},
   {t:"The most dangerous kind of waste is the waste we do not recognize.",a:"Shigeo Shingo"},
   {t:"Leaders eat last.",a:"Simon Sinek"},
   {t:"Start with why.",a:"Simon Sinek"},
@@ -477,14 +486,14 @@ const QUOTES = [
   {t:"Good is the enemy of great.",a:"Jim Collins"},
   {t:"First who, then what.",a:"Jim Collins"},
   {t:"Greatness is not a function of circumstance. It is a matter of conscious choice.",a:"Jim Collins"},
-  {t:"The secret of getting ahead is getting started.",a:"Mark Twain"},
+  {t:"The secret of getting ahead is getting started.",a:"Attributed to Mark Twain"},
   {t:"It is not the strongest of the species that survive, but the one most responsive to change.",a:"Charles Darwin"},
-  {t:"The measure of intelligence is the ability to change.",a:"Albert Einstein"},
-  {t:"In the middle of every difficulty lies opportunity.",a:"Albert Einstein"},
+  {t:"The measure of intelligence is the ability to change.",a:"Attributed to Albert Einstein"},
+  {t:"In the middle of every difficulty lies opportunity.",a:"Attributed to Albert Einstein"},
   {t:"Imagination is more important than knowledge.",a:"Albert Einstein"},
-  {t:"A person who never made a mistake never tried anything new.",a:"Albert Einstein"},
-  {t:"Logic will get you from A to B. Imagination will take you everywhere.",a:"Albert Einstein"},
-  {t:"The definition of insanity is doing the same thing over and over and expecting different results.",a:"Albert Einstein"},
+  {t:"A person who never made a mistake never tried anything new.",a:"Attributed to Albert Einstein"},
+  {t:"Logic will get you from A to B. Imagination will take you everywhere.",a:"Attributed to Albert Einstein"},
+  {t:"The definition of insanity is doing the same thing over and over and expecting different results.",a:"Narcotics Anonymous (1981), often credited to Einstein"},
   {t:"Try not to become a man of success, but rather try to become a man of value.",a:"Albert Einstein"},
   // Discipline & Hard Work
   {t:"Discipline is the bridge between goals and accomplishment.",a:"Jim Rohn"},
@@ -501,7 +510,6 @@ const QUOTES = [
   {t:"Your time is limited, so don't waste it living someone else's life.",a:"Steve Jobs"},
   {t:"Stay hungry, stay foolish.",a:"Steve Jobs"},
   {t:"Innovation distinguishes between a leader and a follower.",a:"Steve Jobs"},
-  {t:"The people who are crazy enough to think they can change the world are the ones who do.",a:"Steve Jobs"},
   {t:"Simplicity is the ultimate sophistication.",a:"Leonardo da Vinci"},
   {t:"The secret of success is constancy of purpose.",a:"Benjamin Disraeli"},
   {t:"An investment in knowledge pays the best interest.",a:"Benjamin Franklin"},
@@ -543,17 +551,17 @@ const QUOTES = [
   {t:"Success is where preparation and opportunity meet.",a:"Bobby Unser"},
   {t:"Winning is habit. Unfortunately, so is losing.",a:"Vince Lombardi"},
   {t:"Excellence is not a singular act, but a habit.",a:"Aristotle"},
-  {t:"We are what we repeatedly do. Excellence, then, is not an act but a habit.",a:"Aristotle"},
-  {t:"It is during our darkest moments that we must focus to see the light.",a:"Aristotle"},
+  {t:"We are what we repeatedly do. Excellence, then, is not an act but a habit.",a:"Will Durant, summarizing Aristotle"},
+  {t:"It is during our darkest moments that we must focus to see the light.",a:"Attributed to Aristotle Onassis"},
   // Resilience & Persistence
   {t:"Fall seven times, stand up eight.",a:"Japanese Proverb"},
-  {t:"It does not matter how slowly you go as long as you do not stop.",a:"Confucius"},
-  {t:"Our greatest glory is not in never failing, but in rising every time we fall.",a:"Confucius"},
+  {t:"It does not matter how slowly you go as long as you do not stop.",a:"Attributed to Confucius"},
+  {t:"Our greatest glory is not in never falling, but in rising every time we fall.",a:"Oliver Goldsmith"},
   {t:"The man who moves a mountain begins by carrying away small stones.",a:"Confucius"},
-  {t:"Success is not final, failure is not fatal: it is the courage to continue that counts.",a:"Winston Churchill"},
-  {t:"If you're going through hell, keep going.",a:"Winston Churchill"},
-  {t:"Continuous effort — not strength or intelligence — is the key to unlocking our potential.",a:"Winston Churchill"},
-  {t:"Success consists of going from failure to failure without loss of enthusiasm.",a:"Winston Churchill"},
+  {t:"Success is not final, failure is not fatal: it is the courage to continue that counts.",a:"Attributed to Winston Churchill"},
+  {t:"If you're going through hell, keep going.",a:"Attributed to Winston Churchill"},
+  {t:"Continuous effort — not strength or intelligence — is the key to unlocking our potential.",a:"Attributed to Winston Churchill"},
+  {t:"Success consists of going from failure to failure without loss of enthusiasm.",a:"Attributed to Winston Churchill"},
   {t:"We shall never surrender.",a:"Winston Churchill"},
   {t:"Never, never, never give up.",a:"Winston Churchill"},
   {t:"I am not a product of my circumstances. I am a product of my decisions.",a:"Stephen Covey"},
@@ -597,21 +605,20 @@ const QUOTES = [
   {t:"There are two types of companies: those that have been hacked, and those that don't yet know they have been hacked.",a:"John Chambers"},
   // Learning & Growth
   {t:"Live as if you were to die tomorrow. Learn as if you were to live forever.",a:"Mahatma Gandhi"},
-  {t:"Be the change you wish to see in the world.",a:"Mahatma Gandhi"},
+  {t:"Be the change you wish to see in the world.",a:"Attributed to Mahatma Gandhi"},
   {t:"Strength does not come from physical capacity. It comes from an indomitable will.",a:"Mahatma Gandhi"},
   {t:"The weak can never forgive. Forgiveness is the attribute of the strong.",a:"Mahatma Gandhi"},
   {t:"The more that you read, the more things you will know.",a:"Dr. Seuss"},
   {t:"You have brains in your head. You have feet in your shoes. You can steer yourself any direction you choose.",a:"Dr. Seuss"},
   {t:"Today you are You, that is truer than true. There is no one alive who is Youer than You.",a:"Dr. Seuss"},
   {t:"Why fit in when you were born to stand out?",a:"Dr. Seuss"},
-  {t:"An investment in knowledge always pays the best interest.",a:"Benjamin Franklin"},
   {t:"Knowledge is power.",a:"Francis Bacon"},
   {t:"The capacity to learn is a gift; the ability to learn is a skill; the willingness to learn is a choice.",a:"Brian Herbert"},
   {t:"Education is not the filling of a pail, but the lighting of a fire.",a:"William Butler Yeats"},
   {t:"The beautiful thing about learning is that no one can take it away from you.",a:"B.B. King"},
   {t:"Learning never exhausts the mind.",a:"Leonardo da Vinci"},
   {t:"Every expert was once a beginner.",a:"Helen Hayes"},
-  {t:"The more I learn, the more I realize how much I don't know.",a:"Albert Einstein"},
+  {t:"The more I learn, the more I realize how much I don't know.",a:"Attributed to Albert Einstein"},
   {t:"You don't have to be great to start, but you have to start to be great.",a:"Zig Ziglar"},
   {t:"People often say that motivation doesn't last. Well, neither does bathing. That's why we recommend it daily.",a:"Zig Ziglar"},
   {t:"Your attitude, not your aptitude, will determine your altitude.",a:"Zig Ziglar"},
@@ -620,7 +627,6 @@ const QUOTES = [
   {t:"What you get by achieving your goals is not as important as what you become by achieving your goals.",a:"Zig Ziglar"},
   // Health, Recovery & Performance Science
   {t:"The groundwork for all happiness is good health.",a:"Leigh Hunt"},
-  {t:"Take care of your body. It's the only place you have to live.",a:"Jim Rohn"},
   {t:"Health is not valued until sickness comes.",a:"Thomas Fuller"},
   {t:"The first wealth is health.",a:"Ralph Waldo Emerson"},
   {t:"A healthy outside starts from the inside.",a:"Robert Urich"},
@@ -648,16 +654,15 @@ const QUOTES = [
   {t:"All that is gold does not glitter.",a:"J.R.R. Tolkien"},
   {t:"Even the smallest person can change the course of the future.",a:"J.R.R. Tolkien"},
   {t:"It's a dangerous business, going out your door.",a:"J.R.R. Tolkien"},
-  {t:"The two most important days in your life are the day you are born and the day you find out why.",a:"Mark Twain"},
-  {t:"The secret of getting ahead is getting started.",a:"Mark Twain"},
-  {t:"Twenty years from now you will be more disappointed by the things you didn't do than by the ones you did.",a:"Mark Twain"},
+  {t:"The two most important days in your life are the day you are born and the day you find out why.",a:"Attributed to Mark Twain"},
+  {t:"Twenty years from now you will be more disappointed by the things you didn't do than by the ones you did.",a:"Attributed to Mark Twain"},
   {t:"Courage is not the absence of fear but the judgment that something else is more important than fear.",a:"Ambrose Redmoon"},
   {t:"Everything you've ever wanted is on the other side of fear.",a:"George Addair"},
   {t:"You gain strength, courage, and confidence by every experience in which you really stop to look fear in the face.",a:"Eleanor Roosevelt"},
   {t:"No one can make you feel inferior without your consent.",a:"Eleanor Roosevelt"},
   {t:"The future belongs to those who believe in the beauty of their dreams.",a:"Eleanor Roosevelt"},
   {t:"Do what you can, with what you have, where you are.",a:"Theodore Roosevelt"},
-  {t:"Believe you can and you're halfway there.",a:"Theodore Roosevelt"},
+  {t:"Believe you can and you're halfway there.",a:"Attributed to Theodore Roosevelt"},
   {t:"Nothing in life is to be feared, only to be understood.",a:"Marie Curie"},
   {t:"I have not failed. I've just found 10,000 ways that won't work.",a:"Thomas Edison"},
   {t:"Genius is one percent inspiration and ninety-nine percent perspiration.",a:"Thomas Edison"},
@@ -678,7 +683,7 @@ const QUOTES = [
   {t:"First say to yourself what you would be; and then do what you have to do.",a:"Epictetus"},
   {t:"It's not what happens to you, but how you react to it that matters.",a:"Epictetus"},
   {t:"Man is not worried by real problems so much as by his imagined anxieties about real problems.",a:"Epictetus"},
-  {t:"Luck is what happens when preparation meets opportunity.",a:"Seneca"},
+  {t:"Luck is what happens when preparation meets opportunity.",a:"Attributed to Seneca"},
   {t:"It is not that I'm so smart. But I stay with the questions much longer.",a:"Albert Einstein"},
   {t:"He who has a why to live can bear almost any how.",a:"Friedrich Nietzsche"},
   {t:"That which does not kill us makes us stronger.",a:"Friedrich Nietzsche"},
@@ -705,14 +710,14 @@ const QUOTES = [
   {t:"In the future, there will be no female leaders. There will just be leaders.",a:"Sheryl Sandberg"},
   {t:"The biggest risk is not taking any risk. In a world that's changing quickly, the only strategy that is guaranteed to fail is not taking risks.",a:"Mark Zuckerberg"},
   {t:"Move fast and break things.",a:"Mark Zuckerberg"},
-  {t:"The people who are crazy enough to think they can change the world are the ones who do.",a:"Rob Siltanen"},
+  {t:"The people who are crazy enough to think they can change the world are the ones who do.",a:"Apple 'Think Different' ad (1997)"},
   // Mentorship, Coaching & Youth Development
   {t:"A coach is someone who tells you what you don't want to hear, who has you see what you don't want to see, so you can be who you have always known you could be.",a:"Tom Landry"},
   {t:"The mediocre teacher tells. The good teacher explains. The superior teacher demonstrates. The great teacher inspires.",a:"William Arthur Ward"},
   {t:"Education is the passport to the future, for tomorrow belongs to those who prepare for it today.",a:"Malcolm X"},
   {t:"The function of leadership is to produce more leaders, not more followers.",a:"Ralph Nader"},
   {t:"A mentor is someone who sees more talent and ability within you, than you see in yourself.",a:"Bob Proctor"},
-  {t:"Tell me and I forget. Teach me and I remember. Involve me and I learn.",a:"Benjamin Franklin"},
+  {t:"Tell me and I forget. Teach me and I remember. Involve me and I learn.",a:"Proverb, loosely after Xunzi"},
   {t:"The children are our future. Teach them well and let them lead the way.",a:"Whitney Houston"},
   {t:"Plant seeds of happiness, hope, success, and love; it will all come back to you in abundance.",a:"Steve Maraboli"},
   {t:"Success is not about how much money you make; it's about the difference you make in people's lives.",a:"Michelle Obama"},
@@ -724,14 +729,13 @@ const QUOTES = [
   {t:"I can resist everything except temptation.",a:"Oscar Wilde"},
   {t:"A room without books is like a body without a soul.",a:"Marcus Tullius Cicero"},
   {t:"If you want to go fast, go alone. If you want to go far, go together.",a:"African Proverb"},
-  {t:"A smooth sea never made a skilled sailor.",a:"Franklin D. Roosevelt"},
+  {t:"A smooth sea never made a skilled sailor.",a:"Proverb"},
   {t:"When you reach the end of your rope, tie a knot in it and hang on.",a:"Franklin D. Roosevelt"},
   {t:"The only thing we have to fear is fear itself.",a:"Franklin D. Roosevelt"},
   {t:"The price of greatness is responsibility.",a:"Winston Churchill"},
-  {t:"We make a living by what we get, but we make a life by what we give.",a:"Winston Churchill"},
+  {t:"We make a living by what we get, but we make a life by what we give.",a:"Attributed to Winston Churchill"},
   {t:"Attitude is a little thing that makes a big difference.",a:"Winston Churchill"},
-  {t:"Success is stumbling from failure to failure with no loss of enthusiasm.",a:"Winston Churchill"},
-  {t:"You have enemies? Good. That means you've stood up for something, sometime in your life.",a:"Winston Churchill"},
+  {t:"You have enemies? Good. That means you've stood up for something, sometime in your life.",a:"Attributed to Winston Churchill"},
   {t:"Every accomplishment starts with the decision to try.",a:"John F. Kennedy"},
   {t:"Ask not what your country can do for you — ask what you can do for your country.",a:"John F. Kennedy"},
   {t:"Change is the law of life. And those who look only to the past or present are certain to miss the future.",a:"John F. Kennedy"},
@@ -753,7 +757,6 @@ const QUOTES = [
   {t:"Hell is empty and all the devils are here.",a:"William Shakespeare"},
   {t:"Courage is resistance to fear, mastery of fear, not absence of fear.",a:"Mark Twain"},
   {t:"Whenever you find yourself on the side of the majority, it is time to pause and reflect.",a:"Mark Twain"},
-  {t:"The secret of getting ahead is getting started.",a:"Mark Twain"},
   {t:"If you tell the truth, you don't have to remember anything.",a:"Mark Twain"},
   {t:"Go to heaven for the climate, hell for the company.",a:"Mark Twain"},
   // Running & Endurance
@@ -772,41 +775,34 @@ const QUOTES = [
 const FACTS = [
   // Mind & Brain
   "The average person makes about 35,000 decisions per day — most of them unconscious.",
-  "The human brain can store approximately 2.5 petabytes of information, equivalent to 3 million hours of TV.",
+  "By one popular estimate, the human brain can store about 2.5 petabytes of information, equivalent to 3 million hours of TV.",
   "Reading for just 6 minutes a day can reduce stress levels by up to 68%.",
   "Your brain uses about 20% of your body's total energy despite being only 2% of your body weight.",
-  "The human brain generates about 70,000 thoughts per day.",
   "Sleeping less than 6 hours per night for two weeks impairs performance as much as going 48 hours without sleep.",
   "Learning a new skill physically changes the structure of your brain through neuroplasticity.",
   "The brain's prefrontal cortex — responsible for decision-making — isn't fully developed until age 25.",
   "Multitasking reduces productivity by up to 40% and lowers IQ by 10 points temporarily.",
-  "People remember only about 10% of what they read but 90% of what they teach to others.",
   // Cybersecurity & Technology
   "Zero trust security was first coined by John Kindervag at Forrester Research in 2010.",
   "The first computer virus, Creeper, was created in 1971 and displayed 'I'm the creeper, catch me if you can!'",
   "The global cybersecurity market is projected to exceed $500 billion by 2030.",
   "Microsegmentation can reduce the blast radius of a breach by up to 90%.",
-  "The average data breach takes 207 days to identify and 73 days to contain.",
-  "Phishing attacks account for over 90% of data breaches worldwide.",
-  "There are over 1,000 different CISSP practice question variations per domain across major study platforms.",
+  "IBM's breach studies put the average time to identify and contain a data breach at well over 200 days.",
   "The CISSP exam has a minimum of 100 questions and a maximum of 150, with a 3-hour time limit.",
   "BGP, the protocol that routes the entire internet, was designed on two cocktail napkins in 1989.",
   "The first email was sent by Ray Tomlinson in 1971 — he also chose the @ symbol for email addresses.",
-  "There are approximately 4.1 billion internet users worldwide, generating 2.5 quintillion bytes of data daily.",
+  "About 6 billion people — roughly three-quarters of the world — now use the internet.",
   "The average hospital has over 10 connected medical devices per patient bed.",
-  "SD-WAN adoption grew over 40% in 2023 as enterprises shifted from MPLS to cloud-first networking.",
   "The NIST Cybersecurity Framework is used by over 30% of US organizations.",
-  "Ransomware attacks occur every 11 seconds globally.",
   "The dark web is estimated to be 400-500 times larger than the surface web.",
   "A SQL injection attack takes less than 30 seconds to execute but can take months to detect.",
   "Over 300,000 new malware samples are created every single day.",
   "The first smartphone with internet access was the Nokia 9000 Communicator, released in 1996.",
-  "Python is now the most popular programming language in the world, surpassing JavaScript in 2023.",
+  "Python overtook JavaScript as the most-used language on GitHub in 2024.",
   // Athletics & Wrestling
   "Wrestlers have one of the highest strength-to-weight ratios of any athlete.",
   "The first Olympic wrestling competition was held in 708 BC in ancient Greece.",
-  "Dan Gable won 182 consecutive matches and an Olympic gold medal without giving up a single point.",
-  "High-intensity interval training (HIIT) can burn more calories in 15 minutes than jogging for an hour.",
+  "Dan Gable went 181–1 in high school and college, then won 1972 Olympic gold without giving up a single point.",
   "Progressive overload — adding weight or reps over time — is the single most important principle in strength training.",
   "Protein synthesis after resistance training peaks within 24–48 hours — rest days are growth days.",
   "Sleep deprivation reduces athletic performance by up to 30% — recovery is training.",
@@ -825,7 +821,6 @@ const FACTS = [
   "Periodization — cycling training intensity — was pioneered by Soviet sports scientists in the 1950s.",
   // Nutrition & Health
   "Creatine is one of the safest and most effective supplements for increasing strength and muscle mass.",
-  "The food you eat can be either the safest and most powerful form of medicine or the slowest form of poison.",
   "Protein synthesis requires adequate leucine — found in meat, eggs, and dairy — to initiate muscle building.",
   "Dehydration of just 2% body weight impairs both physical and cognitive performance significantly.",
   "Omega-3 fatty acids reduce inflammation, improve brain function, and lower cardiovascular risk.",
@@ -851,7 +846,7 @@ const FACTS = [
   "Warren Buffett made 99% of his net worth after his 50th birthday — compounding takes time.",
   "Financial literacy is not taught in 80% of US high schools, yet affects every adult decision.",
   "The average 401(k) balance for Americans over 60 is approximately $228,000 — far below what's needed.",
-  "Max out your Roth IRA ($7,000/year in 2024) and it can grow to over $1 million by retirement tax-free.",
+  "Max out your Roth IRA every year (the limit is $7,000+) and it can grow to over $1 million by retirement, tax-free.",
   "Medical expenses are the #1 cause of personal bankruptcy in the United States.",
   "The average car loses 20% of its value the moment you drive it off the lot.",
   "Living below your means — not income — is the most common trait of millionaires.",
@@ -872,34 +867,26 @@ const FACTS = [
   "There are more trees on Earth than stars in the Milky Way galaxy.",
   "The human eye can detect a single photon of light in complete darkness.",
   // Science & Nature
-  "A teaspoon of neutron star material weighs about 10 million tons.",
+  "A teaspoon of neutron star material weighs a few billion tons.",
   "Water is the only natural substance found in all three states — solid, liquid, and gas — on Earth's surface.",
   "The speed of light is 186,000 miles per second — it takes 8 minutes for light from the Sun to reach Earth.",
   "Your body replaces most of its cells every 7–10 years — you are literally a different person.",
   "DNA is so tightly coiled that if unraveled from a single human cell, it would stretch 6 feet.",
   "Lightning strikes Earth approximately 100 times per second.",
-  "The Amazon rainforest produces 20% of the world's oxygen.",
   "A day on Venus is longer than a year on Venus — it rotates so slowly.",
   "Octopuses have three hearts, blue blood, and nine brains — one central and one in each arm.",
   "The human body contains about 37 trillion cells, each performing thousands of chemical reactions per second.",
   "Butterflies taste with their feet — they have taste sensors on their legs.",
-  "There are more possible iterations of a game of chess than atoms in the known universe.",
   // Personal Growth & Philosophy
-  "A 1% improvement every day compounds to a 37x improvement over a year.",
-  "You do not rise to the level of your goals — you fall to the level of your systems.",
-  "Every action you take is a vote for the type of person you wish to become.",
-  "Habits are the compound interest of self-improvement.",
   "Discipline is choosing between what you want now and what you want most.",
   "The most dangerous risk of all is the risk of spending your life not doing what you want.",
   "You can't connect the dots looking forward — only looking backward. So trust that the dots will connect.",
-  "The best time to plant a tree was 20 years ago. The second best time is now.",
   "Most people overestimate what they can do in a year and underestimate what they can do in a decade.",
   "Success is not owned. It's rented — and rent is due every day.",
   "Comfort zones are where dreams go to die — and where mediocrity lives rent-free.",
   "The obstacle is not in the way. The obstacle IS the way.",
   "You are the average of the five people you spend the most time with.",
   "Hard choices, easy life. Easy choices, hard life.",
-  "The man who moves a mountain begins by carrying away small stones.",
   // Home & DIY
   "Replacing your furnace filter monthly can improve HVAC efficiency by up to 15%.",
   "A leaky faucet dripping once per second wastes over 3,000 gallons of water per year.",
@@ -917,7 +904,7 @@ const FACTS = [
   "The Appalachian Trail stretches 2,190 miles from Georgia to Maine — it takes 5–7 months to thru-hike.",
   "Route 66, nicknamed 'The Mother Road,' stretched 2,448 miles from Chicago to Santa Monica.",
   "The Grand Canyon is 277 miles long, up to 18 miles wide, and over a mile deep.",
-  "Alaska is the largest US state by area and contains 17 of the 20 highest peaks in North America.",
+  "Alaska is the largest US state by area and contains 17 of the 20 highest peaks in the United States.",
   "The Florida Keys are the only place in the continental US where you can see a coral reef.",
   "Great Smoky Mountains is the most visited US national park — receiving over 12 million visitors per year.",
   "Texas is larger than France — it covers 268,596 square miles.",
@@ -946,7 +933,7 @@ const ON_THIS_DAY = {
   "01-01":{y:1863,e:"The Emancipation Proclamation takes effect, declaring enslaved people in Confederate states to be free."},
   "01-02":{y:1492,e:"The Reconquista ends as the last Moorish ruler surrenders Granada to Spain after 700 years."},
   "01-03":{y:1777,e:"General George Washington defeats British forces at the Battle of Princeton during the American Revolution."},
-  "01-04":{y:1903,e:"Thomas Edison electrocutes Topsy the elephant at Coney Island in a misguided demonstration of DC power."},
+  "01-04":{y:1903,e:"Topsy the elephant is electrocuted with alternating current (AC) at Coney Island; Edison's film company records it."},
   "01-05":{y:1933,e:"Construction begins on the Golden Gate Bridge in San Francisco Bay."},
   "01-06":{y:1941,e:"Franklin D. Roosevelt delivers his famous Four Freedoms speech to Congress."},
   "01-07":{y:1979,e:"Vietnamese forces capture Phnom Penh, ending the brutal Khmer Rouge regime in Cambodia."},
@@ -958,7 +945,7 @@ const ON_THIS_DAY = {
   "01-13":{y:1888,e:"The National Geographic Society is founded in Washington, D.C."},
   "01-14":{y:1784,e:"The United States ratifies the Treaty of Paris, officially ending the American Revolutionary War."},
   "01-15":{y:1929,e:"Martin Luther King Jr. is born in Atlanta, Georgia. His birthday is now a federal holiday."},
-  "01-16":{y:1920,e:"Prohibition begins in the United States, banning the manufacture and sale of alcohol for 13 years."},
+  "01-16":{y:1919,e:"The 18th Amendment is ratified, bringing Prohibition to the United States a year later — it lasts nearly 14 years."},
   "01-17":{y:1991,e:"Operation Desert Storm begins as coalition forces launch massive air strikes against Iraq."},
   "01-18":{y:1778,e:"Captain James Cook becomes the first European to discover the Hawaiian Islands."},
   "01-19":{y:1807,e:"Robert E. Lee is born in Virginia, later to command the Confederate Army of Northern Virginia."},
@@ -983,7 +970,7 @@ const ON_THIS_DAY = {
   "02-07":{y:1812,e:"Charles Dickens is born in Portsmouth, England. He would go on to write Oliver Twist and A Tale of Two Cities."},
   "02-08":{y:1910,e:"The Boy Scouts of America is incorporated by William D. Boyce."},
   "02-09":{y:1964,e:"The Beatles make their historic debut on The Ed Sullivan Show, watched by 73 million Americans."},
-  "02-10":{y:1996,e:"Deep Blue, IBM\'s chess computer, defeats world champion Garry Kasparov for the first time."},
+  "02-10":{y:1996,e:"IBM\'s Deep Blue becomes the first computer to beat a reigning world chess champion in a game, winning game one against Garry Kasparov (he took the match)."},
   "02-11":{y:1990,e:"Nelson Mandela is released from Victor Verster Prison after 27 years of imprisonment."},
   "02-12":{y:1809,e:"Abraham Lincoln is born in a log cabin in Kentucky. He would become America\'s 16th president."},
   "02-13":{y:1633,e:"Galileo arrives in Rome to face the Inquisition for his support of heliocentrism."},
@@ -1000,7 +987,7 @@ const ON_THIS_DAY = {
   "02-24":{y:1582,e:"Pope Gregory XIII issues the Gregorian calendar, the basis for the modern calendar we use today."},
   "02-25":{y:1870,e:"Hiram Revels of Mississippi becomes the first African American to serve in the US Senate."},
   "02-26":{y:1993,e:"A truck bomb explodes in the parking garage of the World Trade Center, killing six people."},
-  "02-27":{y:1861,e:"The Confederate States of America adopt their constitution in Montgomery, Alabama."},
+  "02-27":{y:1933,e:"The Reichstag building in Berlin is set on fire; the Nazis use it as a pretext to seize emergency powers."},
   "02-28":{y:1953,e:"James Watson and Francis Crick announce they have discovered the double helix structure of DNA."},
   "02-29":{y:1960,e:"The deadliest earthquake in Africa\'s recorded history strikes Agadir, Morocco, killing over 12,000."},
   "03-01":{y:1872,e:"President Ulysses S. Grant signs legislation creating Yellowstone as the world\'s first national park."},
@@ -1017,7 +1004,7 @@ const ON_THIS_DAY = {
   "03-12":{y:1989,e:"Tim Berners-Lee submits his proposal for the World Wide Web to CERN, changing civilization forever."},
   "03-13":{y:1781,e:"William Herschel discovers Uranus, the first planet found with a telescope."},
   "03-14":{y:1879,e:"Albert Einstein is born in Ulm, Germany. His theories of relativity would reshape physics."},
-  "03-15":{y:44,e:"Julius Caesar is stabbed to death on the Ides of March by a group of Roman senators."},
+  "03-15":{y:-44,e:"Julius Caesar is stabbed to death on the Ides of March by a group of Roman senators."},
   "03-16":{y:1968,e:"US soldiers massacre hundreds of unarmed civilians at My Lai, Vietnam, one of the war\'s worst atrocities."},
   "03-17":{y:461,e:"Saint Patrick, the patron saint of Ireland, dies. His feast day is now celebrated worldwide."},
   "03-18":{y:1965,e:"Soviet cosmonaut Alexei Leonov performs the first spacewalk, floating outside Voskhod 2 for 12 minutes."},
@@ -1054,19 +1041,19 @@ const ON_THIS_DAY = {
   "04-18":{y:1906,e:"A massive earthquake devastates San Francisco, with the resulting fires killing over 3,000 people."},
   "04-19":{y:1995,e:"A truck bomb destroys the Alfred P. Murrah Federal Building in Oklahoma City, killing 168 people."},
   "04-20":{y:1999,e:"Two students open fire at Columbine High School in Colorado, killing 13 people."},
-  "04-21":{y:753,e:"According to Roman tradition, Romulus founds the city of Rome on Palatine Hill."},
+  "04-21":{y:-753,e:"According to Roman tradition, Romulus founds the city of Rome on Palatine Hill."},
   "04-22":{y:1970,e:"The first Earth Day is celebrated, launching the modern environmental movement."},
   "04-23":{y:1564,e:"William Shakespeare is born in Stratford-upon-Avon, England. He would write 37 plays and 154 sonnets."},
   "04-24":{y:1990,e:"The Hubble Space Telescope is launched into orbit, eventually revolutionizing our view of the universe."},
   "04-25":{y:1953,e:"James Watson and Francis Crick publish their landmark paper on the double helix structure of DNA."},
   "04-26":{y:1986,e:"The Chernobyl nuclear power plant explodes in Soviet Ukraine, causing the worst nuclear disaster in history."},
-  "04-27":{y:1981,e:"The computer mouse is introduced to the public for the first time by Apple Computer."},
+  "04-27":{y:1981,e:"Xerox introduces the Star workstation, the first commercial computer to ship with a mouse and a graphical interface."},
   "04-28":{y:1945,e:"Italian dictator Benito Mussolini is captured and executed by Italian partisans."},
   "04-29":{y:1945,e:"US forces liberate Dachau concentration camp in Germany, one of the first to be freed."},
   "04-30":{y:1975,e:"Saigon falls to North Vietnamese forces, ending the Vietnam War."},
   "05-01":{y:1931,e:"The Empire State Building officially opens in New York City, becoming the world\'s tallest building."},
   "05-02":{y:1945,e:"Soviet forces capture Berlin, effectively ending World War II in Europe."},
-  "05-03":{y:1971,e:"The Pentagon Papers are published, revealing the US government had systematically lied about Vietnam."},
+  "05-03":{y:1469,e:"Niccolò Machiavelli, author of The Prince, is born in Florence."},
   "05-04":{y:1970,e:"National Guard troops open fire on student protesters at Kent State University, killing four students."},
   "05-05":{y:1961,e:"Alan Shepard becomes the first American in space aboard Freedom 7."},
   "05-06":{y:1954,e:"Roger Bannister becomes the first person to run a mile in under four minutes, finishing in 3:59.4."},
@@ -1091,7 +1078,7 @@ const ON_THIS_DAY = {
   "05-25":{y:1977,e:"Star Wars opens in theaters, transforming Hollywood and creating the modern blockbuster era."},
   "05-26":{y:1940,e:"The Dunkirk evacuation begins, rescuing over 330,000 Allied troops from German-occupied France."},
   "05-27":{y:1937,e:"The Golden Gate Bridge opens to pedestrians in San Francisco after four years of construction."},
-  "05-28":{y:585,e:"A solar eclipse occurs during the Battle of Halys, ending a war between Lydia and Media."},
+  "05-28":{y:-585,e:"By tradition, a solar eclipse halts the Battle of Halys, ending a war between Lydia and Media."},
   "05-29":{y:1953,e:"Edmund Hillary and Tenzing Norgay become the first people confirmed to have summited Mount Everest."},
   "05-30":{y:1431,e:"Joan of Arc is burned at the stake for heresy in Rouen, France. She was 19 years old."},
   "05-31":{y:1889,e:"The Johnstown Flood kills over 2,200 people in Pennsylvania after a dam failure."},
@@ -1130,13 +1117,13 @@ const ON_THIS_DAY = {
   "07-03":{y:1863,e:"The Battle of Gettysburg ends after three bloody days, marking a turning point in the Civil War."},
   "07-04":{y:1776,e:"The United States Declaration of Independence is formally adopted by the Continental Congress."},
   "07-05":{y:1996,e:"Dolly the sheep is born, the first mammal successfully cloned from an adult somatic cell."},
-  "07-06":{y:1928,e:"The first fully synchronized sound film, The Jazz Singer, premieres in New York."},
+  "07-06":{y:1928,e:"Lights of New York, the first all-talking feature film, premieres in New York."},
   "07-07":{y:1981,e:"Sandra Day O\'Connor is nominated by President Reagan as the first female Supreme Court justice."},
   "07-08":{y:1947,e:"An unidentified object crashes near Roswell, New Mexico, sparking decades of UFO conspiracy theories."},
   "07-09":{y:1850,e:"President Zachary Taylor dies in office from gastroenteritis, just 16 months into his term."},
   "07-10":{y:1925,e:"The Scopes Monkey Trial begins in Tennessee, pitting evolution against creationism in a national debate."},
   "07-11":{y:1979,e:"Skylab, America\'s first space station, falls from orbit and crashes into the Australian Outback."},
-  "07-12":{y:100,e:"Julius Caesar is born. He would become Rome\'s most famous general and dictator."},
+  "07-12":{y:-100,e:"Julius Caesar is traditionally said to be born. He would become Rome\'s most famous general and dictator."},
   "07-13":{y:1985,e:"Live Aid concerts in London and Philadelphia raise over $125 million for African famine relief."},
   "07-14":{y:1789,e:"French revolutionaries storm the Bastille fortress in Paris, igniting the French Revolution."},
   "07-15":{y:1799,e:"The Rosetta Stone is discovered by French soldiers near the Egyptian town of Rosetta."},
@@ -1170,7 +1157,7 @@ const ON_THIS_DAY = {
   "08-12":{y:1981,e:"IBM introduces its first personal computer, the IBM PC, launching the personal computing revolution."},
   "08-13":{y:1961,e:"East Germany begins erecting the Berlin Wall, dividing the city and cutting off escape to the West."},
   "08-14":{y:1945,e:"Japan announces its surrender to the Allies, ending World War II in the Pacific."},
-  "08-15":{y:1945,e:"V-J Day: Japan formally surrenders, ending World War II with ceremonies aboard the USS Missouri."},
+  "08-15":{y:1945,e:"V-J Day: Emperor Hirohito announces Japan's surrender in a radio address, effectively ending World War II."},
   "08-16":{y:1977,e:"Elvis Presley dies at his Graceland estate in Memphis, Tennessee. He was 42 years old."},
   "08-17":{y:1978,e:"The Double Eagle II becomes the first balloon to cross the Atlantic Ocean successfully."},
   "08-18":{y:1920,e:"The 19th Amendment is ratified, granting American women the right to vote."},
@@ -1214,7 +1201,7 @@ const ON_THIS_DAY = {
   "09-25":{y:1956,e:"The first transatlantic telephone cable begins commercial service between the US and UK."},
   "09-26":{y:1960,e:"The first televised presidential debate occurs between John F. Kennedy and Richard Nixon."},
   "09-27":{y:1825,e:"The world\'s first public steam railway, the Stockton and Darlington Railway, opens in England."},
-  "09-28":{y:551,e:"Confucius is born in China. His teachings would shape East Asian philosophy for millennia."},
+  "09-28":{y:-551,e:"Confucius is traditionally said to be born in China. His teachings would shape East Asian philosophy for millennia."},
   "09-29":{y:1829,e:"Scotland Yard, the headquarters of London\'s Metropolitan Police, is established."},
   "09-30":{y:1935,e:"Hoover Dam, the largest dam in the Western Hemisphere at the time, is dedicated by President Roosevelt."},
   "10-01":{y:1949,e:"Mao Zedong proclaims the founding of the People\'s Republic of China from Tiananmen Square."},
@@ -1243,7 +1230,7 @@ const ON_THIS_DAY = {
   "10-24":{y:1945,e:"The United Nations officially comes into existence after ratification of its charter."},
   "10-25":{y:1415,e:"English forces under Henry V defeat the French at Agincourt in a major upset of the Hundred Years War."},
   "10-26":{y:1881,e:"The Gunfight at the O.K. Corral occurs in Tombstone, Arizona, lasting just 30 seconds."},
-  "10-27":{y:1904,e:"The New York City subway opens, the first rapid transit system in America."},
+  "10-27":{y:1904,e:"New York City's first subway line opens, running about 9 miles from City Hall to 145th Street."},
   "10-28":{y:1886,e:"The Statue of Liberty is dedicated in New York Harbor, a gift from France to the United States."},
   "10-29":{y:1969,e:"The first message is sent over ARPANET, the precursor to the internet, though it crashed after two letters."},
   "10-30":{y:1938,e:"Orson Welles broadcasts War of the Worlds on radio, causing widespread panic among listeners."},
@@ -1311,6 +1298,8 @@ const ON_THIS_DAY = {
   "12-31":{y:1999,e:"The world holds its breath for Y2K as the millennium rolls over — and most computers keep running."},
 };
 
+function fmtYear(y){ return y < 0 ? (-y) + ' BC' : String(y); }
+
 function getTodayHistory() {
   const now = new Date();
   const mm = String(now.getMonth()+1).padStart(2,'0');
@@ -1324,7 +1313,7 @@ function getTodayHistory() {
 
   if (ON_THIS_DAY[todayKey]) {
     // Today has an exact match — show it
-    return { ...ON_THIS_DAY[todayKey], date: 'Today in ' + ON_THIS_DAY[todayKey].y };
+    return { ...ON_THIS_DAY[todayKey], date: 'Today in ' + fmtYear(ON_THIS_DAY[todayKey].y) };
   } else {
     // No entry for today — pick a random historical event, clearly labeled with its real date
     const idx = period8 % allKeys.length;
@@ -1333,7 +1322,7 @@ function getTodayHistory() {
     const [m, d] = key.split('-');
     const dateLabel = new Date(2000, parseInt(m)-1, parseInt(d))
       .toLocaleDateString('en-US', {month:'long', day:'numeric'});
-    return { ...entry, date: dateLabel + ', ' + entry.y };
+    return { ...entry, date: dateLabel + ', ' + fmtYear(entry.y) };
   }
 }
 
@@ -1467,7 +1456,7 @@ function initHome() {
       'Good evening — hope the day\'s threat surface was manageable',
       'Evening. The network sleeps. You, apparently, do not',
       'Good evening, Thomas. Dinner first, then maybe one more domain',
-      'Evening briefing initiated. Status: survived another Tuesday',
+      'Evening briefing initiated. Status: survived another day',
       'Ah, evening — when the real security work begins',
       'Good evening, Thomas. The firewall held. Today',
       'Evening. G-Mac better be in recovery mode by now',
@@ -1503,7 +1492,7 @@ function initHome() {
   document.getElementById('home-date-full').textContent =
     now.toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric', year:'numeric'});
 
-  // Quote — local pool of 300, rotates every 8 hours
+  // Quote — local QUOTES pool, rotates every 8 hours
   const q = pickPeriod8(QUOTES, 1);
   document.getElementById('home-quote-text').textContent = '\u201c' + q.t + '\u201d';
   document.getElementById('home-quote-attr').textContent = '\u2014 ' + q.a;
@@ -1516,7 +1505,7 @@ function initHome() {
   // On This Day — still date-based, changes daily
   const hist = getTodayHistory();
   document.getElementById('home-history-text').textContent = hist.e;
-  document.getElementById('home-history-year').textContent = hist.date || (hist.y + ' AD');
+  document.getElementById('home-history-year').textContent = hist.date || fmtYear(hist.y);
 
   // Home seasonal maintenance card
   const seasonCard = document.getElementById('home-season-card');
@@ -1554,36 +1543,41 @@ async function loadHomeHeadlines(force=false) {
     </div>`).join('');
 
   // Fetch top story from each tab's first feed
-  const results = await Promise.all(HOME_TABS.map(async t => {
+  const picks = await Promise.all(HOME_TABS.map(async t => {
     const feeds = NEWS_FEEDS[t.key];
-    if (!feeds || !feeds.length) return {tab: t, item: null};
+    if (!feeds || !feeds.length) return {tab: t, cands: []};
     // Try feeds in order until we get a result
     for (const feed of feeds) {
       try {
         const items = await getFeedItems(feed.url, force);
         if (items.length) {
-          // For tabs with keywords, find first matching item
-          const kws = KEYWORDS[t.key];
-          let item = items[0];
-          if (kws) {
-            const match = items.find(i => {
-              const txt = (i.title + ' ' + (i.description||'')).toLowerCase();
-              return kws.some(k => txt.includes(k));
-            });
-            if (match) item = match;
-          }
-          return {tab: t, item: {
+          // Rank this feed's items by keyword score; strict tabs need a match,
+          // otherwise try the next feed.
+          const ranked = KEYWORDS[t.key]
+            ? items.map(i => ({i, sc: kwScore(i.title + ' ' + (i.description||''), t.key)}))
+                   .filter(x => x.sc > 0 || !STRICT_TABS.has(t.key))
+                   .sort((a, b) => b.sc - a.sc).map(x => x.i)
+            : items;
+          if (!ranked.length) continue;
+          return {tab: t, cands: ranked.slice(0, 5).map(item => ({
             headline: esc(item.title || 'Untitled'),
             link: esc(safeUrl(item.link)),
             source: esc(feed.label),
             date: esc(fmtDate(item.pubDate))
-          }};
+          }))};
         }
       } catch {}
       if (isRateLimited()) break; // don't keep hammering the service
     }
-    return {tab: t, item: null};
+    return {tab: t, cands: []};
   }));
+  // Pick each card's best story that isn't already shown on another card
+  const usedHeadlines = new Set();
+  const results = picks.map(({tab, cands}) => {
+    const item = cands.find(c => !usedHeadlines.has(c.headline)) || null;
+    if (item) usedHeadlines.add(item.headline);
+    return {tab, item};
+  });
 
   document.getElementById('home-grid').innerHTML = results.map(({tab: t, item}) => {
     if (!item) return `
@@ -1640,8 +1634,12 @@ const TAGLINES = [
   }
 
   function getTagline() {
+    try {
     let order = JSON.parse(localStorage.getItem(KEY_ORDER) || 'null');
-    let idx   = parseInt(localStorage.getItem(KEY_IDX)   || '0');
+    if (!Array.isArray(order) || order.length !== TAGLINES.length ||
+        order.some(i => !Number.isInteger(i) || i < 0 || i >= TAGLINES.length)) order = null;
+    let idx   = parseInt(localStorage.getItem(KEY_IDX)   || '0') || 0;
+    if (idx < 0) idx = 0;
     const period = Math.floor(Date.now() / PERIOD);
 
     // If no order yet or idx went past end, generate a fresh shuffle
@@ -1652,7 +1650,7 @@ const TAGLINES = [
     }
 
     // Advance index once per 12hr period (store period so we only advance once)
-    const lastPeriod = parseInt(localStorage.getItem('mcgrid_tagline_period') || '0');
+    const lastPeriod = parseInt(localStorage.getItem('mcgrid_tagline_period') || '0') || 0;
     if (period > lastPeriod) {
       idx = (idx + 1) % order.length;
       if (idx === 0) {
@@ -1664,7 +1662,11 @@ const TAGLINES = [
       localStorage.setItem('mcgrid_tagline_period', String(period));
     }
 
-    return TAGLINES[order[idx]];
+    return TAGLINES[order[idx]] || TAGLINES[period % TAGLINES.length];
+    } catch {
+      // storage blocked or corrupt: rotate by time instead
+      return TAGLINES[Math.floor(Date.now() / PERIOD) % TAGLINES.length];
+    }
   }
 
   const tag = getTagline();
@@ -1694,7 +1696,10 @@ document.querySelectorAll('.plb').forEach(btn=>{
     const el = document.getElementById('pod-'+key);
     el.innerHTML=`<div class="state-box"><span class="si" style="font-size:1.4rem">⏳</span><p>Loading latest episodes...</p></div>`;
     try{
-      el.innerHTML = await fetchPodEpisodes(key);
+      const res = await fetchPodEpisodes(key);
+      el.innerHTML = res.html;
+      if(!res.live) throw new Error('no live episodes');
+      btn.classList.remove('loading');
       btn.innerHTML='✓ Live Episodes';
       const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',mw:'var(--mwa)',ai:'var(--aia)',ltc:'var(--ltca)',diy:'var(--diya)',tv:'var(--tva)',golf:'var(--ga)',cissp:'var(--csa)'}[key];
       btn.style.color=`color-mix(in srgb, ${accent} 100%, transparent)`;
@@ -1702,8 +1707,13 @@ document.querySelectorAll('.plb').forEach(btn=>{
     }catch{
       el.innerHTML=renderStaticPods(key);
       btn.classList.remove('loading'); btn.disabled=false;
+      btn.innerHTML='<div class="sp"></div>' + (isRateLimited() ? 'Feed service busy — retry later' : 'No new episodes — retry');
     }
   });
+});
+// Tabs whose shows have no RSS feed can't load episodes: hide the button there.
+document.querySelectorAll('.plb').forEach(btn=>{
+  if(!(PODS_STATIC[btn.dataset.pod]||[]).some(p=>p.rss)) btn.hidden = true;
 });
 
 // ── MOBILE HAMBURGER ──────────────────────────────────────────────────────
