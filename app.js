@@ -9,12 +9,36 @@ const sbDate = document.getElementById('sb-date');
 if(sbDate) sbDate.textContent = now.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}) + ' · ' + now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
 
 // TABS
+// ── TABS: the one place to add/rename a news tab ─────────────────────────
+// key = data-tab / panel id suffix; tag = card label; home = Home card label;
+// accent = CSS colour var. (The nav buttons in index.html still list the
+// tabs for layout; this drives everything in the script.)
+const TABS = [
+  {key:'it',       tag:'IT & Tech',     home:'💻 IT',            accent:'var(--ca)'},
+  {key:'net',      tag:'Networking',    home:'🌐 Networking',    accent:'var(--na)'},
+  {key:'sec',      tag:'Cybersecurity', home:'🔐 Cybersecurity', accent:'var(--sea)'},
+  {key:'ot',       tag:'Industrial OT', home:'🏭 Industrial OT', accent:'var(--oa)'},
+  {key:'hc',       tag:'Healthcare',    home:'🏥 Healthcare',    accent:'var(--hca)'},
+  {key:'fin',      tag:'Finance & Reg', home:'💼 Finance & Reg', accent:'var(--fa)'},
+  {key:'training', tag:'Training',      home:'💪 Training',      accent:'var(--ta)'},
+  {key:'mw',       tag:'Money & Markets', home:'💰 Money',       accent:'var(--mwa)'},
+  {key:'diy',      tag:'Home & DIY',    home:'🏠 Home & DIY',    accent:'var(--diya)'},
+  {key:'tv',       tag:'Travel',        home:'✈️ Travel',        accent:'var(--tva)'},
+  {key:'golf',     tag:'Golf',          home:'⛳ Golf',           accent:'var(--ga)'},
+  {key:'ai',       tag:'AI & Dev',      home:'🤖 AI & Dev',      accent:'var(--aia)'},
+  {key:'ltc',      tag:'Learn to Code', home:'📚 Learn to Code', accent:'var(--ltca)'},
+  {key:'cissp',    tag:'CISSP',         home:'🎓 CISSP',         accent:'var(--csa)'},
+];
+const ACCENT = Object.fromEntries(TABS.map(t => [t.key, t.accent]));
+const TAG    = Object.fromEntries(TABS.map(t => [t.key, t.tag]));
+
 const loadedTabs = new Set();
 
 function activateTab(key) {
   document.querySelectorAll('.tab-btn,.sb-btn,.mob-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll(`[data-tab="${key}"]`).forEach(b => b.classList.add('active'));
+  document.querySelectorAll('.tab-btn,.sb-btn,.mob-btn').forEach(b => b.removeAttribute('aria-current'));
+  document.querySelectorAll(`[data-tab="${key}"]`).forEach(b => { b.classList.add('active'); b.setAttribute('aria-current', 'page'); });
   document.getElementById('panel-' + key).classList.add('active');
   // Auto-fetch news if this tab hasn't been loaded yet
   if (key !== 'home' && !loadedTabs.has(key)) {
@@ -282,6 +306,30 @@ function safeUrl(u){try{const x=new URL(u);return /^https?:$/.test(x.protocol)?x
 // for 5 min once it says we're rate-limited.
 const FEED_TTL = 30*60*1000, RL_COOLDOWN = 5*60*1000, FEED_MAX_PARALLEL = 3;
 const feedInflight = new Map();
+// feeds.json is pre-built hourly by the GitHub Pages workflow
+// (scripts/build_feeds.py). Use it first; rss2json only fills the gaps.
+const SNAP_MAX_AGE = 3*60*60*1000, SNAP_REFRESH_AGE = 90*60*1000;
+let snapPromise = null, snapLoadedAt = 0;
+let snapLoaded = null;
+function loadSnapshot(){
+  if(snapPromise && snapLoaded !== undefined && (snapLoaded === null || Date.now() - snapLoaded.t > SNAP_MAX_AGE) && Date.now() - snapLoadedAt > 5*60*1000){
+    snapPromise = null; // failed or old: try again (at most every 5 min)
+  }
+  if(!snapPromise){
+    snapLoaded = undefined; snapLoadedAt = Date.now();
+    snapPromise = fetch('feeds.json', {cache:'no-cache'})
+      .then(r => r.ok ? r.json() : null)
+      .then(d => (d && d.feeds && typeof d.feeds === 'object') ? {t: Date.parse(d.generated) || 0, feeds: d.feeds} : null)
+      .catch(() => null)
+      .then(v => (snapLoaded = v));
+  }
+  return snapPromise;
+}
+function snapItems(snap, url){
+  const v = snap && snap.feeds[url];
+  if(!Array.isArray(v)) return null;
+  return v.map(i => ({title: String(i.title||''), link: String(i.link||''), pubDate: String(i.pubDate||''), description: String(i.description||'')}));
+}
 let feedActive = 0; const feedQueue = [];
 let rateLimitedUntil = 0;
 function isRateLimited(){return Date.now() < rateLimitedUntil}
@@ -315,12 +363,18 @@ async function feedNetwork(url){
 async function getFeedItems(url, force=false){
   const c = feedCacheGet(url);
   if(c && !force && Date.now()-c.t < FEED_TTL) return c.items;
-  if(isRateLimited()) return c ? c.items : [];
+  const snap = await loadSnapshot();
+  const s = snapItems(snap, url);
+  if(s && s.length){
+    const age = Date.now() - snap.t;
+    if(age < SNAP_MAX_AGE && (!force || age < SNAP_REFRESH_AGE)) return s;
+  }
+  if(isRateLimited()) return c ? c.items : (s || []);
   if(!feedInflight.has(url)){
     feedInflight.set(url, feedNetwork(url).catch(()=>null).finally(()=>feedInflight.delete(url)));
   }
   const items = await feedInflight.get(url);
-  return items || (c ? c.items : []);
+  return items || (c ? c.items : (s || []));
 }
 const RL_MSG = 'The news feed service is rate-limiting this page. Showing what was saved; try again in a few minutes.';
 function fmtDate(s){if(!s)return'';if(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(s))s=s.replace(' ','T')+'Z';const d=new Date(s);return isNaN(d)?'':d.toLocaleDateString('en-US',{month:'short',day:'numeric'})}
@@ -367,6 +421,12 @@ function kwScore(text, tab){
   let n = 0; for (const re of res) if (re.test(txt)) n++;
   return n;
 }
+// tab-specific blocklists — exclude irrelevant topics
+const BLOCKLIST = {
+  diy: ['pool','swimming pool','above-ground pool','pool vacuum','pool debris'],
+  tv:  ['credit card','travel card','travel rewards','miles card','points card','gear review','best luggage','best backpack','travel insurance','travel pillow','travel adapter','travel hack','cheap flight','airline miles','frequent flyer','loyalty program','travel credit','card review','best card for travel','travel wallet','best airbnb','best airbnbs','airbnb in','vrbo','vacation rental','best hotels in','best resorts in','best hostels','where to stay in','places to stay'],
+};
+
 function scoreItem(item, tab){
   if(!KEYWORDS[tab]) return 1;
   return kwScore((item.headline+' '+item.summary).replace(/&amp;/g,'&').replace(/&#39;/g,"'").replace(/&quot;/g,'"'), tab);
@@ -387,11 +447,6 @@ async function fetchPanel(key, force=false){
     if(STRICT_TABS.has(key) && KEYWORDS[key]) {
       items = items.filter(i => scoreItem(i, key) > 0);
     }
-    // tab-specific blocklists — exclude irrelevant topics
-    const BLOCKLIST = {
-      diy: ['pool','swimming pool','above-ground pool','pool vacuum','pool debris'],
-      tv:  ['credit card','travel card','travel rewards','miles card','points card','gear review','best luggage','best backpack','travel insurance','travel pillow','travel adapter','travel hack','cheap flight','airline miles','frequent flyer','loyalty program','travel credit','card review','best card for travel','travel wallet','best airbnb','best airbnbs','airbnb in','vrbo','vacation rental','best hotels in','best resorts in','best hostels','where to stay in','places to stay'],
-    };
     if(BLOCKLIST[key]) {
       items = items.filter(i => {
         const txt = (i.headline + ' ' + i.summary).toLowerCase();
@@ -401,8 +456,8 @@ async function fetchPanel(key, force=false){
     // sort by keyword relevance score (highest first)
     if(KEYWORDS[key]) items.sort((a,b)=>scoreItem(b,key)-scoreItem(a,key));
     items = items.slice(0,9);
-    const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',mw:'var(--mwa)',ai:'var(--aia)',ltc:'var(--ltca)',diy:'var(--diya)',tv:'var(--tva)',golf:'var(--ga)',cissp:'var(--csa)'}[key];
-    const tag = {it:'IT & Tech',net:'Networking',sec:'Cybersecurity',ot:'Industrial OT',hc:'Healthcare',fin:'Finance & Reg',training:'Training',mw:'Money & Markets',ai:'AI & Dev',ltc:'Learn to Code',diy:'Home & DIY',tv:'Travel',golf:'Golf',cissp:'CISSP'}[key];
+    const accent = ACCENT[key];
+    const tag = TAG[key];
     if(!items.length){
       document.getElementById('cards-'+key).innerHTML=`<div class="state-box"><span class="si">⚠️</span><p>${isRateLimited()?"The news feed service is rate-limiting this page. Try again in a few minutes.":"Couldn't load feeds. Try again in a moment."}</p></div>`;
     } else {
@@ -428,7 +483,7 @@ async function fetchPanel(key, force=false){
 
 // ── PODCASTS ──────────────────────────────────────────────────────────────
 function renderStaticPods(key){
-  const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',mw:'var(--mwa)',ai:'var(--aia)',ltc:'var(--ltca)',diy:'var(--diya)',tv:'var(--tva)',golf:'var(--ga)',cissp:'var(--csa)'}[key];
+  const accent = ACCENT[key];
   return `<div class="grid">`+
     PODS_STATIC[key].map(p=>`
       <a class="pc" href="${p.url}" target="_blank" rel="noopener" style="--ac:${accent}">
@@ -442,7 +497,7 @@ function renderStaticPods(key){
 }
 
 async function fetchPodEpisodes(key){
-  const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',mw:'var(--mwa)',ai:'var(--aia)',ltc:'var(--ltca)',diy:'var(--diya)',tv:'var(--tva)',golf:'var(--ga)',cissp:'var(--csa)'}[key];
+  const accent = ACCENT[key];
   const pods = PODS_STATIC[key].filter(p=>p.rss);
   if(!pods.length) return {html: renderStaticPods(key), live: false};
   const results = await Promise.all(pods.map(async p=>{
@@ -1513,22 +1568,7 @@ function initHome() {
 }
 
 // HOME TABS CONFIG for pulling top story
-const HOME_TABS = [
-  {key:'it',  label:'💻 IT',           accent:'var(--ca)',  tab:'it'},
-  {key:'net', label:'🌐 Networking',   accent:'var(--na)',  tab:'net'},
-  {key:'sec', label:'🔐 Cybersecurity',accent:'var(--sea)', tab:'sec'},
-  {key:'ot',  label:'🏭 Industrial OT',accent:'var(--oa)',  tab:'ot'},
-  {key:'hc',  label:'🏥 Healthcare',   accent:'var(--hca)', tab:'hc'},
-  {key:'fin', label:'💼 Finance & Reg',accent:'var(--fa)',  tab:'fin'},
-  {key:'training',label:'💪 Training', accent:'var(--ta)',  tab:'training'},
-  {key:'mw',   label:'💰 Money',        accent:'var(--mwa)', tab:'mw'},
-  {key:'diy',  label:'🏠 Home & DIY',   accent:'var(--diya)',tab:'diy'},
-  {key:'tv',   label:'✈️ Travel',       accent:'var(--tva)', tab:'tv'},
-  {key:'golf', label:'⛳ Golf',          accent:'var(--ga)',  tab:'golf'},
-  {key:'ai',   label:'🤖 AI & Dev',    accent:'var(--aia)', tab:'ai'},
-  {key:'ltc',  label:'📚 Learn to Code',accent:'var(--ltca)',tab:'ltc'},
-  {key:'cissp',label:'🎓 CISSP',       accent:'var(--csa)', tab:'cissp'},
-];
+const HOME_TABS = TABS.map(t => ({key: t.key, label: t.home, accent: t.accent}));
 
 async function loadHomeHeadlines(force=false) {
   const btn = document.getElementById('home-fetch-btn');
@@ -1677,7 +1717,7 @@ const TAGLINES = [
 })();
 
 // ── INIT ──────────────────────────────────────────────────────────────────
-['it','net','sec','ot','hc','fin','training','mw','ai','ltc','diy','tv','golf','cissp'].forEach(key=>{
+TABS.map(t=>t.key).forEach(key=>{
   document.getElementById('pod-'+key).innerHTML = renderStaticPods(key);
 });
 
@@ -1701,7 +1741,7 @@ document.querySelectorAll('.plb').forEach(btn=>{
       if(!res.live) throw new Error('no live episodes');
       btn.classList.remove('loading');
       btn.innerHTML='✓ Live Episodes';
-      const accent = {it:'var(--ca)',net:'var(--na)',sec:'var(--sea)',ot:'var(--oa)',hc:'var(--hca)',fin:'var(--fa)',training:'var(--ta)',mw:'var(--mwa)',ai:'var(--aia)',ltc:'var(--ltca)',diy:'var(--diya)',tv:'var(--tva)',golf:'var(--ga)',cissp:'var(--csa)'}[key];
+      const accent = ACCENT[key];
       btn.style.color=`color-mix(in srgb, ${accent} 100%, transparent)`;
       btn.style.borderColor=`color-mix(in srgb, ${accent} 100%, transparent)`;
     }catch{
@@ -1717,16 +1757,42 @@ document.querySelectorAll('.plb').forEach(btn=>{
 });
 
 // ── MOBILE HAMBURGER ──────────────────────────────────────────────────────
+function setDrawerA11y(open) {
+  const d = document.getElementById('mob-drawer'), hb = document.getElementById('mob-hamburger');
+  if (d) { d.inert = !open; d.setAttribute('aria-hidden', open ? 'false' : 'true'); }
+  if (hb) { hb.setAttribute('aria-expanded', open ? 'true' : 'false'); hb.setAttribute('aria-label', open ? 'Close menu' : 'Open menu'); }
+}
 function openDrawer() {
   document.getElementById('mob-drawer').classList.add('open');
   document.getElementById('mob-overlay').classList.add('open');
   document.getElementById('mob-hamburger').classList.add('open');
+  setDrawerA11y(true);
+  const first = document.querySelector('#mob-drawer .mob-btn.active') || document.getElementById('mob-close');
+  if (first) first.focus();
 }
 function closeDrawer() {
+  const wasOpen = document.getElementById('mob-drawer').classList.contains('open');
   document.getElementById('mob-drawer').classList.remove('open');
   document.getElementById('mob-overlay').classList.remove('open');
   document.getElementById('mob-hamburger').classList.remove('open');
+  setDrawerA11y(false);
+  const hb = document.getElementById('mob-hamburger');
+  if (wasOpen && hb && hb.offsetParent !== null) hb.focus();
 }
+setDrawerA11y(false);
+document.addEventListener('keydown', e => {
+  const d = document.getElementById('mob-drawer');
+  if (!d.classList.contains('open')) return;
+  if (e.key === 'Escape') { closeDrawer(); return; }
+  if (e.key === 'Tab') { // keep focus inside the open menu
+    const f = [...d.querySelectorAll('button, a[href]')].filter(el => el.offsetParent !== null);
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    else if (!d.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+  }
+});
 var mobHamburger = document.getElementById('mob-hamburger');
 var mobClose = document.getElementById('mob-close');
 var mobOverlay = document.getElementById('mob-overlay');

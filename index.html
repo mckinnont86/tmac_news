@@ -2,23 +2,25 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://api.rss2json.com; img-src 'self' data:; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://api.rss2json.com; img-src 'self' data:; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <title>McGrid</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   :root{
-    --ink:#0f1117;--paper:#f7f6f2;--rule:#d8d5ce;--muted:#888580;--card-bg:#ffffff;--ls:#e8e6e0;
+    --ink:#0f1117;--paper:#f7f6f2;--rule:#d8d5ce;--muted:#6b6862;--card-bg:#ffffff;--ls:#e8e6e0;
     --ca:#54B9F1;--na:#3a86e8;--sea:#e05555;--oa:#4caf82;--hca:#2a9d8f;--fa:#c9933a;--ta:#9b6fe0;--mwa:#10b981;--aia:#f97316;--tva:#0ea5e9;--ga:#22c55e;--ltca:#06b6d4;--diya:#d97706;--csa:#c084fc;
   }
   @media(prefers-color-scheme:dark){
     :root{
-      --ink:#e8e6e2;--paper:#0f1117;--rule:#2a2d35;--muted:#6b7280;--card-bg:#1a1d26;--ls:#1e2130;
+      --ink:#e8e6e2;--paper:#0f1117;--rule:#2a2d35;--muted:#9ca3af;--card-bg:#1a1d26;--ls:#1e2130;
     }
   }
   body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.6;min-height:100vh;transition:background .2s,color .2s}
@@ -33,7 +35,6 @@
   .tab-btn:hover{color:var(--ink)}
   .tab-btn.active{color:var(--ink)}
   .tab-btn.active::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:3px;background:var(--tc,var(--ink))}
-  .tab-btn[data-tab=cyber]{--tc:var(--ca)}
   .tab-btn[data-tab=home]{--tc:var(--ink)}
   .tab-btn[data-tab=it]{--tc:var(--ca)}
   .tab-btn[data-tab=net]{--tc:var(--na)}
@@ -59,6 +60,9 @@
   .fetch-btn .sp{width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none}
   .fetch-btn.loading .sp{display:block}.fetch-btn.loading .bl{opacity:.6}
   @keyframes spin{to{transform:rotate(360deg)}}
+  :focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  .sidebar :focus-visible,.mob-bar :focus-visible,.mob-drawer :focus-visible{outline-color:#fff}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
   .sl{font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:26px 0 12px;display:flex;align-items:center;gap:10px}
   .sl::after{content:'';flex:1;height:1px;background:var(--rule)}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
@@ -305,17 +309,17 @@
     <div class="mob-bar-name">McGrid</div>
     <div class="mob-bar-date" id="mob-date"></div>
   </div>
-  <button class="mob-hamburger" id="mob-hamburger" aria-label="Open menu">
+  <button class="mob-hamburger" id="mob-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mob-drawer">
     <span></span><span></span><span></span>
   </button>
 </div>
 
-<div class="mob-overlay" id="mob-overlay"></div>
+<div class="mob-overlay" id="mob-overlay" aria-hidden="true"></div>
 
-<div class="mob-drawer" id="mob-drawer">
+<div class="mob-drawer" id="mob-drawer" role="dialog" aria-modal="true" aria-label="Menu">
   <div class="mob-drawer-header">
     <div class="mob-drawer-name">McGrid</div>
-    <button class="mob-close" id="mob-close">✕</button>
+    <button class="mob-close" id="mob-close" aria-label="Close menu">✕</button>
   </div>
   <nav class="mob-nav">
     <div class="mob-group">
